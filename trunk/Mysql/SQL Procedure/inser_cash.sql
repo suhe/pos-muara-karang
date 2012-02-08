@@ -1,0 +1,1 @@
+SELECT kas FROM vw_cash_flow WHERE tgl_cash=DATE_ADD(CURDATE(), INTERVAL - 1 DAY)

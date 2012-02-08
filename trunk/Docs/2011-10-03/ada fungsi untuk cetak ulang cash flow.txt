@@ -1,0 +1,2 @@
+misalnnya cash flow tanggal 20 sudah di cetakk... bisa nga kalo tanggal 20 dicetak sekali lagi 
+beserta atribut atributnnya (piutang, draft error, stock minimum)
