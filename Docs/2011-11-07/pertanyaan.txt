@@ -1,0 +1,19 @@
+1 .Data revisi 2 sofeware.xlsx
+bisa diperjelas 
+misal :  
+
+Cashier          ADD     Delete   PRINT
+                 Cashier
+                 Manager          Admin
+                 Admin    Admin   Admin
+
+
+
+2. revisi title print tagihan.png : itu yang nama kreditor , kalo misal 1 hari pendapatan 
+Kreditor nya banyak gmana ? 
+
+3. di cash flow cetak.txt 
+  itu belum jelas tolong diperjelas
+
+
+Terima Kasih
