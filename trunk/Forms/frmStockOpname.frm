@@ -143,84 +143,60 @@ Begin VB.Form frmStockOpname
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      NumItems        =   14
+      NumItems        =   10
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Text            =   "Kd Obat"
-         Object.Width           =   1764
+         Text            =   "Tanggal"
+         Object.Width           =   2117
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
+         Text            =   "Jam"
+         Object.Width           =   1764
+      EndProperty
+      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   2
+         Text            =   "Kd Obat"
+         Object.Width           =   1764
+      EndProperty
+      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   3
          Text            =   "Nm Obat"
          Object.Width           =   2646
       EndProperty
-      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   2
-         Text            =   "Harga Beli"
-         Object.Width           =   2999
-      EndProperty
-      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   3
-         Text            =   "Box Besar"
-         Object.Width           =   2117
-      EndProperty
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
          SubItemIndex    =   4
-         Text            =   "Box Kecil"
-         Object.Width           =   2117
+         Text            =   "Harga Beli"
+         Object.Width           =   2646
       EndProperty
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   5
-         Text            =   "Op.Kem.Besar"
-         Object.Width           =   2293
+         Text            =   "Stok Sisa"
+         Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   6
-         Text            =   "Op.Kem.Kecil"
-         Object.Width           =   2117
+         Text            =   "Stok Opname"
+         Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   7
-         Text            =   "Op.Satuan"
-         Object.Width           =   2117
+         Text            =   "Selisih"
+         Object.Width           =   2469
       EndProperty
       BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   8
-         Text            =   "Stok Sisa"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(10) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   9
-         Text            =   "Stok Fisik"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(11) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   10
-         Text            =   "Stok Total"
-         Object.Width           =   2117
-      EndProperty
-      BeginProperty ColumnHeader(12) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   11
-         Text            =   "Total Kerugian"
+         Text            =   "Value"
          Object.Width           =   3175
       EndProperty
-      BeginProperty ColumnHeader(13) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   12
+      BeginProperty ColumnHeader(10) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   9
          Text            =   "Nm Pemeriksa"
          Object.Width           =   2822
-      EndProperty
-      BeginProperty ColumnHeader(14) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   13
-         Text            =   "Tgl Input"
-         Object.Width           =   2646
       EndProperty
    End
    Begin VB.Shape shpBar 
@@ -441,12 +417,12 @@ Private Sub Form_Load()
         btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
     
-    sql = "o.kd_obat,o.nm_obat,o.harga_beli,o.box_besar,o.box_kecil,s.kem_besar,s.kem_kecil,s.satuan,o.sisa,@f:=((o.box_besar*s.kem_besar)+(o.box_kecil*s.kem_kecil)+(s.satuan)) as stok_fisik,@s:=(o.sisa-@f) as total_sisa,(@s*o.harga_beli) as total_kerugian,p.nm_pengguna,s.tgl_input"
+    sql = "DATE_FORMAT(s.tgl_input,'%d-%m-%Y'),DATE_FORMAT(s.tgl_input,'%H:%i:%s'),o.kd_obat,o.nm_obat,o.harga_beli,o.sisa,@so:=((o.box_besar*s.kem_besar)+(o.box_kecil*s.kem_kecil)+(s.satuan)) as so,@ss:=(@so-o.sisa)as selisih,(@ss * o.harga_beli) as value,p.nm_pengguna"
     With SQLParser
         .Fields = sql
         .Tables = " tbl_opname s LEFT JOIN vw_stok o ON s.id_obat =o.id_obat LEFT JOIN tbl_pengguna p ON p.id=s.id_pengguna "
         .wCondition = " s.flag_opname = 1"
-        .SortOrder = " ABS(s.id_obat) ASC"
+        .SortOrder = " DATE_FORMAT(s.tgl_input,'%d-%m-%Y') ASC,DATE_FORMAT(s.tgl_input,'%H:%i:%s') ASC"
         .SaveStatement
     End With
     
