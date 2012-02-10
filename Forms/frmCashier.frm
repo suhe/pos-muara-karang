@@ -2174,7 +2174,7 @@ Private Sub txtSrchStrPasien_Change()
             .Fields = sql
             .Tables = " tbl_pasien p LEFT JOIN tbl_pengguna pp ON pp.id=p.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStrPasien.Text & "%'"
-            .SortOrder = " p.kd_pasien ASC LIMIT 20"
+            .SortOrder = " p.kd_pasien ASC LIMIT 10"
             .SaveStatement
         End With
         

@@ -46,10 +46,10 @@ Begin VB.Form frmSplash
          Strikethrough   =   0   'False
       EndProperty
       Height          =   615
-      Left            =   6000
+      Left            =   5280
       TabIndex        =   0
       Top             =   3000
-      Width           =   2415
+      Width           =   3135
    End
 End
 Attribute VB_Name = "frmSplash"

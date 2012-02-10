@@ -1386,15 +1386,11 @@ Public Sub printStockOpname()
         .txtKode.DataField = "kd_obat"
         .txtnama.DataField = "nm_obat"
         .txtHargaBeli.DataField = "harga_beli"
-        .txtUkBB.DataField = "box_besar"
-        .txtUkBK.DataField = "box_kecil"
-        .txtOpBB.DataField = "kem_besar"
-        .txtOpBK.DataField = "kem_kecil"
-        .txtOpSat.DataField = "satuan"
         .txtStokDatabase.DataField = "stok_sblm"
         .txtStokFisik.DataField = "sf"
         .txtStokSisa.DataField = "sisa"
         .txtTotalKerugian.DataField = "total"
+        .txtGrandTotal.DataField = "total"
         .txtNmPemeriksa.DataField = "nm_pengguna"
         .show
      End With
