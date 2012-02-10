@@ -1421,7 +1421,7 @@ Private Sub cmdNew_Click()
 End Sub
 
 Private Sub clearText()
-    lblTotal.Caption = 0
+    lbltotal.Caption = 0
     txtFak.Text = ""
     txtSrchStrPasien.Text = ""
     txtPayment.Text = ""
@@ -1429,7 +1429,7 @@ Private Sub clearText()
     lstOrders.ListItems.Clear
     lvList.ListItems.Clear
     lblBrand.Caption = "---"
-    lblstock.Caption = "---"
+    lblStock.Caption = "---"
     lblPrice.Caption = "---"
     lblKdPasien.Caption = "..."
     lblNmPasien.Caption = "..."
@@ -1536,7 +1536,7 @@ Private Sub recipeMedicine()
     Dim intResponse As Integer
     payment = Format(txtPayment.Text, "")
     payment = Replace(payment, ".", ",")
-    total = Format(lblTotal.Caption, "")
+    total = Format(lbltotal.Caption, "")
     'MsgBox total & "-" & payment
     'If (Val(payment) >= Val(total)) Then
     If (txtPayment.Text <> "Credit") Then
@@ -1556,7 +1556,7 @@ Private Sub recipeMedicine()
             tbl.TABLE_TYPE = "Cash"
         Else
             bayar = 0
-            piutang = Format(lblTotal.Caption, "")
+            piutang = Format(lbltotal.Caption, "")
             strpay = "Piutang"
             tbl.TABLE_TYPE = "Credit"
         End If
@@ -1682,7 +1682,7 @@ Private Sub recipeMedicine()
         tbl.TABLE_NM_DEPT = dcDepartement.Text
         tbl.TABLE_ID_KREDITUR = Trim(txtKreditor.Text)
         tbl.TABLE_TANGGAL = Format(Now, "DD-MM-YYYY")
-        tbl.TABLE_TOTAL = lblTotal.Caption
+        tbl.TABLE_TOTAL = lbltotal.Caption
         tbl.TABLE_KOMISI = komisi
         If txtPayment <> "Credit" Then
             tbl.TABLE_MONEY = txtPayment.Text
@@ -1714,7 +1714,7 @@ Private Sub cmdRemove_Click()
 End Sub
 
 Private Sub clearPayment()
-    lblTotal.Caption = 0
+    lbltotal.Caption = 0
     txtPayment.Text = ""
     txtMoneyBack.Text = ""
     txtKreditor.Text = 0
@@ -1811,7 +1811,7 @@ Public Sub counttotal()
             subtotal = subtotal + (lstOrders.ListItems(i).SubItems(4) * lstOrders.ListItems(i).SubItems(5))
         Next i
     End If
-    lblTotal.Caption = Format(subtotal, "##,###0.00")
+    lbltotal.Caption = Format(subtotal, "##,###0.00")
 End Sub
 
 Private Sub Form_Deactivate()
@@ -1983,9 +1983,9 @@ Private Sub callBrand()
         End If
         
         If (lvListObat.SelectedItem.SubItems(5) = 0) Then
-            .lblstock.Caption = 0
+            .lblStock.Caption = 0
         Else
-            .lblstock.Caption = lvListObat.SelectedItem.SubItems(5)
+            .lblStock.Caption = lvListObat.SelectedItem.SubItems(5)
         End If
     End With
 End Sub
@@ -2007,7 +2007,7 @@ Private Sub lvListObat_Click()
         With lvListObat.SelectedItem
             lblBrand.Caption = .SubItems(2)
             lblPrice.Caption = .SubItems(4)
-            lblstock.Caption = .SubItems(5)
+            lblStock.Caption = .SubItems(5)
         End With
     End If
 End Sub
@@ -2086,7 +2086,7 @@ Private Sub txtPayment_Change()
     txtPayment.Text = Format(txtPayment.Text, "#,##0")
     Dim payment, total, cback As Double
     payment = Format(txtPayment.Text, "")
-    total = Format(lblTotal.Caption, "")
+    total = Format(lbltotal.Caption, "")
     cback = payment - total
     txtMoneyBack.Text = Format(cback, "#,###0")
     txtPayment.SelStart = Len(txtPayment.Text)
@@ -2126,7 +2126,7 @@ Private Sub txtSrchStr_Change()
             .Fields = sql
             .Tables = " tbl_obat o LEFT JOIN tbl_kategori k ON k.id_kategori =o.id_kategori LEFT JOIN tbl_pengguna p ON p.id=o.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStr.Text & "%'  "
-            .SortOrder = " o.id_obat ASC LIMIT 20"
+            .SortOrder = " o.id_obat ASC LIMIT 10"
             .SaveStatement
         End With
         
