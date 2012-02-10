@@ -304,11 +304,6 @@ Public Sub CommandPass(ByVal srcPerformWhat As String)
         Case "Print"
             On Error Resume Next
             frmStockOpnamePrint.show vbModal
-            'If (lvList.ListItems.Count > 0) Then
-             '   Call printStock
-            'Else
-             '   MsgBox "No Data View In the List"
-            'End If
         Case "Close"
             Unload Me
     End Select
@@ -417,7 +412,7 @@ Private Sub Form_Load()
         btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
     
-    sql = "DATE_FORMAT(s.tgl_input,'%d-%m-%Y'),DATE_FORMAT(s.tgl_input,'%H:%i:%s'),o.kd_obat,o.nm_obat,o.harga_beli,o.sisa,@so:=((o.box_besar*s.kem_besar)+(o.box_kecil*s.kem_kecil)+(s.satuan)) as so,@ss:=(@so-o.sisa)as selisih,(@ss * o.harga_beli) as value,p.nm_pengguna"
+    sql = "DATE_FORMAT(s.tgl_input,'%d-%m-%Y'),DATE_FORMAT(s.tgl_input,'%H:%i:%s'),o.kd_obat,o.nm_obat,o.harga_beli,o.sisa,@so:=((o.box_sedang*s.kem_sedang)+(o.box_kecil*s.kem_kecil)+(s.satuan)) as so,@ss:=(@so-o.sisa)as selisih,(@ss * o.harga_beli) as value,p.nm_pengguna"
     With SQLParser
         .Fields = sql
         .Tables = " tbl_opname s LEFT JOIN vw_stok o ON s.id_obat =o.id_obat LEFT JOIN tbl_pengguna p ON p.id=s.id_pengguna "

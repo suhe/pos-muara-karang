@@ -490,7 +490,6 @@ Private Sub Form_Load()
         
         If (CurrUser.USER_ISADMIN = True) Or (CurrUser.USER_ISMANAGER = True) Then
             .ListItems.Add , "frmProduct", "Stok Obat", 27, 27
-            .ListItems.Add , "frmStockOpname", "Stok Opname", 37, 37
             .ListItems.Add , "frmDebt", "Penagihan Kreditor", 15, 15
             .ListItems.Add , "frmPasien", "Data Pasien", 30, 30
             .ListItems.Add , "frmCategories", "Data Kategori Obat", 29, 29
@@ -505,6 +504,7 @@ Private Sub Form_Load()
         End If
         
         If (CurrUser.USER_ISADMIN = True) Then
+            .ListItems.Add , "frmStockOpname", "Stok Opname", 37, 37
             .ListItems.Add , "frmGroup", "Cabang Klinik", 33, 33
             .ListItems.Add , "frmBusinessInfo", "info Klinik", 36, 36
         End If

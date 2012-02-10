@@ -411,16 +411,17 @@ Begin VB.MDIForm MDIMainMenu
             Style           =   6
             Object.Width           =   1764
             MinWidth        =   1764
-            TextSave        =   "2/7/2012"
+            TextSave        =   "2/10/2012"
          EndProperty
          BeginProperty Panel8 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
             Object.Width           =   1764
             MinWidth        =   1764
-            TextSave        =   "6:04 PM"
+            TextSave        =   "2:34 PM"
          EndProperty
          BeginProperty Panel9 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   3
+            Enabled         =   0   'False
             Object.Width           =   882
             MinWidth        =   882
             TextSave        =   "INS"
@@ -871,6 +872,7 @@ Private Sub lvWin_Click()
     Select Case lvWin.SelectedItem.Key
         Case "frmShortcuts": frmShortcuts.show: frmShortcuts.WindowState = vbMaximized: frmShortcuts.SetFocus
         Case "frmProduct": LoadForm frmProduct
+        Case "frmStockOpname": LoadForm frmStockOpname
         Case "frmProductList": LoadForm frmProductList
         Case "frmCashFlow": LoadForm frmCashFlow
         Case "frmCashier": LoadForm frmCashier
@@ -968,7 +970,6 @@ Private Sub MDIForm_Load()
     If hndMenu Then
         ItemCount = GetMenuItemCount(hndMenu)
         lngID = GetMenuItemID(hndMenu, ItemCount - 1)
-        'MsgBox lngID
         'Disable the X button
         For i = 1 To 2
         Call RemoveMenu(hndMenu, ItemCount - i, MF_BYPOSITION)
@@ -1073,7 +1074,6 @@ Public Sub HideTBButton(ByVal srcPatern As String, Optional srcAllButton As Bool
     If Mid$(srcPatern, 5, 1) = "t" Then tbMenu.Buttons(7).Visible = False
     If Mid$(srcPatern, 6, 1) = "t" Then tbMenu.Buttons(8).Visible = False
     If Mid$(srcPatern, 7, 1) = "t" Then tbMenu.Buttons(9).Visible = False
-    'If mnuRAC.Visible = False Then mnuRASep2.Visible = False
 End Sub
 
 Public Sub ShowTBButton(ByVal srcPatern As String, Optional srcAllButton As Boolean)
@@ -1086,7 +1086,6 @@ Public Sub ShowTBButton(ByVal srcPatern As String, Optional srcAllButton As Bool
     If Mid$(srcPatern, 5, 1) = "t" Then tbMenu.Buttons(7).Visible = True
     If Mid$(srcPatern, 6, 1) = "t" Then tbMenu.Buttons(8).Visible = True
     If Mid$(srcPatern, 7, 1) = "t" Then tbMenu.Buttons(9).Visible = True
-    'If mnuRAC.Visible = True Then mnuRASep2.Visible = True
 End Sub
 
 Public Sub UpdateInfoMsg()
@@ -1136,8 +1135,7 @@ Public Sub UpdateInfoMsg()
     strHTML = strHTML & "<font face='tahoma' size=2 color=#" & Hex$(255) & Hex$(147) & Hex$(31) & ">" & _
                             "<img src='ar.bmp'></img>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jumlah Kategori Obat = " & getRecordCount("id_kategori", "tbl_kategori") & "&nbsp;&nbsp;&nbsp;" & _
                         "</font>"
-                 
-                 
+              
     '- Laba Pendapatan
     strHTML = strHTML & "<font face='tahoma' size=2 color=#" & Hex$(255) & Hex$(147) & Hex$(31) & ">" & _
                             "<img src='ar.bmp'></img>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Laba Pendapatan Lunas Hari ini = Rp." & toMoney(getSUMTotal("SELECT jual AS total FROM vw_cash_flow WHERE DAY(tgl_cash)=DAY(curdate())", "total", CN)) & "&nbsp;&nbsp;&nbsp;" & _
