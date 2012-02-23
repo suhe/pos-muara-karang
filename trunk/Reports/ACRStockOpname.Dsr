@@ -43,6 +43,7 @@ Private Sub ActiveReport_ReportEnd()
     MDIMainMenu.RemToWin Me.Caption
     If tbl.TABLE_FLAG_OPNAME = 1 Then
         CN.Execute "UPDATE tbl_opname SET flag_opname=0 WHERE flag_opname = 1"
+        CN.Execute "UPDATE tbl_obat SET flag_opname=0 WHERE flag_opname = 1"
     End If
     frmStockOpname.RefreshRecords
 End Sub
