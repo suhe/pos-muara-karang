@@ -1374,7 +1374,7 @@ Public Sub printStockOpname()
         .DataControl1.CursorLocation = ddADOUseClient
         .DataControl1.ConnectionString = DBPath
         
-        sql = "SELECT *,DATE_FORMAT(op.tgl_input,'%d-%m-%Y') as dateop,DATE_FORMAT(op.tgl_input,'%H:%i:%s') as timeop,@sf:=((o.box_sedang * op.kem_sedang)+(o.box_kecil*op.kem_kecil)+op.satuan) as sf,@s:=(@sf-stok_sblm) as sisa,(@s*o.harga_beli) as total,p.nm_pengguna "
+        sql = "SELECT *,DATE_FORMAT(op.tgl_input,'%d-%m-%Y') as dateop,DATE_FORMAT(op.tgl_input,'%H:%i:%s') as timeop,@sf:=((o.box_sedang * op.kem_sedang)+(o.box_kecil*op.kem_kecil)+op.satuan) as sf,@s:=(@sf-op.stok_sblm) as sisa,(@s*o.harga_beli) as total,p.nm_pengguna "
         sql = sql & " FROM tbl_opname op "
         sql = sql & " LEFT JOIN tbl_obat o ON o.id_obat=op.id_obat "
         sql = sql & " LEFT JOIN tbl_pengguna p ON p.id=op.id_pengguna "
