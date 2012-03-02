@@ -1,6 +1,8 @@
 Attribute VB_Name = "modFunction"
 Option Explicit
 
+
+
 'Function used to format recordset
 Public Function FormatRS(ByVal srcField As Field, Optional AllowNewLine As Boolean) As String
     Dim strRet As String
