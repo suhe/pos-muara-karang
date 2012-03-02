@@ -35,21 +35,21 @@ Begin VB.Form frmSplash
    End
    Begin VB.Label Label1 
       BackStyle       =   0  'Transparent
-      Caption         =   "Aplha V.2.5"
+      Caption         =   "Beta 1.0"
       BeginProperty Font 
          Name            =   "Arial Narrow"
-         Size            =   24
+         Size            =   15.75
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   615
-      Left            =   5280
+      Height          =   375
+      Left            =   6960
       TabIndex        =   0
-      Top             =   3000
-      Width           =   3135
+      Top             =   3120
+      Width           =   1335
    End
 End
 Attribute VB_Name = "frmSplash"

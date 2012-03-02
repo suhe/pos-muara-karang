@@ -115,5 +115,8 @@ Private Sub cmdConnect_Click()
 End Sub
 
 Private Sub Form_Load()
+    If CurrUser.USER_TRIAL = 1 Then
+        frmDSN.Caption = "DSN - DEMO VERSION"
+    End If
     Call GetDSNsAndDrivers
 End Sub

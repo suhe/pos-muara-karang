@@ -239,15 +239,21 @@ Private Sub cmdLog_Click()
             CurrUser.USER_ISMANAGER = False
             CurrUser.USER_ISCASHIER = False
             CurrBiz.BUSINNES_GROUP = 0
-             Unload Me
-             LoadForm frmShortcuts
+            Unload Me
+            LoadForm frmShortcuts
+            If CurrUser.USER_TRIAL = 1 Then
+               MsgBox "DEMO VERSION SOFTWARE !", vbCritical + vbInformation
+            End If
         ElseIf (manager > 0) Then
            CurrUser.USER_ISADMIN = False
             CurrUser.USER_ISMANAGER = True
             CurrUser.USER_ISCASHIER = False
             CurrBiz.BUSINNES_GROUP = dcGroup.BoundText
-             Unload Me
-             LoadForm frmShortcuts
+            Unload Me
+            LoadForm frmShortcuts
+            If CurrUser.USER_TRIAL = 1 Then
+               MsgBox "DEMO VERSION SOFTWARE !", vbCritical + vbInformation
+            End If
         ElseIf (user > 0) Then
             CurrUser.USER_ISADMIN = False
             CurrUser.USER_ISMANAGER = False
@@ -255,6 +261,9 @@ Private Sub cmdLog_Click()
             CurrBiz.BUSINNES_GROUP = dcGroup.BoundText
             Unload Me
             LoadForm frmShortcuts
+            If CurrUser.USER_TRIAL = 1 Then
+               MsgBox "DEMO VERSION SOFTWARE !", vbCritical + vbInformation
+            End If
         Else
             MsgBox "Invalid Group.Please try again!", vbExclamation
         End If
