@@ -43,6 +43,7 @@ Begin VB.Form frmLicense
       _ExtentX        =   1508
       _ExtentY        =   450
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"FrmLicense.frx":038A
    End
    Begin VB.Label Labels 
@@ -235,5 +236,3 @@ Private Sub Form_Load()
   End If
   lblLicense.Caption = code.Text
 End Sub
-
-

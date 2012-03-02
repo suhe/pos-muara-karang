@@ -76,7 +76,6 @@ Begin VB.Form frmSplashLicense
          _ExtentX        =   8070
          _ExtentY        =   503
          _Version        =   393217
-         Enabled         =   -1  'True
          MultiLine       =   0   'False
          Appearance      =   0
          TextRTF         =   $"frmSplashLicense.frx":038A
@@ -133,6 +132,7 @@ Begin VB.Form frmSplashLicense
       _ExtentX        =   1508
       _ExtentY        =   450
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"frmSplashLicense.frx":084E
    End
    Begin VB.Label Label1 
@@ -189,6 +189,40 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Const LocationReg = "System\Windows\User"
+Const PasswordReg = "kode"
+
+Function GetInfoReg() As String
+    On Error GoTo Ero
+    Dim Reg As Object
+    Set Reg = CreateObject("WScript.Shell")
+    GetInfoReg = Reg.RegRead("HKEY_CLASSES_ROOT\" & LocationReg & "\")
+    Exit Function
+Ero:
+    Reg.RegWrite "HKEY_CLASSES_ROOT\" & LocationReg & "\", Format(Now, "short date") 'memasukkan tgl sekarang
+    GetInfoReg = Format(Now, "short date")
+End Function
+
+Function SuccessReg() As Boolean 'fungsi utk prosedur pemasukan kode registrasi
+    Dim s As String
+Lagi:
+    s = InputBox("Masukkan kode registrasi", "Registrasi")
+    If s = PasswordReg Then
+    Dim Reg As Object
+    Set Reg = CreateObject("WScript.Shell")
+    Reg.RegWrite "HKEY_CLASSES_ROOT\" & LocationReg & "\", "Registered" 'mendaftarkan k registry
+    MsgBox "Terima kasih telah melakukan registrasi", vbInformation, "Registrasi Sukses"
+    SuccessReg = True
+          
+    ElseIf s = "" Then
+    SuccessReg = False
+      
+    Else
+    If MsgBox("Maaf kode registrasi salah, coba lagi ?", vbYesNo + vbExclamation, "Registrasi") = vbYes Then GoTo Lagi
+    SuccessReg = False
+    End If
+End Function
+
 Private Sub cmdActive_Click()
     Dim code1
     Dim final
@@ -196,7 +230,7 @@ Private Sub cmdActive_Click()
     Dim WMI, cpu, cpuid
     Dim i As Integer
     
-    If Len(text2.Text) < 17 Then
+    If Len(Text2.Text) < 17 Then
         MsgBox "The Licence Code you have entered is an invalid length."
         Exit Sub
     End If
@@ -218,7 +252,7 @@ Private Sub cmdActive_Click()
     Next i
     final = Right(final, Len(final) - 4)
     final = final & Asc(cpuid)
-    If (final = text2.Text) Then
+    If (final = Text2.Text) Then
         code.Text = final
         code.SaveFile "c:\windows\system\pos_license.rtf"
         MsgBox "License Anda Benar Selamat Menikmati Fitur Full Optimal dari Software Kami Terima Kasih!", vbInformation + vbOKOnly
@@ -244,5 +278,23 @@ Private Sub Form_Load()
     For Each cpu In WMI.InstancesOf("Win32_Processor")
         cpuid = cpuid + cpu.ProcessorID
     Next
-    Text1.Text = cpuid
+    text1.Text = cpuid
+    RegTrial
+End Sub
+
+Private Sub RegTrial()
+    Dim s As String, l As Byte
+    Dim dayone As Byte
+    dayone = 5
+    s = GetInfoReg
+    If s <> "Registered" Then 'jika belum terdaftar"
+        l = dayone - (CDate(Format(Now, "short date")) - CDate(s)) 'max penggunaan trial 30 hari
+        If l > 0 And l <= 30 Then 'jika masih ada sisa hari
+            cmdTrial.Enabled = True
+            cmdTrial.Caption = "&Use Trial " & l & " Days"
+        Else 'jika kadaluarsa
+            cmdTrial.Enabled = False
+            cmdTrial.Caption = "&Expired"
+        End If
+    End If
 End Sub
