@@ -7,6 +7,7 @@ Public Type USER_INFO
     USER_ISMANAGER As Boolean
     USER_ISCASHIER As Boolean
     User_DSN As String
+    USER_TRIAL As Byte
 End Type
 
 'Enumerator for form state

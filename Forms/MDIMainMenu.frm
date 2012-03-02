@@ -1,6 +1,7 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "comctl32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.MDIForm MDIMainMenu 
    BackColor       =   &H8000000C&
    Caption         =   "POS APPLICATION"
@@ -411,17 +412,16 @@ Begin VB.MDIForm MDIMainMenu
             Style           =   6
             Object.Width           =   1764
             MinWidth        =   1764
-            TextSave        =   "2/10/2012"
+            TextSave        =   "2/26/2012"
          EndProperty
          BeginProperty Panel8 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
             Object.Width           =   1764
             MinWidth        =   1764
-            TextSave        =   "2:34 PM"
+            TextSave        =   "10:03 PM"
          EndProperty
          BeginProperty Panel9 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   3
-            Enabled         =   0   'False
             Object.Width           =   882
             MinWidth        =   882
             TextSave        =   "INS"
@@ -527,6 +527,18 @@ Begin VB.MDIForm MDIMainMenu
             ImageIndex      =   7
          EndProperty
       EndProperty
+      Begin RichTextLib.RichTextBox code 
+         Height          =   255
+         Left            =   0
+         TabIndex        =   14
+         Top             =   0
+         Visible         =   0   'False
+         Width           =   855
+         _ExtentX        =   1508
+         _ExtentY        =   450
+         _Version        =   393217
+         TextRTF         =   $"MDIMainMenu.frx":7D9E1
+      End
       Begin VB.PictureBox picFreeMem 
          Appearance      =   0  'Flat
          BackColor       =   &H00FFFFFF&
@@ -652,23 +664,23 @@ Begin VB.MDIForm MDIMainMenu
       BeginProperty Images {0713E8C2-850A-101B-AFC0-4210102A8DA7} 
          NumListImages   =   5
          BeginProperty ListImage1 {0713E8C3-850A-101B-AFC0-4210102A8DA7} 
-            Picture         =   "MDIMainMenu.frx":7D9E1
+            Picture         =   "MDIMainMenu.frx":7DA63
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {0713E8C3-850A-101B-AFC0-4210102A8DA7} 
-            Picture         =   "MDIMainMenu.frx":7E633
+            Picture         =   "MDIMainMenu.frx":7E6B5
             Key             =   ""
          EndProperty
          BeginProperty ListImage3 {0713E8C3-850A-101B-AFC0-4210102A8DA7} 
-            Picture         =   "MDIMainMenu.frx":7F285
+            Picture         =   "MDIMainMenu.frx":7F307
             Key             =   ""
          EndProperty
          BeginProperty ListImage4 {0713E8C3-850A-101B-AFC0-4210102A8DA7} 
-            Picture         =   "MDIMainMenu.frx":7FED7
+            Picture         =   "MDIMainMenu.frx":7FF59
             Key             =   ""
          EndProperty
          BeginProperty ListImage5 {0713E8C3-850A-101B-AFC0-4210102A8DA7} 
-            Picture         =   "MDIMainMenu.frx":80B29
+            Picture         =   "MDIMainMenu.frx":80BAB
             Key             =   ""
          EndProperty
       EndProperty
@@ -686,23 +698,23 @@ Begin VB.MDIForm MDIMainMenu
       BeginProperty Images {0713E8C2-850A-101B-AFC0-4210102A8DA7} 
          NumListImages   =   5
          BeginProperty ListImage1 {0713E8C3-850A-101B-AFC0-4210102A8DA7} 
-            Picture         =   "MDIMainMenu.frx":8177B
+            Picture         =   "MDIMainMenu.frx":817FD
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {0713E8C3-850A-101B-AFC0-4210102A8DA7} 
-            Picture         =   "MDIMainMenu.frx":823CD
+            Picture         =   "MDIMainMenu.frx":8244F
             Key             =   ""
          EndProperty
          BeginProperty ListImage3 {0713E8C3-850A-101B-AFC0-4210102A8DA7} 
-            Picture         =   "MDIMainMenu.frx":8301F
+            Picture         =   "MDIMainMenu.frx":830A1
             Key             =   ""
          EndProperty
          BeginProperty ListImage4 {0713E8C3-850A-101B-AFC0-4210102A8DA7} 
-            Picture         =   "MDIMainMenu.frx":83C71
+            Picture         =   "MDIMainMenu.frx":83CF3
             Key             =   ""
          EndProperty
          BeginProperty ListImage5 {0713E8C3-850A-101B-AFC0-4210102A8DA7} 
-            Picture         =   "MDIMainMenu.frx":848C3
+            Picture         =   "MDIMainMenu.frx":84945
             Key             =   ""
          EndProperty
       EndProperty
@@ -720,7 +732,7 @@ Begin VB.MDIForm MDIMainMenu
       BeginProperty Images {0713E8C2-850A-101B-AFC0-4210102A8DA7} 
          NumListImages   =   1
          BeginProperty ListImage1 {0713E8C3-850A-101B-AFC0-4210102A8DA7} 
-            Picture         =   "MDIMainMenu.frx":85515
+            Picture         =   "MDIMainMenu.frx":85597
             Key             =   ""
          EndProperty
       EndProperty
@@ -981,6 +993,43 @@ Private Sub MDIForm_Load()
     HideTBButton "", True
     Me.show
     frmSplash.show vbModal
+    
+    'check License
+    If Dir("c:\windows\system\pos_license.rtf") <> "" Then
+        code.LoadFile "c:\windows\system\pos_license.rtf"
+    Else
+        code.SaveFile "c:\windows\system\pos_license.rtf"
+        code.LoadFile "c:\windows\system\pos_license.rtf"
+    End If
+    
+    
+    Dim code1
+    Dim final
+    Dim zip
+    Dim WMI, cpu, cpuid
+    
+    Set WMI = GetObject("winmgmts:")
+    For Each cpu In WMI.InstancesOf("Win32_Processor")
+     cpuid = cpuid + cpu.ProcessorID
+    Next
+    
+    For i = 1 To Len(cpuid) - 1
+    code1 = Format(Asc(Right(cpuid, Len(cpuid) - i)) * 2 + (10 / i) + (i + 3 / 7), "#.#")
+    zip = zip & code1
+    Next i
+    zip = Right(zip, 8)
+    
+    For i = 1 To Len(zip) - 1
+        code1 = Format(Asc(Right(zip, Len(zip) - i)) * 2 + (1 / i) + (i + 1 / 4), "#00")
+        final = final & code1
+    Next i
+    final = Right(final, Len(final) - 4)
+    final = final & Asc(cpuid)
+    If final <> code.Text Then
+        frmSplashLicense.show vbModal
+    End If
+    'check license
+    
     frmDSN.show vbModal
     
     If OpenDB = False Then CloseMe = True: Unload Me: Exit Sub
