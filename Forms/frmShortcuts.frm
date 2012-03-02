@@ -241,7 +241,7 @@ Begin VB.Form frmShortcuts
       MaskColor       =   12632256
       _Version        =   393216
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
-         NumListImages   =   37
+         NumListImages   =   38
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
             Picture         =   "frmShortcuts.frx":70576
             Key             =   ""
@@ -390,6 +390,10 @@ Begin VB.Form frmShortcuts
             Picture         =   "frmShortcuts.frx":14114D
             Key             =   ""
          EndProperty
+         BeginProperty ListImage38 {2C247F27-8591-11D1-B16A-00C0F0283628} 
+            Picture         =   "frmShortcuts.frx":147C4B
+            Key             =   ""
+         EndProperty
       EndProperty
    End
    Begin MSComctlLib.ListView lvMenu 
@@ -411,7 +415,7 @@ Begin VB.Form frmShortcuts
       BackColor       =   -2147483643
       Appearance      =   1
       MousePointer    =   99
-      MouseIcon       =   "frmShortcuts.frx":147C4B
+      MouseIcon       =   "frmShortcuts.frx":14CE2A
       OLEDragMode     =   1
       NumItems        =   0
    End
@@ -512,7 +516,7 @@ Private Sub Form_Load()
         If (CurrUser.USER_ISADMIN = True) Then
             .ListItems.Add , "frmUserRec", "SDM Informatika Teknologi", 21, 21
         End If
-    
+        .ListItems.Add , "FrmLicense", "License POS", 38, 38
     End With
 End Sub
 
@@ -663,6 +667,9 @@ Private Sub lvMenu_DblClick()
              Else
                 frmUserRec.show vbModal
             End If
+            
+       Case "FrmLicense"
+                FrmLicense.show vbModal
        End Select
 End Sub
 
