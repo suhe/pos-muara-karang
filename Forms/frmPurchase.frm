@@ -152,12 +152,12 @@ Begin VB.Form frmPurchase
       NumItems        =   13
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID Beli"
-         Object.Width           =   2117
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
-         Text            =   "No Beli"
-         Object.Width           =   3175
+         Text            =   "No Faktur"
+         Object.Width           =   2117
       EndProperty
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   2
@@ -178,17 +178,17 @@ Begin VB.Form frmPurchase
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   5
          Text            =   "ID Supplier"
-         Object.Width           =   2646
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   6
          Text            =   "Nm Supplier"
-         Object.Width           =   4586
+         Object.Width           =   3881
       EndProperty
       BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   7
          Text            =   "Type"
-         Object.Width           =   1764
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   8
@@ -199,24 +199,24 @@ Begin VB.Form frmPurchase
          Alignment       =   1
          SubItemIndex    =   9
          Text            =   "Bayar"
-         Object.Width           =   3175
+         Object.Width           =   2646
       EndProperty
       BeginProperty ColumnHeader(11) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   10
          Text            =   "Hutang"
-         Object.Width           =   3175
+         Object.Width           =   2646
       EndProperty
       BeginProperty ColumnHeader(12) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   11
          Text            =   "Sisa"
-         Object.Width           =   3175
+         Object.Width           =   2646
       EndProperty
       BeginProperty ColumnHeader(13) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   12
          Text            =   "Nm Pengguna"
-         Object.Width           =   4410
+         Object.Width           =   1940
       EndProperty
    End
    Begin VB.ComboBox cbDay1 
@@ -470,7 +470,7 @@ Private Sub Form_Load()
     End With
     
     With SQLParser
-        .Fields = "b.id_beli,b.no_beli,b.tgl_input,b.tgl_bayar,b.flag_supplier,b.id_supplier,s.nm_supplier,b.type,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa,p.nm_pengguna"
+        .Fields = "b.id_beli,b.no_beli,DATE_FORMAT(b.tgl_input,'%Y-%m-%d'),b.tgl_bayar,b.flag_supplier,b.id_supplier,s.nm_supplier,b.type,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa,p.nm_pengguna"
         .Tables = "tbl_beli b JOIN tbl_supplier s ON s.id_supplier=b.id_supplier LEFT JOIN tbl_pengguna p ON p.id=b.id_pengguna "
         .SortOrder = "b.id_beli DESC "
         .SaveStatement

@@ -911,7 +911,7 @@ Public Sub printPurchaseSummary()
             gk = ">="
         End If
         'DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') as tgl_beli
-        sql = "SELECT b.no_beli,b.tgl_beli,b.tgl_bayar,b.id_supplier,s.nm_supplier,b.type,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa FROM tbl_beli b JOIN tbl_supplier s ON s.id_supplier=b.id_supplier WHERE b.id_beli " & gb & " " & baw & " And b.id_beli " & gk & " " & bak & "  ORDER BY b.tgl_bayar " 'DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') ASC
+        sql = "SELECT b.no_beli,b.tgl_beli,b.tgl_bayar,b.id_supplier,s.nm_supplier,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa FROM tbl_beli b JOIN tbl_supplier s ON s.id_supplier=b.id_supplier WHERE b.id_beli " & gb & " " & baw & " And b.id_beli " & gk & " " & bak & "  ORDER BY b.tgl_bayar " 'DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') ASC
         .DataControl1.Source = sql
         '.GroupHeader1.DataField = "tgl_beli"
         .GroupHeader1.DataField = "tgl_bayar"
@@ -921,7 +921,7 @@ Public Sub printPurchaseSummary()
         .txtTglBayar.DataField = "tgl_beli"
         .txtSuppID.DataField = "id_supplier"
         .txtSupplierName.DataField = "nm_supplier"
-        .txtPaymentType.DataField = "type"
+        .txtPaymentType.DataField = "payment"
         .txtBayar.DataField = "bayar"
         .txtHutang.DataField = "hutang"
         .txtSisaHutang.DataField = "sisa"

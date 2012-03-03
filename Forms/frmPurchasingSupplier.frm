@@ -9,8 +9,8 @@ Begin VB.Form frmPurchasingSupplier
    Icon            =   "frmPurchasingSupplier.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
-   ScaleHeight     =   5490
-   ScaleWidth      =   7515
+   ScaleHeight     =   11115
+   ScaleWidth      =   19080
    StartUpPosition =   2  'CenterScreen
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -20,10 +20,10 @@ Begin VB.Form frmPurchasingSupplier
       Index           =   1
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   7515
+      ScaleWidth      =   19080
       TabIndex        =   13
-      Top             =   5085
-      Width           =   7515
+      Top             =   10710
+      Width           =   19080
    End
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -33,10 +33,10 @@ Begin VB.Form frmPurchasingSupplier
       Index           =   0
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   7515
+      ScaleWidth      =   19080
       TabIndex        =   12
-      Top             =   5100
-      Width           =   7515
+      Top             =   10725
+      Width           =   19080
    End
    Begin VB.PictureBox Picture1 
       Align           =   2  'Align Bottom
@@ -45,10 +45,10 @@ Begin VB.Form frmPurchasingSupplier
       Height          =   380
       Left            =   0
       ScaleHeight     =   375
-      ScaleWidth      =   7515
+      ScaleWidth      =   19080
       TabIndex        =   4
-      Top             =   5115
-      Width           =   7515
+      Top             =   10740
+      Width           =   19080
       Begin VB.PictureBox Picture2 
          BorderStyle     =   0  'None
          Height          =   345

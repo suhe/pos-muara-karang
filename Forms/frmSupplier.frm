@@ -410,7 +410,7 @@ Private Sub Form_Load()
     End With
     
     With SQLParser
-        .Fields = "s.id_supplier,s.nm_supplier,s.almt_supplier,s.tlp_supplier,s.cp_supplier,s.kota_supplier,s.negara_supplier,s.tgl_input,p.nm_pengguna,s.id_supplier"
+        .Fields = "s.id_supplier,s.nm_supplier,s.almt_supplier,s.tlp_supplier,s.cp_supplier,s.kota_supplier,s.negara_supplier,DATE_FORMAT(s.tgl_input,'%Y-%m-%d'),p.nm_pengguna,s.id_supplier"
         .Tables = "tbl_supplier s LEFT JOIN tbl_pengguna p ON p.id=s.id_pengguna "
         .SortOrder = "s.id_supplier ASC"
         .SaveStatement
