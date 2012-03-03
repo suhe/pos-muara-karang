@@ -151,7 +151,7 @@ Begin VB.Form frmDepartement
       NumItems        =   11
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID_Departement"
-         Object.Width           =   2293
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
@@ -161,30 +161,30 @@ Begin VB.Form frmDepartement
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   2
          Text            =   "Nm Departement"
-         Object.Width           =   4410
+         Object.Width           =   3881
       EndProperty
       BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   3
          Text            =   "Parent Departement"
-         Object.Width           =   4410
+         Object.Width           =   3881
       EndProperty
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   4
          Text            =   "BN"
-         Object.Width           =   2646
+         Object.Width           =   2293
       EndProperty
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   5
          Text            =   "AN"
-         Object.Width           =   2646
+         Object.Width           =   2293
       EndProperty
       BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   6
          Text            =   "VN"
-         Object.Width           =   2540
+         Object.Width           =   2293
       EndProperty
       BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
@@ -196,17 +196,17 @@ Begin VB.Form frmDepartement
          Alignment       =   1
          SubItemIndex    =   8
          Text            =   "PN"
-         Object.Width           =   2540
+         Object.Width           =   2293
       EndProperty
       BeginProperty ColumnHeader(10) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   9
          Text            =   "Tgl Input"
-         Object.Width           =   2293
+         Object.Width           =   2117
       EndProperty
       BeginProperty ColumnHeader(11) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   10
          Text            =   "Nm Pengguna"
-         Object.Width           =   3528
+         Object.Width           =   1940
       EndProperty
    End
    Begin VB.Label lblTitle 
@@ -416,7 +416,7 @@ Private Sub Form_Load()
     End With
     
     With SQLParser
-        .Fields = "d.id_departement,d.kd_departement,d.nm_departement,d2.nm_departement,d.bn,d.an,d.vn,d.rn,d.pn,d.tgl_input,p.nm_pengguna"
+        .Fields = "d.id_departement,d.kd_departement,d.nm_departement,d2.nm_departement,d.bn,d.an,d.vn,d.rn,d.pn,DATE_FORMAT(d.tgl_input,'%Y-%m-%d'),p.nm_pengguna"
         .Tables = "tbl_departement d LEFT JOIN tbl_departement d2 ON d2.id_departement=d.parent_id LEFT JOIN tbl_pengguna p ON p.id=d.id_pengguna"
         .wCondition = "d.id_departement<>0"
         .SortOrder = "d.kd_departement ASC"
