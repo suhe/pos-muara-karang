@@ -85,4 +85,4 @@ frmStockOpname = 44, 44, 451, 492, , 22, 22, 429, 470, C
 frmStockOpnamePrint = 44, 44, 451, 492, , 176, 176, 583, 624, C
 ACRStockOpname = 88, 88, 495, 536, , 88, 88, 1112, 856, C
 frmLicense = 154, 154, 561, 600, , 176, 176, 583, 622, C
-frmSplashLicense = 198, 198, 605, 644, Z, 176, 176, 583, 622, C
+frmSplashLicense = 198, 198, 605, 644, , 176, 176, 583, 622, C

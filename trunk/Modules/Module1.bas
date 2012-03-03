@@ -1014,7 +1014,9 @@ Public Sub printRetur()
         End If
         sql = "SELECT *,(d.harga_beli*d.retur)as total "
         sql = sql & " FROM tbl_beli b JOIN tbl_beli_details d ON d.no_beli=b.no_beli "
-        sql = sql & " JOIN tbl_obat o ON o.id_obat=d.id_obat JOIN tbl_kategori k ON k.id_kategori=o.id_kategori WHERE b.id_beli " & gb & " " & baw & " AND b.id_beli " & gk & " " & bak & " AND d.retur > 0 ORDER BY o.id_kategori,o.kd_obat ASC"
+        sql = sql & " LEFT JOIN tbl_obat o ON o.id_obat=d.id_obat LEFT JOIN tbl_kategori k ON k.id_kategori=o.id_kategori "
+        sql = sql & " WHERE d.retur > 0 "
+        sql = sql & " ORDER BY o.id_kategori,o.kd_obat ASC"
         .ADO1.Source = sql
         .txtKdFaktur.DataField = "no_beli"
         .txtTanggal.DataField = "tgl_retur"

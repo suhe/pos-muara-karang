@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "comctl32.ocx"
+Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "COMCTL32.ocx"
 Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
 Begin VB.Form frmCashier 
    Caption         =   "Cashier"
@@ -1976,6 +1976,7 @@ Private Sub callBrand()
             .txtQty.Enabled = False
         Else
             On Error Resume Next
+            .txtHarga.Text = "0"
             .txtHarga.Enabled = False
             .txtQty.Text = 10
             .txtQty.Enabled = True
