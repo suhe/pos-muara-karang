@@ -1056,7 +1056,7 @@ Public Sub printInvoice()
         sql = sql + " JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
         sql = sql + " JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor"
         sql = sql + " JOIN tbl_departement d ON d.id_departement=j.id_departement"
-        sql = sql + " WHERE j.id_kreditor= " & tbl.TABLE_ID_KREDITUR & " AND j.flag_kreditor=trim(0) AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')< CURDATE() "
+        sql = sql + " WHERE j.id_kreditor= " & tbl.TABLE_ID_KREDITUR & " AND j.flag_kreditor=1 AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')< CURDATE() "
         If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
             sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
             sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
@@ -1091,7 +1091,7 @@ Public Sub Invoice_lunas()
                 sql = "UPDATE tbl_jual "
                 sql = sql + "SET "
                 sql = sql + " tgl_bayar='" & Format(Date, "YYYY-MM-DD") & "',"
-                sql = sql + " payment='Piutang', "
+                sql = sql + " payment='Lunas', "
                 sql = sql + " flag_kreditor= 0 , "
                 sql = sql + " bayar=" & Format(.lvList.ListItems(i).SubItems(17), "") & ", "
                 sql = sql + " dibayar=" & Format(.lvList.ListItems(i).SubItems(17), "") & ", "
@@ -1165,8 +1165,8 @@ Public Sub printInvoicePembelian()
         sql = sql + " WHERE b.flag_supplier=1 AND b.id_supplier = " & Trim(tbl.TABLE_ID_SUPPLIER) & " "
         
         If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
-            sql = sql + " AND DATE_FORMAT(j.tgl_beli,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
-            sql = sql + " AND DATE_FORMAT(j.tgl_beli,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
         End If
         
         'HighlightInWin ACRInvoicePembelian.Name: MDIMainMenu.ShowTBButton "fffffft"
@@ -1183,32 +1183,8 @@ Public Sub printInvoicePembelian()
      
      MsgBox "Print Invoice Pengeluaran, Akan Melunasi Seluruh Hutang yang telah ada di Invoice !  ", vbCritical + vbInformation
      
-     With frmPurchaseFaktur
-        Dim total As Integer
-        Dim bayar As Double
-     
-        total = .lvList.ListItems.Count
-        If (total > 0) Then
-            bayar = 0
-            For i = 1 To total
-                sql = "UPDATE tbl_beli "
-                sql = sql + "SET "
-                sql = sql + " tgl_bayar='" & Format(Date, "YYYY-MM-DD") & "',"
-                sql = sql + " payment='Lunas', "
-                sql = sql + " flag_supplier= 0 , "
-                sql = sql + " bayar=" & Format(.lvList.ListItems(i).SubItems(10), "") & ", "
-                'sql = sql + " hutang=" & Format(.lvList.ListItems(i).SubItems(10), "") & " "
-                sql = sql + " hutang=0"
-                sql = sql + " WHERE no_beli='" & .lvList.ListItems(i).SubItems(1) & "'"
-                bayar = bayar + Val(Format(.lvList.ListItems(i).SubItems(10), ""))
-                CN.Execute sql
-            Next i
-            tbl.TABLE_TANGGAL_AWAL = .lvList.ListItems(total).SubItems(2)
-            tbl.TABLE_TANGGAL_AKHIR = .lvList.ListItems(1).SubItems(2)
-            tbl.TABLE_TOTAL = bayar
-            tbl.TABLE_TOTAL_OBAT = total
-        End If
-     End With
+      'End If
+     'End With
 End Sub
 
 Public Sub cetak_Invoice_Pembelian()

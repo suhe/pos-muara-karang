@@ -41,6 +41,54 @@ End Sub
 
 Private Sub ActiveReport_ReportEnd()
     MDIMainMenu.RemToWin Me.Caption
+     'With frmPurchaseFaktur
+        Dim total As Integer
+        Dim bayar As Double
+        Dim rsPay As New Recordset
+       
+        sql = " SELECT b.id_beli,b.no_beli,b.tgl_beli,o.kd_obat,o.nm_obat,b.hutang,d.harga_beli,d.jumlah,(d.harga_beli * d.jumlah) as total"
+        sql = sql + " FROM tbl_beli b"
+        sql = sql + " LEFT JOIN tbl_beli_details d ON d.no_beli=b.no_beli"
+        sql = sql + " LEFT JOIN tbl_obat o ON o.id_obat=d.id_obat"
+        sql = sql + " WHERE b.flag_supplier=1 AND b.id_supplier = " & Trim(tbl.TABLE_ID_SUPPLIER) & " "
+        
+        If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
+        End If
+        
+        sql = sql + " ORDER BY b.id_beli ASC "
+        
+        Set rsPay = New Recordset
+        If rsPay.State = 1 Then rsPay.Close
+        rsPay.Open sql, CN, adOpenStatic, adLockReadOnly
+        
+        Do While Not rsPay.EOF
+        'total = .lvList.ListItems.Count
+        'If (total > 0) Then
+            bayar = 0
+            'For i = 1 To total
+                sql = "UPDATE tbl_beli "
+                sql = sql + "SET "
+                sql = sql + " tgl_bayar='" & Format(Date, "YYYY-MM-DD") & "',"
+                sql = sql + " payment='Lunas', "
+                sql = sql + " flag_supplier= 0, "
+                sql = sql + " hutang= 0, "
+                sql = sql + " bayar=" & rsPay.Fields("hutang") & " "
+                sql = sql + " WHERE id_beli=" & rsPay.Fields("id_beli") & ""
+                bayar = bayar + Val(Format(rsPay.Fields("hutang"), ""))
+                CN.Execute sql
+            rsPay.MoveNext
+           Loop
+            
+            rsPay.MoveFirst
+            'Next i
+            tbl.TABLE_TANGGAL_AWAL = rsPay.Fields("tgl_beli")
+            rsPay.MoveLast
+            tbl.TABLE_TANGGAL_AKHIR = rsPay.Fields("tgl_beli")
+            tbl.TABLE_TOTAL = bayar
+            tbl.TABLE_TOTAL_OBAT = total
+            frmPurchase.RefreshRecords
 End Sub
 
 Private Sub ActiveReport_ReportStart()

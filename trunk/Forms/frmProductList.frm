@@ -146,7 +146,7 @@ Begin VB.Form frmProductList
       NumItems        =   9
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "Tgl Beli"
-         Object.Width           =   2646
+         Object.Width           =   2117
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
@@ -166,7 +166,7 @@ Begin VB.Form frmProductList
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   4
          Text            =   "Nm Supplier"
-         Object.Width           =   4410
+         Object.Width           =   2646
       EndProperty
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
@@ -189,7 +189,7 @@ Begin VB.Form frmProductList
       BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   8
          Text            =   "Nm Pengguna"
-         Object.Width           =   2822
+         Object.Width           =   1940
       EndProperty
    End
    Begin VB.Label lblTitle 
@@ -404,17 +404,7 @@ Private Sub Form_Load()
         btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
         btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
-    
-    'sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.nm_ilmiah,k.nm_kategori,o.kemasan,o.harga_jual,o.harga_beli,(o.harga_jual-o.harga_beli)as profit,o.stok,"
-    'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0)) AS beli,"
-    'sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0)) AS jual,"
-    'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0)) AS rugi,"
-    'sql = sql & "((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
-    'sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
-    'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
-    'sql = sql & " ) AS sisa,o.stok_min,"
-    'sql = sql & "o.tgl_input,p.nm_pengguna"
-    sql = " b.tgl_beli,o.kd_obat,o.nm_obat,o.nm_ilmiah,s.nm_supplier,d.harga_beli,d.jumlah,(d.harga_beli* d.jumlah) as total,p.nm_pengguna"
+    sql = " DATE_FORMAT(b.tgl_beli,'%Y-%m-%d'),o.kd_obat,o.nm_obat,o.nm_ilmiah,s.nm_supplier,d.harga_beli,d.jumlah,(d.harga_beli* d.jumlah) as total,p.nm_pengguna"
     With SQLParser
         .Fields = sql
         .Tables = " tbl_beli_details d JOIN tbl_beli b ON b.no_beli=d.no_beli LEFT JOIN tbl_obat o ON o.id_obat =d.id_obat LEFT JOIN tbl_supplier s ON s.id_supplier =b.id_supplier LEFT JOIN tbl_pengguna p ON p.id=b.id_pengguna "
