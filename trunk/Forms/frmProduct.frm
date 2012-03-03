@@ -157,22 +157,22 @@ Begin VB.Form frmProduct
       NumItems        =   17
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID Obat"
-         Object.Width           =   1764
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
          Text            =   "Kd Obat"
-         Object.Width           =   2646
+         Object.Width           =   1587
       EndProperty
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   2
          Text            =   "Nm Obat"
-         Object.Width           =   4586
+         Object.Width           =   3175
       EndProperty
       BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   3
          Text            =   "Nm Ilmiah"
-         Object.Width           =   2540
+         Object.Width           =   3528
       EndProperty
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   4
@@ -182,25 +182,25 @@ Begin VB.Form frmProduct
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   5
          Text            =   "Kemasan"
-         Object.Width           =   4004
+         Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   6
          Text            =   "Harga Jual"
-         Object.Width           =   2999
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   7
          Text            =   "Harga Beli"
-         Object.Width           =   2999
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   8
          Text            =   "Profit"
-         Object.Width           =   2540
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(10) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
@@ -476,7 +476,7 @@ Private Sub Form_Load()
     sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
     sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
     sql = sql & " ) AS sisa,o.stok_min,"
-    sql = sql & "o.tgl_input,p.nm_pengguna"
+    sql = sql & "DATE_FORMAT(o.tgl_input,'%Y-%m-%d'),p.nm_pengguna"
     With SQLParser
         .Fields = sql
         .Tables = " tbl_obat o LEFT JOIN tbl_kategori k ON k.id_kategori =o.id_kategori LEFT JOIN tbl_pengguna p ON p.id=o.id_pengguna "
@@ -498,7 +498,7 @@ Private Sub FillList(ByVal whichPage As Long)
     RecordPage.CurrentPosition = whichPage
     Screen.MousePointer = vbHourglass
     Me.Enabled = False
-    Call pageFillListView(lvList, rsproduct, RecordPage.PageStart, RecordPage.PageEnd, 16, 2, False, True, , , , "id_obat")
+    Call pageFillListView(lvList, rsproduct, RecordPage.PageStart, RecordPage.PageEnd, 17, 2, False, True, , , , "id_obat")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
     SetNavigation

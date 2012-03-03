@@ -162,7 +162,7 @@ Begin VB.Form frmPasien
       NumItems        =   11
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID Pasien"
-         Object.Width           =   2293
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
@@ -176,8 +176,8 @@ Begin VB.Form frmPasien
       EndProperty
       BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   3
-         Text            =   "Jk Pasien"
-         Object.Width           =   1764
+         Text            =   "Alamat"
+         Object.Width           =   3528
       EndProperty
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   4
@@ -186,8 +186,8 @@ Begin VB.Form frmPasien
       EndProperty
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   5
-         Text            =   "Alamat"
-         Object.Width           =   4586
+         Text            =   "Jk Kelamin"
+         Object.Width           =   1411
       EndProperty
       BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   6
@@ -434,7 +434,7 @@ Private Sub Form_Load()
     End With
     
     With SQLParser
-        .Fields = "p.id_pasien,p.kd_pasien,p.nm_pasien,p.jk_pasien,p.tgl_lahir,p.alamat,p.kota,p.no_hp,p.no_tlp,p.tgl_input,pp.nm_pengguna "
+        .Fields = "p.id_pasien,p.kd_pasien,p.nm_pasien,p.alamat,DATE_FORMAT(p.tgl_lahir,'%Y-%m-%d'),p.jk_pasien,p.kota,p.no_hp,p.no_tlp,DATE_FORMAT(p.tgl_input,'%Y-%m-%d'),pp.nm_pengguna "
         .Tables = "tbl_pasien p LEFT JOIN tbl_pengguna pp ON pp.id=p.id_pengguna "
         .SortOrder = "p.id_pasien ASC"
         .SaveStatement
