@@ -1165,8 +1165,8 @@ Public Sub printInvoicePembelian()
         sql = sql + " WHERE b.flag_supplier=1 AND b.id_supplier = " & Trim(tbl.TABLE_ID_SUPPLIER) & " "
         
         If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
-            sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
-            sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
+            sql = sql + " AND DATE_FORMAT(j.tgl_beli,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
+            sql = sql + " AND DATE_FORMAT(j.tgl_beli,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
         End If
         
         'HighlightInWin ACRInvoicePembelian.Name: MDIMainMenu.ShowTBButton "fffffft"
