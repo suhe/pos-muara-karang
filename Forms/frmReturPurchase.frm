@@ -41,67 +41,52 @@ Begin VB.Form frmReturPurchase
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      NumItems        =   12
+      NumItems        =   9
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Text            =   "ID Beli"
-         Object.Width           =   2646
+         Text            =   "No.Faktur"
+         Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
-         Text            =   "B.No Beli"
-         Object.Width           =   2646
-      EndProperty
-      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   2
          Text            =   "Tgl Beli"
          Object.Width           =   2469
       EndProperty
-      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   3
+      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   2
          Text            =   "Tgl Retur"
          Object.Width           =   2117
       EndProperty
-      BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   4
-         Text            =   "ID Supplier"
-         Object.Width           =   2293
-      EndProperty
-      BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   5
+      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   3
          Text            =   "Nama Supplier"
          Object.Width           =   4410
       EndProperty
+      BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   4
+         Text            =   "Nm Obat"
+         Object.Width           =   4233
+      EndProperty
+      BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
+         SubItemIndex    =   5
+         Text            =   "Jumlah"
+         Object.Width           =   1764
+      EndProperty
       BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
          SubItemIndex    =   6
-         Text            =   "Kd Obat"
+         Text            =   "Retur"
          Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
          SubItemIndex    =   7
-         Text            =   "Nm Obat"
-         Object.Width           =   4233
+         Text            =   "Sisa"
+         Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   8
-         Text            =   "Jumlah"
-         Object.Width           =   1764
-      EndProperty
-      BeginProperty ColumnHeader(10) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   9
-         Text            =   "Retur"
-         Object.Width           =   1764
-      EndProperty
-      BeginProperty ColumnHeader(11) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   10
-         Text            =   "Sisa"
-         Object.Width           =   1764
-      EndProperty
-      BeginProperty ColumnHeader(12) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   11
          Text            =   "Kerugian"
          Object.Width           =   2646
       EndProperty
@@ -435,8 +420,8 @@ Private Sub Form_Load()
     End With
     
     With SQLParser
-        .Fields = " b.id_beli,b.no_beli,b.tgl_beli,d.tgl_retur,b.id_supplier,s.nm_supplier,o.kd_obat,o.nm_obat,d.jumlah,d.retur,(d.jumlah-d.retur) AS sisa,(d.retur*d.harga_beli) AS rugi"
-        .Tables = " tbl_beli_details d JOIN tbl_beli b ON b.no_beli=d.no_beli JOIN tbl_obat o ON o.id_obat=d.id_obat JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
+        .Fields = " b.no_beli,DATE_FORMAT(b.tgl_beli,'%Y-%m-%d'),d.tgl_retur,s.nm_supplier,o.nm_obat,d.jumlah,d.retur,(d.jumlah-d.retur) AS sisa,(d.retur*d.harga_beli) AS rugi"
+        .Tables = " tbl_beli_details d LEFT JOIN tbl_beli b ON b.no_beli=d.no_beli LEFT JOIN tbl_obat o ON o.id_obat=d.id_obat LEFT JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
         .wCondition = " d.retur > 0"
         .SaveStatement
     End With

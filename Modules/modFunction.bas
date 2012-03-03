@@ -15,7 +15,8 @@ Public Function FormatRS(ByVal srcField As Field, Optional AllowNewLine As Boole
         End If
         
         If srcField.Type = adCurrency Or srcField.Type = adDouble Then
-            strRet = Format$(srcField, "#,##0.00")
+        'strRet = Format$(srcField, "#,##0.00")
+        strRet = Format$(srcField, "#,##")
         ElseIf srcField.Type = adDate Then
             strRet = Format$(srcField, "MMM-dd-yyyy")
         Else

@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "comctl32.ocx"
+Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "COMCTL32.ocx"
 Begin VB.Form frmPurchasing 
    Caption         =   "Purchasing"
    ClientHeight    =   8805
@@ -705,6 +705,7 @@ Begin VB.Form frmPurchasing
          Style           =   2  'Dropdown List
          TabIndex        =   4
          Top             =   1080
+         Visible         =   0   'False
          Width           =   1215
       End
       Begin VB.Label Label3 
@@ -781,6 +782,7 @@ Begin VB.Form frmPurchasing
          Left            =   120
          TabIndex        =   10
          Top             =   1080
+         Visible         =   0   'False
          Width           =   1215
       End
       Begin VB.Label lblCodeCust 
@@ -923,7 +925,7 @@ Private Sub clearText()
     lvList.ListItems.Clear
     lblCodeCust.Caption = "......"
     lblNamaCust.Caption = "......"
-    cbpayment.Text = "Cash"
+    'cbpayment.Text = "Cash"
     lblBrand.Caption = "---"
     lblstock.Caption = "---"
     lblPrice.Caption = "---"
@@ -1052,7 +1054,7 @@ Private Sub cash()
                 .Fields("id_supplier") = Trim(lblCodeCust.Caption)
                 .Fields("tgl_input") = Now
                 .Fields("id_pengguna") = Trim(CurrUser.USER_PK)
-                .Fields("type") = cbpayment.Text
+                .Fields("type") = "Cash"
                 If (cbtypePayment.Text = "Lunas") Then
                     .Fields("payment") = "Lunas"
                     .Fields("flag_supplier") = 0
@@ -1074,7 +1076,7 @@ Private Sub cash()
 End Sub
 
 Private Sub cmdProcess_Click()
-    If cbpayment.Text = "" Then MsgBox "Empty Payment", vbOKOnly + vbCritical: Exit Sub
+    'If cbpayment.Text = "" Then MsgBox "Empty Payment", vbOKOnly + vbCritical: Exit Sub
     If cbtypePayment.Text = "" Then MsgBox "Empty Type Of Payment", vbOKOnly + vbCritical: Exit Sub
     If lstOrders.ListItems.Count < 1 Then MsgBox "Empty Product", vbOKOnly + vbCritical: Exit Sub
     If lblTotal.Caption = 0 Then MsgBox "Please Insert Medicine ! ", vbOKOnly + vbCritical: Exit Sub
@@ -1153,10 +1155,10 @@ Private Sub Form_Load()
         .AddItem "Code"
         .Text = "Name"
     End With
-    With cbpayment
-        .AddItem "Cash"
-        .AddItem "Transfer"
-    End With
+    'With cbpayment
+    '    .AddItem "Cash"
+    '    .AddItem "Transfer"
+    'End With
     
     
     If rs.State = 1 Then rs.Close
