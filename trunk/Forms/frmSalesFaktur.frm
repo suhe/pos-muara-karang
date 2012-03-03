@@ -433,7 +433,7 @@ Private Sub Form_Load()
     
     Dim sql2 As String
     
-    sql2 = "j.flag_kreditor=1 AND j.id_kreditor<>1 AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')< DATE_FORMAT(curdate(),'%Y-%m-%d') "
+    sql2 = "j.flag_kreditor=1 AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')< DATE_FORMAT(curdate(),'%Y-%m-%d') "
     If (tbl.TABLE_SEARCH_KREDITOR <> "") Then
         sql2 = sql2 & " AND k.nm_kreditor LIKE '%" & tbl.TABLE_SEARCH_KREDITOR & "%'"
     End If
