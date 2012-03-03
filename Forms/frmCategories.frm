@@ -167,22 +167,22 @@ Begin VB.Form frmCategories
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
          Text            =   "Nm Kategori"
-         Object.Width           =   6288
+         Object.Width           =   3528
       EndProperty
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   2
          Text            =   "Desk Kategori"
-         Object.Width           =   10708
+         Object.Width           =   3528
       EndProperty
       BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   3
          Text            =   "Tgl Input"
-         Object.Width           =   3175
+         Object.Width           =   2293
       EndProperty
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   4
          Text            =   "Nm Pengguna"
-         Object.Width           =   3528
+         Object.Width           =   1940
       EndProperty
    End
    Begin VB.Label lblTitle 
@@ -390,7 +390,7 @@ Private Sub Form_Load()
     End With
     
     With SQLParser
-        .Fields = "k.id_kategori,k.nm_kategori,k.desk_kategori,k.tgl_input,p.nm_pengguna,k.id_kategori"
+        .Fields = "k.id_kategori,k.nm_kategori,k.desk_kategori,DATE_FORMAT(k.tgl_input,'%Y-%m-%d'),p.nm_pengguna,k.id_kategori"
         .Tables = "tbl_kategori k JOIN tbl_pengguna p ON p.id=k.id_pengguna"
         .SortOrder = "k.id_kategori ASC"
         .SaveStatement
