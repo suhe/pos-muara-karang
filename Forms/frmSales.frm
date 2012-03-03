@@ -148,12 +148,12 @@ Begin VB.Form frmSales
       NumItems        =   25
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID Jual"
-         Object.Width           =   1764
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
          Text            =   "No Jual"
-         Object.Width           =   2646
+         Object.Width           =   2117
       EndProperty
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   2
@@ -168,17 +168,17 @@ Begin VB.Form frmSales
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   4
          Text            =   "Status"
-         Object.Width           =   2540
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   5
-         Text            =   "F.Kreditor"
-         Object.Width           =   1764
+         Text            =   "F.KR"
+         Object.Width           =   1235
       EndProperty
       BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   6
-         Text            =   "F.Debitor"
-         Object.Width           =   1764
+         Text            =   "F.DE"
+         Object.Width           =   1235
       EndProperty
       BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   7
@@ -508,7 +508,7 @@ Private Sub Form_Load()
     End With
     
     With SQLParser
-            .Fields = "j.id_jual,j.no_jual,j.tgl_jual,j.tgl_bayar,(IF(j.flag_kreditor=0,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Tagih')),'Lunas')) ,'Lunas'))AS statusjual,j.flag_kreditor,j.flag_debitor,j.tgl_komisi,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.bayar,j.piutang,(j.bayar-j.piutang) as sisa,j.komisi,((j.bayar-j.piutang)-j.komisi) as laba,pp.nm_pengguna "
+            .Fields = "j.id_jual,j.no_jual,DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),j.tgl_bayar,(IF(j.flag_kreditor=0,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Tagih')),'Lunas')) ,'Lunas'))AS statusjual,j.flag_kreditor,j.flag_debitor,j.tgl_komisi,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.bayar,j.piutang,(j.bayar-j.piutang) as sisa,j.komisi,((j.bayar-j.piutang)-j.komisi) as laba,pp.nm_pengguna "
             .Tables = "tbl_jual j LEFT JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor LEFT JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_cabang c ON c.id_cabang=j.id_cabang LEFT JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
             .SortOrder = "j.id_jual DESC"
             .SaveStatement

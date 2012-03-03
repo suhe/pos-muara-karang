@@ -1695,9 +1695,6 @@ Private Sub recipeMedicine()
         Combo1.Visible = False
         Label1.Visible = False
         Label5.Visible = False
-     'Else
-     '   MsgBox "Sorry Money Not Enough", vbOKOnly + vbCritical, "Warning"
-     'End If
 End Sub
 
 Private Sub Active()
