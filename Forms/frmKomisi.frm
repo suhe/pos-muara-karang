@@ -151,11 +151,11 @@ Begin VB.Form frmKomisi
       NumItems        =   19
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID Jual"
-         Object.Width           =   1764
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   1
-         Text            =   "No Jual"
+         Text            =   "No Fak"
          Object.Width           =   2646
       EndProperty
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
@@ -170,7 +170,7 @@ Begin VB.Form frmKomisi
       EndProperty
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   4
-         Text            =   "F.Debitor"
+         Text            =   "F.De"
          Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
@@ -186,47 +186,47 @@ Begin VB.Form frmKomisi
       BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   7
          Text            =   "Tlp Pasien"
-         Object.Width           =   2117
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   8
          Text            =   "Relasi"
-         Object.Width           =   3528
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(10) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   9
          Text            =   "ID Kreditor"
-         Object.Width           =   1764
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(11) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   10
          Text            =   "Nm Kreditor"
-         Object.Width           =   3881
+         Object.Width           =   3175
       EndProperty
       BeginProperty ColumnHeader(12) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   11
          Text            =   "KD Departement"
-         Object.Width           =   2117
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(13) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   12
          Text            =   "Nm Departement"
-         Object.Width           =   3881
+         Object.Width           =   3175
       EndProperty
       BeginProperty ColumnHeader(14) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   13
          Text            =   "Nm Cabang"
-         Object.Width           =   3528
+         Object.Width           =   3351
       EndProperty
       BeginProperty ColumnHeader(15) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   14
          Text            =   "Type"
-         Object.Width           =   1764
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(16) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   15
          Text            =   "Payment"
-         Object.Width           =   1764
+         Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(17) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
@@ -243,7 +243,7 @@ Begin VB.Form frmKomisi
       BeginProperty ColumnHeader(19) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   18
          Text            =   "Nm Pengguna"
-         Object.Width           =   3528
+         Object.Width           =   1940
       EndProperty
    End
    Begin VB.Shape shpBar 
@@ -433,9 +433,9 @@ Private Sub Form_Load()
     End With
     
     With SQLParser
-            .Fields = "j.id_jual,j.no_jual,j.tgl_jual,j.tgl_komisi,j.flag_debitor,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.bayar,j.komisi,pp.nm_pengguna "
+            .Fields = "j.id_jual,j.no_jual,DATE_FORMAT(j.tgl_jual,'%Y-%m-%d %H:%i:%s'),j.tgl_komisi,j.flag_debitor,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.bayar,j.komisi,pp.nm_pengguna "
             .Tables = "tbl_jual j JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_cabang c ON c.id_cabang=j.id_cabang LEFT JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
-            .wCondition = " j.flag_kreditor=1  "
+            .wCondition = " j.flag_kreditor=0  "
             .SortOrder = "j.id_jual DESC"
             .SaveStatement
     End With
