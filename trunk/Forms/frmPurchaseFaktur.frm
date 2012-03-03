@@ -376,7 +376,7 @@ Private Sub Form_Load()
         btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
     
-    sql = "b.flag_supplier=1 AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')< DATE_FORMAT(curdate(),'%Y-%m-%d')"
+    sql = "b.flag_supplier=1 AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')<= DATE_FORMAT(curdate(),'%Y-%m-%d')"
     If (tbl.TABLE_SEARCH_SUPPLIER <> "") Then
         sql = sql & " AND s.nm_supplier LIKE '%" & tbl.TABLE_SEARCH_SUPPLIER & "%'"
     End If
