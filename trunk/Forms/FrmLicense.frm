@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Begin VB.Form frmLicense 
+Begin VB.Form FrmLicense 
    BackColor       =   &H00FFFFFF&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "License Software"
@@ -43,7 +43,6 @@ Begin VB.Form frmLicense
       _ExtentX        =   1508
       _ExtentY        =   450
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"FrmLicense.frx":038A
    End
    Begin VB.Label Labels 

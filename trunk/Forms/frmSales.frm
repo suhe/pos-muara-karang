@@ -2,93 +2,89 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmSales 
    Caption         =   "Sales"
-   ClientHeight    =   4215
+   ClientHeight    =   4230
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   7410
+   ClientWidth     =   7455
    Icon            =   "frmSales.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
-   ScaleHeight     =   4215
-   ScaleWidth      =   7410
+   ScaleHeight     =   4230
+   ScaleWidth      =   7455
    Begin VB.PictureBox Picture1 
       Align           =   2  'Align Bottom
       BorderStyle     =   0  'None
       Height          =   380
       Left            =   0
       ScaleHeight     =   375
-      ScaleWidth      =   7410
+      ScaleWidth      =   7455
       TabIndex        =   2
-      Top             =   3840
-      Width           =   7410
-      Begin VB.PictureBox Picture2 
-         BorderStyle     =   0  'None
-         Height          =   345
-         Left            =   3000
-         ScaleHeight     =   345
-         ScaleWidth      =   4155
-         TabIndex        =   3
-         Top             =   0
-         Width           =   4150
-         Begin VB.CommandButton btnFirst 
-            Height          =   315
-            Left            =   2760
-            Style           =   1  'Graphical
-            TabIndex        =   7
-            ToolTipText     =   "First 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnPrev 
-            Height          =   315
-            Left            =   3075
-            Style           =   1  'Graphical
-            TabIndex        =   6
-            ToolTipText     =   "Previous 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnLast 
-            Height          =   315
-            Left            =   3705
-            Style           =   1  'Graphical
-            TabIndex        =   5
-            ToolTipText     =   "Last 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnNext 
-            Height          =   315
-            Left            =   3390
-            Style           =   1  'Graphical
-            TabIndex        =   4
-            ToolTipText     =   "Next 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.Label lblPageInfo 
-            Alignment       =   1  'Right Justify
-            BackStyle       =   0  'Transparent
-            Caption         =   "0 - 0 of 0"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   8
-            Top             =   60
-            Visible         =   0   'False
-            Width           =   2535
-         End
+      Top             =   3855
+      Width           =   7455
+      Begin VB.ComboBox cbSort 
+         Height          =   315
+         ItemData        =   "frmSales.frx":038A
+         Left            =   4800
+         List            =   "frmSales.frx":0394
+         TabIndex        =   14
+         Text            =   "No.Faktur"
+         Top             =   30
+         Width           =   1335
+      End
+      Begin VB.ComboBox cbShow 
+         Height          =   315
+         ItemData        =   "frmSales.frx":03B4
+         Left            =   3600
+         List            =   "frmSales.frx":03B6
+         TabIndex        =   13
+         Text            =   "30"
+         Top             =   30
+         Width           =   735
+      End
+      Begin VB.ComboBox cbSortType 
+         Height          =   315
+         ItemData        =   "frmSales.frx":03B8
+         Left            =   6120
+         List            =   "frmSales.frx":03C2
+         TabIndex        =   12
+         Text            =   "ASC"
+         Top             =   30
+         Width           =   855
+      End
+      Begin VB.Label lbltotal 
+         AutoSize        =   -1  'True
+         Caption         =   "Total Record : 0"
+         Height          =   195
+         Left            =   1680
+         TabIndex        =   17
+         Top             =   60
+         Width           =   1395
+      End
+      Begin VB.Label Label2 
+         AutoSize        =   -1  'True
+         Caption         =   "Sort"
+         Height          =   195
+         Left            =   4440
+         TabIndex        =   16
+         Top             =   60
+         Width           =   300
+      End
+      Begin VB.Label Label1 
+         AutoSize        =   -1  'True
+         Caption         =   "Show"
+         Height          =   195
+         Left            =   3120
+         TabIndex        =   15
+         Top             =   60
+         Width           =   390
       End
       Begin VB.Label lblCurrentRecord 
          AutoSize        =   -1  'True
          Caption         =   "Selected Record: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   9
+         TabIndex        =   3
          Top             =   60
          Width           =   1365
       End
@@ -101,10 +97,10 @@ Begin VB.Form frmSales
       Index           =   0
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   7410
+      ScaleWidth      =   7455
       TabIndex        =   1
-      Top             =   3825
-      Width           =   7410
+      Top             =   3840
+      Width           =   7455
    End
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -114,24 +110,26 @@ Begin VB.Form frmSales
       Index           =   1
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   7410
+      ScaleWidth      =   7455
       TabIndex        =   0
-      Top             =   3810
-      Width           =   7410
+      Top             =   3825
+      Width           =   7455
    End
    Begin MSComctlLib.ListView lvList 
       Height          =   3435
       Left            =   0
-      TabIndex        =   10
+      TabIndex        =   4
       Top             =   240
-      Width           =   7380
-      _ExtentX        =   13018
+      Width           =   7305
+      _ExtentX        =   12885
       _ExtentY        =   6059
       View            =   3
       LabelEdit       =   1
+      MultiSelect     =   -1  'True
       LabelWrap       =   0   'False
       HideSelection   =   0   'False
       GridLines       =   -1  'True
+      HoverSelection  =   -1  'True
       _Version        =   393217
       ForeColor       =   -2147483640
       BackColor       =   -2147483643
@@ -145,7 +143,7 @@ Begin VB.Form frmSales
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      NumItems        =   24
+      NumItems        =   23
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID Jual"
          Object.Width           =   0
@@ -167,104 +165,99 @@ Begin VB.Form frmSales
       EndProperty
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   4
-         Text            =   "Status"
-         Object.Width           =   0
+         Text            =   "F.KR"
+         Object.Width           =   1235
       EndProperty
       BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   5
-         Text            =   "F.KR"
+         Text            =   "F.DE"
          Object.Width           =   1235
       EndProperty
       BeginProperty ColumnHeader(7) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   6
-         Text            =   "F.DE"
-         Object.Width           =   1235
-      EndProperty
-      BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   7
          Text            =   "Tgl Ln Dep"
          Object.Width           =   2117
       EndProperty
-      BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   8
+      BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   7
          Text            =   "P.Kd Pasien"
          Object.Width           =   1940
       EndProperty
-      BeginProperty ColumnHeader(10) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   9
+      BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   8
          Text            =   "Nm Pasien"
          Object.Width           =   3995
       EndProperty
+      BeginProperty ColumnHeader(10) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   9
+         Text            =   "Tlp Pasien"
+         Object.Width           =   0
+      EndProperty
       BeginProperty ColumnHeader(11) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   10
-         Text            =   "Tlp Pasien"
+         Text            =   "Relasi"
          Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(12) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   11
-         Text            =   "Relasi"
+         Text            =   "ID Kreditor"
          Object.Width           =   0
       EndProperty
       BeginProperty ColumnHeader(13) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   12
-         Text            =   "ID Kreditor"
-         Object.Width           =   0
-      EndProperty
-      BeginProperty ColumnHeader(14) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   13
          Text            =   "Nm Kreditor"
          Object.Width           =   3175
       EndProperty
-      BeginProperty ColumnHeader(15) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   14
+      BeginProperty ColumnHeader(14) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   13
          Text            =   "KD Departement"
          Object.Width           =   0
       EndProperty
-      BeginProperty ColumnHeader(16) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   15
+      BeginProperty ColumnHeader(15) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   14
          Text            =   "Nm Departement"
          Object.Width           =   3351
       EndProperty
-      BeginProperty ColumnHeader(17) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   16
+      BeginProperty ColumnHeader(16) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   15
          Text            =   "Nm Cabang"
          Object.Width           =   3528
       EndProperty
-      BeginProperty ColumnHeader(18) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   17
+      BeginProperty ColumnHeader(17) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   16
          Text            =   "Type"
          Object.Width           =   0
       EndProperty
-      BeginProperty ColumnHeader(19) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   18
+      BeginProperty ColumnHeader(18) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   17
          Text            =   "Payment"
          Object.Width           =   0
       EndProperty
-      BeginProperty ColumnHeader(20) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+      BeginProperty ColumnHeader(19) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
-         SubItemIndex    =   19
+         SubItemIndex    =   18
          Text            =   "Piutang"
          Object.Width           =   2646
       EndProperty
-      BeginProperty ColumnHeader(21) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   20
+      BeginProperty ColumnHeader(20) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   19
          Text            =   "Sisa"
          Object.Width           =   2646
+      EndProperty
+      BeginProperty ColumnHeader(21) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
+         SubItemIndex    =   20
+         Text            =   "Komisi"
+         Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(22) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   21
-         Text            =   "Komisi"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(23) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   22
          Text            =   "Laba Bersih"
          Object.Width           =   2540
       EndProperty
-      BeginProperty ColumnHeader(24) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   23
+      BeginProperty ColumnHeader(23) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   22
          Text            =   "Nm Pengguna"
          Object.Width           =   1940
       EndProperty
@@ -272,42 +265,42 @@ Begin VB.Form frmSales
    Begin VB.ComboBox cbYear2 
       Height          =   315
       Left            =   4560
-      TabIndex        =   12
+      TabIndex        =   6
       Top             =   600
       Width           =   975
    End
    Begin VB.ComboBox cbMonth2 
       Height          =   315
       Left            =   3840
-      TabIndex        =   13
+      TabIndex        =   7
       Top             =   600
       Width           =   615
    End
    Begin VB.ComboBox cbDay2 
       Height          =   315
       Left            =   3120
-      TabIndex        =   14
+      TabIndex        =   8
       Top             =   600
       Width           =   615
    End
    Begin VB.ComboBox cbYear1 
       Height          =   315
       Left            =   1680
-      TabIndex        =   15
+      TabIndex        =   9
       Top             =   600
       Width           =   975
    End
    Begin VB.ComboBox cbMonth1 
       Height          =   315
       Left            =   960
-      TabIndex        =   16
+      TabIndex        =   10
       Top             =   600
       Width           =   615
    End
    Begin VB.ComboBox cbDay1 
       Height          =   315
       Left            =   240
-      TabIndex        =   17
+      TabIndex        =   11
       Top             =   600
       Width           =   615
    End
@@ -326,7 +319,7 @@ Begin VB.Form frmSales
       ForeColor       =   &H80000014&
       Height          =   210
       Left            =   0
-      TabIndex        =   11
+      TabIndex        =   5
       Top             =   0
       Width           =   4815
    End
@@ -437,6 +430,30 @@ Private Sub btnRecOp_Click()
     frmCustomerRecOp.show vbModal
 End Sub
 
+Private Sub cbShow_Change()
+    cbShow.Text = "30"
+End Sub
+
+Private Sub cbShow_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSort_Change()
+    cbSort.Text = "No.Faktur"
+End Sub
+
+Private Sub cbSort_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSortType_Change()
+    cbSortType.Text = "ASC"
+End Sub
+
+Private Sub cbSortType_Click()
+    Call Form_Load
+End Sub
+
 Private Sub Form_Activate()
     HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "fftfttt"
     CurrBiz.BUSINNES_SALE = 1
@@ -473,38 +490,31 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Form_Load()
-    Dim i As Integer
-    Dim subQty As Long
-    Dim subtotal, subsubtotal As Double
-    
-    MDIMainMenu.AddToWin Me.Caption, Name
-    
+    Dim sort As String
     'Set the graphics for the controls
+    Call LoadShow(cbShow)
     With MDIMainMenu
         'For listview
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-    
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
+        .AddToWin Me.Caption, Name
     End With
+    
+    Select Case cbSort.Text
+        Case "No.Faktur": sort = " LEFT(j.no_jual,3) " & cbSortType.Text & ", ABS(MID(j.no_jual,4,7))" & cbSortType.Text
+        Case "Nama Departemen": sort = "d.nm_departement " & cbSortType.Text
+    End Select
     
     With tbl
         .TABLE_TANGGAL_AWAL = ""
         .TABLE_TANGGAL_AKHIR = ""
     End With
     
+    '(IF(j.flag_kreditor=0,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Tagih')),'Lunas')) ,'Lunas'))AS statusjual
     With SQLParser
-            .Fields = "j.id_jual,j.no_jual,DATE_FORMAT(j.tgl_jual,'%Y-%m-%d %H:%i:%s'),j.tgl_bayar,(IF(j.flag_kreditor=0,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Tagih')),'Lunas')) ,'Lunas'))AS statusjual,j.flag_kreditor,j.flag_debitor,j.tgl_komisi,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.piutang,(j.bayar-j.piutang) as sisa,j.komisi,((j.bayar-j.piutang)-j.komisi) as laba,pp.nm_pengguna "
+            .Fields = "j.id_jual,j.no_jual,DATE_FORMAT(j.tgl_jual,'%Y-%m-%d %H:%i:%s'),j.tgl_bayar,j.flag_kreditor,j.flag_debitor,j.tgl_komisi,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.piutang,(j.bayar-j.piutang) as sisa,j.komisi,((j.bayar-j.piutang)-j.komisi) as laba,pp.nm_pengguna "
             .Tables = "tbl_jual j LEFT JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor LEFT JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_cabang c ON c.id_cabang=j.id_cabang LEFT JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
-            .SortOrder = "j.id_jual DESC"
+            .SortOrder = sort & " LIMIT " & cbShow.Text
             .SaveStatement
     End With
     
@@ -513,9 +523,10 @@ Private Sub Form_Load()
     rsSales.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     
     With RecordPage
-        .Start rsSales, 10000000
+        .Start rsSales, 100000
         FillList 1
     End With
+    lbltotal.Caption = "Total Record : " & lvList.ListItems.Count
 End Sub
 
 Private Sub FillList(ByVal whichPage As Long)
@@ -525,8 +536,7 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsSales, RecordPage.PageStart, RecordPage.PageEnd, 25, 2, False, True, , , , "id_jual")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
-    lblPageInfo.Caption = "Record " & RecordPage.PageInfo
+    'lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvList_Click
 End Sub
 
@@ -549,31 +559,6 @@ Private Sub Form_Unload(Cancel As Integer)
     Set frmSales = Nothing
 End Sub
 
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
-End Sub
 
 Private Sub lvList_Click()
     On Error GoTo err
@@ -604,40 +589,7 @@ Private Sub Browsesrcform()
     End With
 End Sub
 
-Private Sub lvList_DblClick()
-    On Error Resume Next
-    'With lvList
-    '    tbl.TABLE_NO_FAK = .SelectedItem.SubItems(1)
-    '    tbl.TABLE_TANGGAL = .SelectedItem.SubItems(2)
-    '    tbl.TABLE_FLAG_KREDITOR = .SelectedItem.SubItems(3)
-    '    tbl.TABLE_FLAG_DEPT = .SelectedItem.SubItems(4)
-    '    tbl.TABLE_KD_PASIEN = .SelectedItem.SubItems(5)
-    '    tbl.TABLE_NM_PASIEN = .SelectedItem.SubItems(6)
-    '    tbl.TABLE_TLP_PASIEN = .SelectedItem.SubItems(7)
-    '    tbl.TABLE_RELASI = .SelectedItem.SubItems(8)
-    '    tbl.TABLE_ID_KREDITUR = .SelectedItem.SubItems(9)
-    '    tbl.TABLE_NM_KREDITUR = .SelectedItem.SubItems(10)
-    '    tbl.TABLE_KD_DEPT = .SelectedItem.SubItems(11)
-    '    tbl.TABLE_NM_DEPT = .SelectedItem.SubItems(12)
-    '    tbl.TABLE_TYPE = .SelectedItem.SubItems(14)
-    '    tbl.TABLE_PAY_TYPE = .SelectedItem.SubItems(15)
-    '    tbl.TABLE_TOTAL = Format(.SelectedItem.SubItems(16), "") + Format(.SelectedItem.SubItems(17), "")
-    '    tbl.TABLE_CBACK = .SelectedItem.SubItems(17)
-    'End With
-    'Call Browsesrcform
-End Sub
-
-Private Sub lvList_KeyPress(KeyAscii As Integer)
-    On Error Resume Next
-    'If KeyAscii = 13 Then
-    '    Call Browsesrcform
-    'End If
-End Sub
-
 Private Sub lvList_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = 38 Or KeyCode = 40 Or KeyCode = 33 Or KeyCode = 34 Then lvList_Click
 End Sub
 
-Private Sub Picture1_Resize()
-    Picture2.Left = Picture1.ScaleWidth - Picture2.ScaleWidth
-End Sub

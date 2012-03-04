@@ -1,6 +1,16 @@
 Attribute VB_Name = "modProcedure"
 Option Explicit
 
+Public Sub LoadShow(ByRef srccombo As ComboBox)
+    Dim i As Integer
+    With srccombo
+        srccombo.Width = 800
+        For i = 30 To 12000 Step 30
+            .AddItem i
+        Next i
+    End With
+End Sub
+
 Public Sub LoadForm(ByRef srcform As Form)
     srcform.show
     srcform.WindowState = vbMaximized

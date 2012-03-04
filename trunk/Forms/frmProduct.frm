@@ -2,10 +2,10 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmProduct 
    Caption         =   "Medicine List"
-   ClientHeight    =   4365
+   ClientHeight    =   6975
    ClientLeft      =   60
    ClientTop       =   240
-   ClientWidth     =   9060
+   ClientWidth     =   14865
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -20,9 +20,96 @@ Begin VB.Form frmProduct
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   4365
-   ScaleWidth      =   9060
+   ScaleHeight     =   6975
+   ScaleWidth      =   14865
    WindowState     =   2  'Maximized
+   Begin VB.PictureBox Picture1 
+      Align           =   2  'Align Bottom
+      BorderStyle     =   0  'None
+      Height          =   405
+      Left            =   0
+      ScaleHeight     =   405
+      ScaleWidth      =   14865
+      TabIndex        =   4
+      Top             =   6540
+      Width           =   14865
+      Begin VB.ComboBox cbSortType 
+         Height          =   315
+         ItemData        =   "frmProduct.frx":0A02
+         Left            =   6960
+         List            =   "frmProduct.frx":0A0C
+         TabIndex        =   12
+         Text            =   "ASC"
+         Top             =   50
+         Width           =   855
+      End
+      Begin VB.ComboBox cbSort 
+         Height          =   315
+         ItemData        =   "frmProduct.frx":0A1B
+         Left            =   5520
+         List            =   "frmProduct.frx":0A2B
+         TabIndex        =   10
+         Text            =   "Kode Obat"
+         Top             =   50
+         Width           =   1335
+      End
+      Begin VB.ComboBox cbShow 
+         Height          =   315
+         ItemData        =   "frmProduct.frx":0A5B
+         Left            =   4140
+         List            =   "frmProduct.frx":0A5D
+         TabIndex        =   8
+         Text            =   "30"
+         Top             =   30
+         Width           =   735
+      End
+      Begin VB.PictureBox Picture2 
+         BorderStyle     =   0  'None
+         Height          =   345
+         Left            =   10200
+         ScaleHeight     =   345
+         ScaleWidth      =   6315
+         TabIndex        =   5
+         Top             =   0
+         Width           =   6315
+      End
+      Begin VB.Label lbltotal 
+         AutoSize        =   -1  'True
+         Caption         =   "Total Record : 0"
+         Height          =   195
+         Left            =   1920
+         TabIndex        =   11
+         Top             =   60
+         Width           =   1755
+      End
+      Begin VB.Label Label2 
+         AutoSize        =   -1  'True
+         Caption         =   "Sort"
+         Height          =   195
+         Left            =   5040
+         TabIndex        =   9
+         Top             =   60
+         Width           =   300
+      End
+      Begin VB.Label Label1 
+         AutoSize        =   -1  'True
+         Caption         =   "Show"
+         Height          =   195
+         Left            =   3720
+         TabIndex        =   7
+         Top             =   60
+         Width           =   390
+      End
+      Begin VB.Label lblCurrentRecord 
+         AutoSize        =   -1  'True
+         Caption         =   "Selected Record: 0"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   6
+         Top             =   60
+         Width           =   1365
+      End
+   End
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
       BackColor       =   &H80000010&
@@ -31,10 +118,10 @@ Begin VB.Form frmProduct
       Index           =   1
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   9060
-      TabIndex        =   9
-      Top             =   3960
-      Width           =   9060
+      ScaleWidth      =   14865
+      TabIndex        =   1
+      Top             =   6945
+      Width           =   14865
    End
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -44,92 +131,16 @@ Begin VB.Form frmProduct
       Index           =   0
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   9060
-      TabIndex        =   8
-      Top             =   3975
-      Width           =   9060
-   End
-   Begin VB.PictureBox Picture1 
-      Align           =   2  'Align Bottom
-      BorderStyle     =   0  'None
-      Height          =   375
-      Left            =   0
-      ScaleHeight     =   375
-      ScaleWidth      =   9060
-      TabIndex        =   4
-      Top             =   3990
-      Width           =   9060
-      Begin VB.PictureBox Picture2 
-         BorderStyle     =   0  'None
-         Height          =   345
-         Left            =   4680
-         ScaleHeight     =   345
-         ScaleWidth      =   2475
-         TabIndex        =   5
-         Top             =   0
-         Width           =   2475
-         Begin VB.CommandButton btnNext 
-            Height          =   315
-            Left            =   3390
-            Style           =   1  'Graphical
-            TabIndex        =   2
-            ToolTipText     =   "Next 250"
-            Top             =   10
-            Width           =   315
-         End
-         Begin VB.CommandButton btnLast 
-            Height          =   315
-            Left            =   3705
-            Style           =   1  'Graphical
-            TabIndex        =   3
-            ToolTipText     =   "Last 250"
-            Top             =   10
-            Width           =   315
-         End
-         Begin VB.CommandButton btnPrev 
-            Height          =   315
-            Left            =   3075
-            Style           =   1  'Graphical
-            TabIndex        =   1
-            ToolTipText     =   "Previous 250"
-            Top             =   10
-            Width           =   315
-         End
-         Begin VB.CommandButton btnFirst 
-            Height          =   315
-            Left            =   2760
-            Style           =   1  'Graphical
-            TabIndex        =   0
-            ToolTipText     =   "First 250"
-            Top             =   10
-            Width           =   315
-         End
-         Begin VB.Label lblPageInfo 
-            Alignment       =   1  'Right Justify
-            BackStyle       =   0  'Transparent
-            Caption         =   "0 - 0 of 0"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   6
-            Top             =   60
-            Width           =   2535
-         End
-      End
-      Begin VB.Label lblCurrentRecord 
-         AutoSize        =   -1  'True
-         Caption         =   "Selected Record: 0"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   7
-         Top             =   60
-         Width           =   1365
-      End
+      ScaleWidth      =   14865
+      TabIndex        =   0
+      Top             =   6960
+      Width           =   14865
    End
    Begin MSComctlLib.ListView lvList 
       Height          =   3495
       Left            =   0
-      TabIndex        =   11
-      Top             =   360
+      TabIndex        =   3
+      Top             =   240
       Width           =   9015
       _ExtentX        =   15901
       _ExtentY        =   6165
@@ -265,8 +276,8 @@ Begin VB.Form frmProduct
       EndProperty
       ForeColor       =   &H80000014&
       Height          =   210
-      Left            =   75
-      TabIndex        =   10
+      Left            =   0
+      TabIndex        =   2
       Top             =   0
       Width           =   4815
    End
@@ -423,6 +434,34 @@ Private Sub btnPrev_Click()
     If RecordPage.PAGE_CURRENT <> 1 Then FillList RecordPage.PAGE_PREVIOUS
 End Sub
 
+Private Sub cbShow_Change()
+    cbShow.Text = 0
+End Sub
+
+Private Sub cbShow_Click()
+    Call Form_Load
+End Sub
+
+Private Sub Combo1_Change()
+
+End Sub
+
+Private Sub cbSort_Change()
+    cbSort.Text = "Kode Obat"
+End Sub
+
+Private Sub cbSort_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSortType_Change()
+    cbSortType.Text = "ASC"
+End Sub
+
+Private Sub cbSortType_Click()
+    Call Form_Load
+End Sub
+
 Private Sub Form_Activate()
     If CurrUser.USER_ISADMIN Then
         HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "ttttttt"
@@ -449,38 +488,36 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Form_Load()
-    'Call listviewHeader
-    MDIMainMenu.AddToWin Me.Caption, Name
-    'Set the graphics for the controls
+    Dim sort As String
+    Call LoadShow(cbShow)
     With MDIMainMenu
+        .AddToWin Me.Caption, Name
         'For listview
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-    
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
-    
+    'sort berdsarkan
+    Select Case cbSort.Text
+        Case "Kode Obat": sort = "ABS(o.kd_obat) " & cbSortType.Text
+        Case "Nama Obat": sort = "o.nm_obat " & cbSortType.Text
+        Case "Penjualan": sort = "ABS(@jual) " & cbSortType.Text
+        Case "Stok Sisa": sort = "ABS(@stok) " & cbSortType.Text
+    End Select
+    'Set the graphics for the controls
     sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.nm_ilmiah,k.nm_kategori,o.kemasan,o.harga_jual,o.harga_beli,(o.harga_jual-o.harga_beli)as profit,o.stok,"
     sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0)) AS beli,"
-    sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0)) AS jual,"
+    sql = sql & "@jual:=(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0)) AS jual,"
     sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0)) AS rugi,"
-    sql = sql & "((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
+    sql = sql & "@stok:=((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
     sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
     sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
     sql = sql & " ) AS sisa,o.stok_min,"
     sql = sql & "DATE_FORMAT(o.tgl_input,'%Y-%m-%d'),p.nm_pengguna"
+    
     With SQLParser
         .Fields = sql
         .Tables = " tbl_obat o LEFT JOIN tbl_kategori k ON k.id_kategori =o.id_kategori LEFT JOIN tbl_pengguna p ON p.id=o.id_pengguna "
-        .SortOrder = " ABS(o.kd_obat) ASC"
+        .SortOrder = sort & " LIMIT  " & cbShow.Text
         .SaveStatement
     End With
     
@@ -489,9 +526,10 @@ Private Sub Form_Load()
     rsproduct.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     
     With RecordPage
-        .Start rsproduct, 10000000
+        .Start rsproduct, 100000
         FillList 1
     End With
+    lbltotal.Caption = "Total Record : " & lvList.ListItems.Count
 End Sub
 
 Private Sub FillList(ByVal whichPage As Long)
@@ -501,8 +539,8 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsproduct, RecordPage.PageStart, RecordPage.PageEnd, 17, 2, False, True, , , , "id_obat")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
-    lblPageInfo.Caption = "Record " & RecordPage.PageInfo
+    'SetNavigation
+    'lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvList_Click
 End Sub
 
@@ -521,32 +559,6 @@ Private Sub Form_Unload(Cancel As Integer)
     MDIMainMenu.RemToWin Me.Caption
     MDIMainMenu.HideTBButton "", True
     Set frmProduct = Nothing
-End Sub
-
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
 End Sub
 
 Private Sub lvList_Click()
@@ -580,3 +592,4 @@ End Sub
 Private Sub Picture1_Resize()
     Picture2.Left = Picture1.ScaleWidth - Picture2.ScaleWidth
 End Sub
+

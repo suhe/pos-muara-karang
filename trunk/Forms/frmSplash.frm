@@ -35,7 +35,7 @@ Begin VB.Form frmSplash
    End
    Begin VB.Label Label2 
       BackStyle       =   0  'Transparent
-      Caption         =   "Updated 3 Maret 2012"
+      Caption         =   "Updated 4 Maret 2012"
       BeginProperty Font 
          Name            =   "Arial Narrow"
          Size            =   8.25
@@ -90,19 +90,14 @@ End Sub
 
 Private Sub Form_Load()
     Dim path As String
-    
     If DisableLoader = False Then
         tmrUnload.Enabled = True
     End If
-    'path = App.path & "\Images\logo\logo.jpg"
-    'Me.Picture = path
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     c = 0
 End Sub
-
-
 
 Private Sub tmrUnload_Timer()
     c = c + 1
