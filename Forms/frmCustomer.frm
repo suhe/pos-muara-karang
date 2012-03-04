@@ -2,10 +2,10 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPasien 
    Caption         =   "Pasien Records"
-   ClientHeight    =   4410
+   ClientHeight    =   6315
    ClientLeft      =   60
    ClientTop       =   135
-   ClientWidth     =   9030
+   ClientWidth     =   14625
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -20,8 +20,8 @@ Begin VB.Form frmPasien
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   4410
-   ScaleWidth      =   9030
+   ScaleHeight     =   6315
+   ScaleWidth      =   14625
    WindowState     =   2  'Maximized
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -31,10 +31,10 @@ Begin VB.Form frmPasien
       Index           =   1
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   9030
+      ScaleWidth      =   14625
       TabIndex        =   9
-      Top             =   4005
-      Width           =   9030
+      Top             =   5910
+      Width           =   14625
    End
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -44,10 +44,10 @@ Begin VB.Form frmPasien
       Index           =   0
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   9030
+      ScaleWidth      =   14625
       TabIndex        =   8
-      Top             =   4020
-      Width           =   9030
+      Top             =   5925
+      Width           =   14625
    End
    Begin VB.PictureBox Picture1 
       Align           =   2  'Align Bottom
@@ -55,19 +55,49 @@ Begin VB.Form frmPasien
       Height          =   380
       Left            =   0
       ScaleHeight     =   375
-      ScaleWidth      =   9030
+      ScaleWidth      =   14625
       TabIndex        =   4
-      Top             =   4035
-      Width           =   9030
+      Top             =   5940
+      Width           =   14625
+      Begin VB.ComboBox cbSortType 
+         Height          =   315
+         ItemData        =   "frmCustomer.frx":0A02
+         Left            =   6480
+         List            =   "frmCustomer.frx":0A0C
+         TabIndex        =   17
+         Text            =   "ASC"
+         Top             =   30
+         Width           =   855
+      End
+      Begin VB.ComboBox cbShow 
+         Height          =   315
+         ItemData        =   "frmCustomer.frx":0A1B
+         Left            =   3660
+         List            =   "frmCustomer.frx":0A1D
+         TabIndex        =   14
+         Text            =   "30"
+         Top             =   30
+         Width           =   735
+      End
+      Begin VB.ComboBox cbSort 
+         Height          =   315
+         ItemData        =   "frmCustomer.frx":0A1F
+         Left            =   5040
+         List            =   "frmCustomer.frx":0A29
+         TabIndex        =   13
+         Text            =   "Kode Pasien"
+         Top             =   30
+         Width           =   1335
+      End
       Begin VB.PictureBox Picture2 
          BorderStyle     =   0  'None
          Height          =   345
-         Left            =   3000
+         Left            =   10440
          ScaleHeight     =   345
-         ScaleWidth      =   4155
+         ScaleWidth      =   2115
          TabIndex        =   5
          Top             =   0
-         Width           =   4150
+         Width           =   2115
          Begin VB.CommandButton btnNext 
             Height          =   315
             Left            =   3390
@@ -113,12 +143,39 @@ Begin VB.Form frmPasien
             BackStyle       =   0  'Transparent
             Caption         =   "0 - 0 of 0"
             Height          =   255
-            Left            =   120
+            Left            =   1560
             TabIndex        =   6
-            Top             =   60
+            Top             =   120
             Visible         =   0   'False
-            Width           =   2535
+            Width           =   615
          End
+      End
+      Begin VB.Label Label1 
+         AutoSize        =   -1  'True
+         Caption         =   "Show"
+         Height          =   195
+         Left            =   3240
+         TabIndex        =   16
+         Top             =   70
+         Width           =   390
+      End
+      Begin VB.Label Label2 
+         AutoSize        =   -1  'True
+         Caption         =   "Sort"
+         Height          =   195
+         Left            =   4560
+         TabIndex        =   15
+         Top             =   70
+         Width           =   300
+      End
+      Begin VB.Label lbltotal 
+         AutoSize        =   -1  'True
+         Caption         =   "Total Record : 0"
+         Height          =   195
+         Left            =   1680
+         TabIndex        =   12
+         Top             =   60
+         Width           =   1395
       End
       Begin VB.Label lblCurrentRecord 
          AutoSize        =   -1  'True
@@ -389,6 +446,30 @@ Private Sub btnRecOp_Click()
     'frmCustomerRecOp.show vbModal
 End Sub
 
+Private Sub cbShow_Change()
+    cbShow.Text = "30"
+End Sub
+
+Private Sub cbShow_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSort_Change()
+    cbSort.Text = "Kode Pasien"
+End Sub
+
+Private Sub cbSort_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSortType_Change()
+    cbSortType.Text = "ASC"
+End Sub
+
+Private Sub cbSortType_Click()
+    Call Form_Load
+End Sub
+
 Private Sub Form_Activate()
     HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "ttttttt"
     With MDIMainMenu
@@ -415,28 +496,27 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Form_Load()
-    MDIMainMenu.AddToWin Me.Caption, Name
+    Dim sort As String
+    'loadlimit
+    LoadShow cbShow
     'Set the graphics for the controls
     With MDIMainMenu
+        .AddToWin Me.Caption, Name
         'For listview
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-    
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
+    
+    'sort
+    Select Case cbSort.Text
+        Case "Kode Pasien": sort = "p.pl_pasien " & cbSortType.Text & ",ABS(p.pk_pasien)" & cbSortType.Text
+        Case "Nama Pasien": sort = "p.nm_pasien " & cbSortType.Text
+    End Select
     
     With SQLParser
         .Fields = "p.id_pasien,p.kd_pasien,p.nm_pasien,p.alamat,DATE_FORMAT(p.tgl_lahir,'%Y-%m-%d'),p.jk_pasien,p.kota,p.no_hp,p.no_tlp,DATE_FORMAT(p.tgl_input,'%Y-%m-%d'),pp.nm_pengguna "
         .Tables = "tbl_pasien p LEFT JOIN tbl_pengguna pp ON pp.id=p.id_pengguna "
-        .SortOrder = "p.id_pasien ASC"
+        .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement
     End With
     
@@ -448,6 +528,7 @@ Private Sub Form_Load()
         .Start rsPasien, 10000000
         FillList 1
     End With
+    lbltotal.Caption = "Total Record : " & lvList.ListItems.Count
 End Sub
 
 Private Sub FillList(ByVal whichPage As Long)
@@ -539,3 +620,4 @@ End Sub
 Private Sub Picture1_Resize()
     Picture2.Left = Picture1.ScaleWidth - Picture2.ScaleWidth
 End Sub
+

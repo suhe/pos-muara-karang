@@ -76,6 +76,7 @@ Begin VB.Form frmSplashLicense
          _ExtentX        =   8070
          _ExtentY        =   503
          _Version        =   393217
+         Enabled         =   -1  'True
          MultiLine       =   0   'False
          Appearance      =   0
          TextRTF         =   $"frmSplashLicense.frx":038A
@@ -132,7 +133,6 @@ Begin VB.Form frmSplashLicense
       _ExtentX        =   1508
       _ExtentY        =   450
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"frmSplashLicense.frx":084E
    End
    Begin VB.Label Label1 
@@ -230,7 +230,7 @@ Private Sub cmdActive_Click()
     Dim WMI, cpu, cpuid
     Dim i As Integer
     
-    If Len(Text2.Text) < 17 Then
+    If Len(text2.Text) < 17 Then
         MsgBox "The Licence Code you have entered is an invalid length."
         Exit Sub
     End If
@@ -252,7 +252,7 @@ Private Sub cmdActive_Click()
     Next i
     final = Right(final, Len(final) - 4)
     final = final & Asc(cpuid)
-    If (final = Text2.Text) Then
+    If (final = text2.Text) Then
         code.Text = final
         code.SaveFile "c:\windows\system\pos_license.rtf"
         MsgBox "License Anda Benar Selamat Menikmati Fitur Full Optimal dari Software Kami Terima Kasih!", vbInformation + vbOKOnly
@@ -278,7 +278,7 @@ Private Sub Form_Load()
     For Each cpu In WMI.InstancesOf("Win32_Processor")
         cpuid = cpuid + cpu.ProcessorID
     Next
-    text1.Text = cpuid
+    Text1.Text = cpuid
     RegTrial
 End Sub
 

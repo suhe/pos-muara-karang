@@ -161,12 +161,12 @@ Begin VB.Form frmKomisi
       BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   2
          Text            =   "Tgl Jual"
-         Object.Width           =   2540
+         Object.Width           =   3175
       EndProperty
       BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   3
          Text            =   "Tgl Komisi"
-         Object.Width           =   2117
+         Object.Width           =   2646
       EndProperty
       BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   4

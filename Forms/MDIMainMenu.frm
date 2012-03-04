@@ -1,13 +1,13 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "comctl32.ocx"
+Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "COMCTL32.OCX"
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.MDIForm MDIMainMenu 
    BackColor       =   &H8000000C&
    Caption         =   "POS APPLICATION"
    ClientHeight    =   8430
    ClientLeft      =   165
-   ClientTop       =   735
+   ClientTop       =   870
    ClientWidth     =   15240
    Icon            =   "MDIMainMenu.frx":0000
    LinkTopic       =   "MDIForm1"
@@ -55,7 +55,7 @@ Begin VB.MDIForm MDIMainMenu
          End
          Begin VB.Label Label1 
             BackStyle       =   0  'Transparent
-            Caption         =   "Opened Forms"
+            Caption         =   "Form Explorer"
             BeginProperty Font 
                Name            =   "Tahoma"
                Size            =   8.25
@@ -69,7 +69,7 @@ Begin VB.MDIForm MDIMainMenu
             Left            =   360
             TabIndex        =   3
             Top             =   195
-            Width           =   1290
+            Width           =   1530
          End
       End
       Begin MSComctlLib.ListView lvWin 
@@ -390,7 +390,7 @@ Begin VB.MDIForm MDIMainMenu
          EndProperty
          BeginProperty Panel3 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             AutoSize        =   1
-            Object.Width           =   12877
+            Object.Width           =   12850
             MinWidth        =   4410
          EndProperty
          BeginProperty Panel4 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
@@ -412,16 +412,17 @@ Begin VB.MDIForm MDIMainMenu
             Style           =   6
             Object.Width           =   1764
             MinWidth        =   1764
-            TextSave        =   "2/26/2012"
+            TextSave        =   "3/4/2012"
          EndProperty
          BeginProperty Panel8 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
             Object.Width           =   1764
             MinWidth        =   1764
-            TextSave        =   "10:03 PM"
+            TextSave        =   "2:36 PM"
          EndProperty
          BeginProperty Panel9 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   3
+            Enabled         =   0   'False
             Object.Width           =   882
             MinWidth        =   882
             TextSave        =   "INS"
@@ -537,6 +538,7 @@ Begin VB.MDIForm MDIMainMenu
          _ExtentX        =   1508
          _ExtentY        =   450
          _Version        =   393217
+         Enabled         =   -1  'True
          TextRTF         =   $"MDIMainMenu.frx":7D9E1
       End
       Begin VB.PictureBox picFreeMem 
