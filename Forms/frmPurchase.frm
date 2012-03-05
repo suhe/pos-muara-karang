@@ -444,7 +444,6 @@ End Sub
 
 Private Sub Form_Activate()
     HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "fftfttt"
-    'Call Active
 End Sub
 
 Private Sub Form_Deactivate()
@@ -467,6 +466,7 @@ End Sub
 
 Private Sub Form_Load()
     Dim sort As String
+    Call LoadShow(cbShow)
     'Set the graphics for the controls
     With MDIMainMenu
         'For listview
@@ -482,7 +482,7 @@ Private Sub Form_Load()
     
     Select Case cbSort.Text
         Case "No.Faktur": sort = " LEFT(b.no_beli,3) " & cbSortType.Text & ", ABS(MID(b.no_beli,4,7))" & cbSortType.Text
-        Case "Tgl Faktur": sort = " DATE_FORMAT(b.tgl_input,'%Y-%m-%d') " & cbSortType.Text
+        Case "Tgl.Faktur": sort = " DATE_FORMAT(b.tgl_input,'%Y-%m-%d') " & cbSortType.Text
         Case "Nama Supplier": sort = " s.nm_supplier " & cbSortType.Text
     End Select
     

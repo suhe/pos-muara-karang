@@ -15,7 +15,7 @@ Begin VB.Form frmReturPurchase
    Begin MSComctlLib.ListView lvList 
       Height          =   6795
       Left            =   0
-      TabIndex        =   10
+      TabIndex        =   4
       Top             =   240
       Width           =   10020
       _ExtentX        =   17674
@@ -94,42 +94,42 @@ Begin VB.Form frmReturPurchase
    Begin VB.ComboBox cbDay1 
       Height          =   315
       Left            =   480
-      TabIndex        =   17
+      TabIndex        =   11
       Top             =   1560
       Width           =   615
    End
    Begin VB.ComboBox cbMonth1 
       Height          =   315
       Left            =   1200
-      TabIndex        =   16
+      TabIndex        =   10
       Top             =   1560
       Width           =   615
    End
    Begin VB.ComboBox cbYear1 
       Height          =   315
       Left            =   1920
-      TabIndex        =   15
+      TabIndex        =   9
       Top             =   1560
       Width           =   975
    End
    Begin VB.ComboBox cbDay2 
       Height          =   315
       Left            =   3360
-      TabIndex        =   14
+      TabIndex        =   8
       Top             =   1560
       Width           =   615
    End
    Begin VB.ComboBox cbMonth2 
       Height          =   315
       Left            =   4080
-      TabIndex        =   13
+      TabIndex        =   7
       Top             =   1560
       Width           =   615
    End
    Begin VB.ComboBox cbYear2 
       Height          =   315
       Left            =   4800
-      TabIndex        =   12
+      TabIndex        =   6
       Top             =   1560
       Width           =   975
    End
@@ -143,73 +143,78 @@ Begin VB.Form frmReturPurchase
       TabIndex        =   2
       Top             =   7215
       Width           =   10095
-      Begin VB.PictureBox Picture2 
-         BorderStyle     =   0  'None
-         Height          =   345
-         Left            =   3000
-         ScaleHeight     =   345
-         ScaleWidth      =   4155
-         TabIndex        =   3
-         Top             =   0
-         Width           =   4150
-         Begin VB.CommandButton btnFirst 
-            Height          =   315
-            Left            =   2760
-            Style           =   1  'Graphical
-            TabIndex        =   7
-            ToolTipText     =   "First 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnPrev 
-            Height          =   315
-            Left            =   3075
-            Style           =   1  'Graphical
-            TabIndex        =   6
-            ToolTipText     =   "Previous 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnLast 
-            Height          =   315
-            Left            =   3705
-            Style           =   1  'Graphical
-            TabIndex        =   5
-            ToolTipText     =   "Last 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnNext 
-            Height          =   315
-            Left            =   3390
-            Style           =   1  'Graphical
-            TabIndex        =   4
-            ToolTipText     =   "Next 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.Label lblPageInfo 
-            Alignment       =   1  'Right Justify
-            BackStyle       =   0  'Transparent
-            Caption         =   "0 - 0 of 0"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   8
-            Top             =   60
-            Visible         =   0   'False
-            Width           =   2535
-         End
+      Begin VB.ComboBox cbSort 
+         Height          =   315
+         ItemData        =   "frmReturPurchase.frx":038A
+         Left            =   4920
+         List            =   "frmReturPurchase.frx":0397
+         TabIndex        =   14
+         Text            =   "No.Faktur"
+         Top             =   30
+         Width           =   1335
+      End
+      Begin VB.ComboBox cbShow 
+         Height          =   315
+         ItemData        =   "frmReturPurchase.frx":03C1
+         Left            =   3720
+         List            =   "frmReturPurchase.frx":03C3
+         TabIndex        =   13
+         Text            =   "30"
+         Top             =   30
+         Width           =   735
+      End
+      Begin VB.ComboBox cbSortType 
+         Height          =   315
+         ItemData        =   "frmReturPurchase.frx":03C5
+         Left            =   6360
+         List            =   "frmReturPurchase.frx":03CF
+         TabIndex        =   12
+         Text            =   "ASC"
+         Top             =   30
+         Width           =   855
+      End
+      Begin VB.Label Label3 
+         AutoSize        =   -1  'True
+         Caption         =   "Show"
+         Height          =   195
+         Left            =   3240
+         TabIndex        =   18
+         Top             =   60
+         Width           =   390
+      End
+      Begin VB.Label lbltotal 
+         AutoSize        =   -1  'True
+         Caption         =   "Total Record : 0"
+         Height          =   195
+         Left            =   1920
+         TabIndex        =   17
+         Top             =   60
+         Width           =   1395
+      End
+      Begin VB.Label Label2 
+         AutoSize        =   -1  'True
+         Caption         =   "Sort"
+         Height          =   195
+         Left            =   4560
+         TabIndex        =   16
+         Top             =   30
+         Width           =   300
+      End
+      Begin VB.Label Label1 
+         AutoSize        =   -1  'True
+         Caption         =   "Show"
+         Height          =   195
+         Left            =   2640
+         TabIndex        =   15
+         Top             =   30
+         Width           =   390
       End
       Begin VB.Label lblCurrentRecord 
          AutoSize        =   -1  'True
          Caption         =   "Selected Record: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   9
+         TabIndex        =   3
          Top             =   60
          Width           =   1365
       End
@@ -255,7 +260,7 @@ Begin VB.Form frmReturPurchase
       ForeColor       =   &H80000014&
       Height          =   210
       Left            =   0
-      TabIndex        =   11
+      TabIndex        =   5
       Top             =   0
       Width           =   4815
    End
@@ -379,6 +384,30 @@ Private Sub Deactive()
      End With
 End Sub
 
+Private Sub cbShow_Change()
+    cbShow.Text = "30"
+End Sub
+
+Private Sub cbShow_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSort_Change()
+    cbSort.Text = "No.Faktur"
+End Sub
+
+Private Sub cbSort_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSortType_Change()
+    cbSortType.Text = "ASC"
+End Sub
+
+Private Sub cbSortType_Click()
+    Call Form_Load
+End Sub
+
 Private Sub Form_Activate()
     HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "tftfttt"
     Active
@@ -403,26 +432,26 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Form_Load()
-    Dim subtotal As Double
-    MDIMainMenu.AddToWin Me.Caption, Name
+    Dim sort As String
+    Call LoadShow(cbShow)
+    
     With MDIMainMenu
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
+        .AddToWin Me.Caption, Name
     End With
+    
+    Select Case cbSort.Text
+        Case "No.Faktur": sort = " LEFT(b.no_beli,3) " & cbSortType.Text & ", ABS(MID(b.no_beli,4,7))" & cbSortType.Text
+        Case "Tgl.Faktur": sort = " DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') " & cbSortType.Text
+        Case "Nama Supplier": sort = " s.nm_supplier " & cbSortType.Text
+    End Select
     
     With SQLParser
         .Fields = " b.no_beli,DATE_FORMAT(b.tgl_beli,'%Y-%m-%d'),d.tgl_retur,s.nm_supplier,o.nm_obat,d.jumlah,d.retur,(d.jumlah-d.retur) AS sisa,(d.retur*d.harga_beli) AS rugi"
         .Tables = " tbl_beli_details d LEFT JOIN tbl_beli b ON b.no_beli=d.no_beli LEFT JOIN tbl_obat o ON o.id_obat=d.id_obat LEFT JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
         .wCondition = " d.retur > 0"
+        .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement
     End With
     
@@ -434,7 +463,6 @@ Private Sub Form_Load()
         .Start rsReturPurchase, 10000000
         FillList 1
     End With
-
 End Sub
 
 Private Sub FillList(ByVal whichPage As Long)
@@ -444,8 +472,6 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsReturPurchase, RecordPage.PageStart, RecordPage.PageEnd, 12, 2, False, True, , , , "id_beli")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
-    lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvList_Click
 End Sub
 
@@ -464,32 +490,6 @@ Private Sub Form_Unload(Cancel As Integer)
     MDIMainMenu.RemToWin Me.Caption
     MDIMainMenu.HideTBButton "", True
     Set frmReturPurchase = Nothing
-End Sub
-
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
 End Sub
 
 Private Sub lvList_Click()
@@ -511,26 +511,7 @@ Private Sub lvList_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
     CURR_COL = ColumnHeader.Index - 1
 End Sub
 
-Private Sub Browsesrcform()
-    'With frmSalesProductDetails
-      '          Set .srcform = frmReturPurchase
-     '           .cmdNew.Visible = False
-       '         .show vbModal
-    'End With
-End Sub
-
-Private Sub lvList_DblClick()
-    'Call Browsesrcform
-End Sub
-
-Private Sub lvList_KeyPress(KeyAscii As Integer)
-    'Call Browsesrcform
-End Sub
 
 Private Sub lvList_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = 38 Or KeyCode = 40 Or KeyCode = 33 Or KeyCode = 34 Then lvList_Click
-End Sub
-
-Private Sub Picture1_Resize()
-    Picture2.Left = Picture1.ScaleWidth - Picture2.ScaleWidth
 End Sub

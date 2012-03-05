@@ -67,23 +67,13 @@ Begin VB.Form frmStockOpname
             Top             =   10
             Width           =   315
          End
-         Begin VB.Label lblPageInfo 
-            Alignment       =   1  'Right Justify
-            BackStyle       =   0  'Transparent
-            Caption         =   "0 - 0 of 0"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   8
-            Top             =   60
-            Width           =   2535
-         End
       End
       Begin VB.Label lblCurrentRecord 
          AutoSize        =   -1  'True
          Caption         =   "Selected Record: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   9
+         TabIndex        =   8
          Top             =   60
          Width           =   1365
       End
@@ -117,7 +107,7 @@ Begin VB.Form frmStockOpname
    Begin MSComctlLib.ListView lvList 
       Height          =   3495
       Left            =   0
-      TabIndex        =   10
+      TabIndex        =   9
       Top             =   360
       Width           =   9015
       _ExtentX        =   15901
@@ -199,18 +189,9 @@ Begin VB.Form frmStockOpname
          Object.Width           =   2822
       EndProperty
    End
-   Begin VB.Shape shpBar 
-      BackColor       =   &H80000010&
-      BackStyle       =   1  'Opaque
-      BorderColor     =   &H80000010&
-      Height          =   240
-      Left            =   0
-      Top             =   0
-      Width           =   8955
-   End
    Begin VB.Label lblTitle 
       BackStyle       =   0  'Transparent
-      Caption         =   "Medicine List"
+      Caption         =   "Medicine Stock Opname"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -223,9 +204,18 @@ Begin VB.Form frmStockOpname
       ForeColor       =   &H80000014&
       Height          =   210
       Left            =   75
-      TabIndex        =   11
+      TabIndex        =   10
       Top             =   0
       Width           =   4815
+   End
+   Begin VB.Shape shpBar 
+      BackColor       =   &H80000010&
+      BackStyle       =   1  'Opaque
+      BorderColor     =   &H80000010&
+      Height          =   240
+      Left            =   0
+      Top             =   0
+      Width           =   8955
    End
 End
 Attribute VB_Name = "frmStockOpname"
@@ -439,7 +429,6 @@ Private Sub FillList(ByVal whichPage As Long)
     Me.Enabled = True
     Screen.MousePointer = vbDefault
     SetNavigation
-    lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvList_Click
 End Sub
 
