@@ -300,6 +300,7 @@ Begin VB.Form frmDebtDetails
       TabIndex        =   8
       ToolTipText     =   "Tagihan dicetak Apabila Pembayaran Hutang"
       Top             =   1440
+      Visible         =   0   'False
       Width           =   1695
    End
    Begin VB.CommandButton cmdKeluar 
@@ -308,6 +309,7 @@ Begin VB.Form frmDebtDetails
       Left            =   7680
       TabIndex        =   7
       Top             =   1440
+      Visible         =   0   'False
       Width           =   1695
    End
    Begin VB.Frame Frame3 

@@ -452,7 +452,7 @@ Private Sub Form_Load()
     With SQLParser
             .Fields = "j.id_jual,j.no_jual,DATE_FORMAT(j.tgl_jual,'%Y-%m-%d %H:%i:%s'),j.tgl_komisi,j.flag_debitor,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.bayar,j.komisi,pp.nm_pengguna "
             .Tables = "tbl_jual j JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_cabang c ON c.id_cabang=j.id_cabang LEFT JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
-            .wCondition = " j.flag_kreditor=0  "
+            .wCondition = " j.flag_kreditor = 0  "
             .SortOrder = sort & " LIMIT " & cbShow.Text
             .SaveStatement
     End With
