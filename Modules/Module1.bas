@@ -1298,26 +1298,48 @@ End Sub
 
 Public Sub LunasKomisi()
     Dim total As Integer
-     Dim bayar As Double
-     With frmKomisiFaktur
-     total = (.lvList.ListItems.Count)
-        If (total > 0) Then
+    Dim bayar As Double
+    Dim rsKom As New Recordset
+     
+    sql = " SELECT j.no_jual,j.tgl_jual,j.kd_pasien,p.nm_pasien,k.nm_kreditor,j.komisi"
+    sql = sql + " From "
+    sql = sql + " tbl_jual j"
+    sql = sql + " LEFT JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
+    sql = sql + " LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor"
+    sql = sql + " JOIN tbl_departement d ON d.id_departement=j.id_departement"
+    sql = sql + " WHERE j.id_departement= " & tbl.TABLE_ID_DEPT & " AND j.flag_kreditor=0 AND j.flag_debitor=1  AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= CURDATE() "
+    If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
+        sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
+        sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
+    End If
+    
+    Set rsKom = New Recordset
+    If rsKom.State = 1 Then rsKom.Close
+    rsKom.Open sql, CN, adOpenStatic, adLockReadOnly
+     'With frmKomisiFaktur
+     'total = (.lvList.ListItems.Count)
+        'If (total > 0) Then
             bayar = 0
-            For i = 1 To total
+            Do While Not rsKom.EOF
+            'For i = 1 To total
                 sql = "UPDATE tbl_jual "
                 sql = sql + "SET "
                 sql = sql + " flag_debitor= 0,  "
-                sql = sql + " tgl_komisi= '" & Format(Date, "YYYY-MM-DD") & "'"
-                sql = sql + " WHERE no_jual='" & .lvList.ListItems(i).SubItems(1) & "'"
+                sql = sql + " tgl_komisi= '" & rsKom.Fields("tgl_komisi") & "'"
+                sql = sql + " WHERE no_jual='" & rsKom.Fields("no_jual") & "'"
                 CN.Execute sql
-                bayar = bayar + Val(Format(.lvList.ListItems(i).SubItems(16), ""))
-            Next i
-            tbl.TABLE_TANGGAL_AWAL = .lvList.ListItems(total).SubItems(2)
-            tbl.TABLE_TANGGAL_AKHIR = .lvList.ListItems(1).SubItems(2)
+                bayar = bayar + Val(Format(rsKom.Fields("komisi"), ""))
+                total = total + Val(Format(rsKom.Fields("kd_pasien"), ""))
+            'Next i
+            Loop
+            rsKom.MoveFirst
+            tbl.TABLE_TANGGAL_AWAL = rsKom.Fields("tgl_jual")
+            rsKom.MoveLast
+            tbl.TABLE_TANGGAL_AKHIR = rsKom.Fields("tgl_jual")
             tbl.TABLE_TOTAL = bayar
             tbl.TABLE_TOTAL_PASIEN = total
-        End If
-     End With
+        'End If
+     'End With
 End Sub
     
 Public Sub cetak_Invoice_Komisi()

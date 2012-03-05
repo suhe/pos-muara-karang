@@ -40,6 +40,7 @@ End Sub
 
 Private Sub ActiveReport_ReportEnd()
     MDIMainMenu.RemToWin Me.Caption
+    Call LunasKomisi
 End Sub
 
 Private Sub ActiveReport_ReportStart()
