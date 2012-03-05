@@ -372,12 +372,24 @@ Private Sub cbShow_Change()
     cbShow.Text = "30"
 End Sub
 
+Private Sub cbShow_Click()
+    Call Form_Load
+End Sub
+
 Private Sub cbSort_Change()
     cbSort.Text = "No.Faktur"
 End Sub
 
+Private Sub cbSort_Click()
+    Call Form_Load
+End Sub
+
 Private Sub cbSortType_Change()
     cbSortType.Text = "ASC"
+End Sub
+
+Private Sub cbSortType_Click()
+    Call Form_Load
 End Sub
 
 Private Sub Form_Activate()
@@ -416,7 +428,7 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Form_Load()
-    On Error Resume Next
+    'On Error Resume Next
     Dim sort As String
     Call LoadShow(cbShow)
     'Set the graphics for the controls
@@ -429,7 +441,7 @@ Private Sub Form_Load()
     
     Select Case cbSort.Text
         Case "No.Faktur": sort = " LEFT(j.no_jual,3) " & cbSortType.Text & ", ABS(MID(j.no_jual,4,7))" & cbSortType.Text
-        Case "Tgl.Komisi": sort = " j.tgl_komisi " & cbSortType.Text
+        Case "Tgl.Faktur": sort = " DATE_FORMAT(j.tgl_jual,'%Y-%m-%d %H:%i:%s') " & cbSortType.Text
     End Select
     
     With tbl
@@ -441,7 +453,7 @@ Private Sub Form_Load()
             .Fields = "j.id_jual,j.no_jual,DATE_FORMAT(j.tgl_jual,'%Y-%m-%d %H:%i:%s'),j.tgl_komisi,j.flag_debitor,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.bayar,j.komisi,pp.nm_pengguna "
             .Tables = "tbl_jual j JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_cabang c ON c.id_cabang=j.id_cabang LEFT JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
             .wCondition = " j.flag_kreditor=0  "
-            .SortOrder = "j.id_jual DESC LIMIT " & cbShow.Text
+            .SortOrder = sort & " LIMIT " & cbShow.Text
             .SaveStatement
     End With
     
@@ -462,8 +474,6 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsKomisi, RecordPage.PageStart, RecordPage.PageEnd, 23, 2, False, True, , , , "id_jual")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
-    lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvList_Click
 End Sub
 
