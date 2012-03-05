@@ -7,7 +7,7 @@ Begin {9EB8768B-CDFA-44DF-8F3E-857A8405E1DB} ACRListKomisi
    ClientWidth     =   15240
    MDIChild        =   -1  'True
    WindowState     =   2  'Maximized
-   _ExtentX        =   29607
+   _ExtentX        =   26882
    _ExtentY        =   13573
    SectionData     =   "ACRListKomisi.dsx":0000
 End

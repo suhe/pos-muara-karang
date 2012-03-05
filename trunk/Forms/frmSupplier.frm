@@ -2,10 +2,10 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmSupplier 
    Caption         =   "Supplier Records"
-   ClientHeight    =   7185
+   ClientHeight    =   4560
    ClientLeft      =   60
    ClientTop       =   135
-   ClientWidth     =   9030
+   ClientWidth     =   7530
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -20,8 +20,8 @@ Begin VB.Form frmSupplier
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   7185
-   ScaleWidth      =   9030
+   ScaleHeight     =   4560
+   ScaleWidth      =   7530
    WindowState     =   2  'Maximized
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -31,10 +31,10 @@ Begin VB.Form frmSupplier
       Index           =   1
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   9030
-      TabIndex        =   10
-      Top             =   6780
-      Width           =   9030
+      ScaleWidth      =   7530
+      TabIndex        =   4
+      Top             =   4155
+      Width           =   7530
    End
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -44,10 +44,10 @@ Begin VB.Form frmSupplier
       Index           =   0
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   9030
-      TabIndex        =   9
-      Top             =   6795
-      Width           =   9030
+      ScaleWidth      =   7530
+      TabIndex        =   3
+      Top             =   4170
+      Width           =   7530
    End
    Begin VB.PictureBox Picture1 
       Align           =   2  'Align Bottom
@@ -55,77 +55,71 @@ Begin VB.Form frmSupplier
       Height          =   380
       Left            =   0
       ScaleHeight     =   375
-      ScaleWidth      =   9030
-      TabIndex        =   5
-      Top             =   6810
-      Width           =   9030
-      Begin VB.PictureBox Picture2 
-         BorderStyle     =   0  'None
-         Height          =   345
-         Left            =   3000
-         ScaleHeight     =   345
-         ScaleWidth      =   4155
+      ScaleWidth      =   7530
+      TabIndex        =   1
+      Top             =   4185
+      Width           =   7530
+      Begin VB.ComboBox cbSortType 
+         Height          =   315
+         ItemData        =   "frmSupplier.frx":0A02
+         Left            =   6480
+         List            =   "frmSupplier.frx":0A0C
+         TabIndex        =   8
+         Text            =   "ASC"
+         Top             =   30
+         Width           =   855
+      End
+      Begin VB.ComboBox cbSort 
+         Height          =   315
+         ItemData        =   "frmSupplier.frx":0A1B
+         Left            =   4680
+         List            =   "frmSupplier.frx":0A25
+         TabIndex        =   7
+         Text            =   "ID Supplier"
+         Top             =   30
+         Width           =   1695
+      End
+      Begin VB.ComboBox cbShow 
+         Height          =   315
+         Left            =   3540
          TabIndex        =   6
+         Text            =   "30"
          Top             =   0
-         Width           =   4150
-         Begin VB.CommandButton btnNext 
-            Height          =   315
-            Left            =   3390
-            Style           =   1  'Graphical
-            TabIndex        =   3
-            ToolTipText     =   "Next 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnLast 
-            Height          =   315
-            Left            =   3705
-            Style           =   1  'Graphical
-            TabIndex        =   4
-            ToolTipText     =   "Last 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnPrev 
-            Height          =   315
-            Left            =   3075
-            Style           =   1  'Graphical
-            TabIndex        =   2
-            ToolTipText     =   "Previous 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnFirst 
-            Height          =   315
-            Left            =   2760
-            Style           =   1  'Graphical
-            TabIndex        =   1
-            ToolTipText     =   "First 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.Label lblPageInfo 
-            Alignment       =   1  'Right Justify
-            BackStyle       =   0  'Transparent
-            Caption         =   "0 - 0 of 0"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   7
-            Top             =   60
-            Visible         =   0   'False
-            Width           =   2535
-         End
+         Width           =   735
+      End
+      Begin VB.Label lbltotal 
+         AutoSize        =   -1  'True
+         Caption         =   "Total Record : 0"
+         Height          =   195
+         Left            =   1680
+         TabIndex        =   11
+         Top             =   60
+         Width           =   1395
+      End
+      Begin VB.Label Label2 
+         AutoSize        =   -1  'True
+         Caption         =   "Sort"
+         Height          =   195
+         Left            =   4320
+         TabIndex        =   10
+         Top             =   60
+         Width           =   300
+      End
+      Begin VB.Label Label1 
+         AutoSize        =   -1  'True
+         Caption         =   "Show"
+         Height          =   195
+         Left            =   3120
+         TabIndex        =   9
+         Top             =   60
+         Width           =   390
       End
       Begin VB.Label lblCurrentRecord 
          AutoSize        =   -1  'True
          Caption         =   "Selected Record: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   8
+         TabIndex        =   2
          Top             =   60
          Width           =   1365
       End
@@ -134,9 +128,9 @@ Begin VB.Form frmSupplier
       Height          =   3435
       Left            =   0
       TabIndex        =   0
-      Top             =   375
-      Width           =   7260
-      _ExtentX        =   12806
+      Top             =   240
+      Width           =   7500
+      _ExtentX        =   13229
       _ExtentY        =   6059
       View            =   3
       LabelEdit       =   1
@@ -220,8 +214,8 @@ Begin VB.Form frmSupplier
       ForeColor       =   &H80000014&
       Height          =   210
       Left            =   75
-      TabIndex        =   11
-      Top             =   75
+      TabIndex        =   5
+      Top             =   0
       Width           =   4815
    End
    Begin VB.Shape shpBar 
@@ -230,8 +224,8 @@ Begin VB.Form frmSupplier
       BorderColor     =   &H80000010&
       Height          =   240
       Left            =   0
-      Top             =   75
-      Width           =   6915
+      Top             =   0
+      Width           =   7275
    End
 End
 Attribute VB_Name = "frmSupplier"
@@ -369,6 +363,30 @@ Private Sub btnRecOp_Click()
     frmSupplierRecOp.show vbModal
 End Sub
 
+Private Sub cbShow_Change()
+    cbShow.Text = "30"
+End Sub
+
+Private Sub cbShow_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSort_Change()
+    cbSort.Text = "ID Supplier"
+End Sub
+
+Private Sub cbSort_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSortType_Change()
+    cbSortType.Text = "ASC"
+End Sub
+
+Private Sub cbSortType_Click()
+    Call Form_Load
+End Sub
+
 Private Sub Form_Activate()
     HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "tttttft"
 End Sub
@@ -391,28 +409,26 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Form_Load()
-    MDIMainMenu.AddToWin Me.Caption, Name
+    Dim sort As String
+    Call LoadShow(cbShow)
     'Set the graphics for the controls
     With MDIMainMenu
         'For listview
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-    
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
+        .AddToWin Me.Caption, Name
     End With
+    
+    'sort berdsarkan
+    Select Case cbSort.Text
+        Case "ID Supplier": sort = "ABS(s.id_supplier) " & cbSortType.Text
+        Case "Nama Supplier": sort = "s.nm_supplier " & cbSortType.Text
+    End Select
     
     With SQLParser
         .Fields = "s.id_supplier,s.nm_supplier,s.almt_supplier,s.tlp_supplier,s.cp_supplier,s.kota_supplier,s.negara_supplier,DATE_FORMAT(s.tgl_input,'%Y-%m-%d'),p.nm_pengguna,s.id_supplier"
         .Tables = "tbl_supplier s LEFT JOIN tbl_pengguna p ON p.id=s.id_pengguna "
-        .SortOrder = "s.id_supplier ASC"
+        .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement
     End With
     
@@ -434,10 +450,7 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsSupplier, RecordPage.PageStart, RecordPage.PageEnd, 9, 2, False, True, , , , "id_supplier")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
     'Display the page information
-    lblPageInfo.Caption = "Record " & RecordPage.PageInfo
-    'Display the selected record
     lvList_Click
 End Sub
 
@@ -459,31 +472,6 @@ Private Sub Form_Unload(Cancel As Integer)
     Set frmSupplier = Nothing
 End Sub
 
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
-End Sub
 
 Private Sub lvList_Click()
     On Error GoTo err
@@ -514,6 +502,4 @@ Private Sub lvList_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = 38 Or KeyCode = 40 Or KeyCode = 33 Or KeyCode = 34 Then lvList_Click
 End Sub
 
-Private Sub Picture1_Resize()
-    Picture2.Left = Picture1.ScaleWidth - Picture2.ScaleWidth
-End Sub
+
