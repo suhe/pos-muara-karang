@@ -22,73 +22,69 @@ Begin VB.Form frmDepartement
       TabIndex        =   2
       Top             =   5280
       Width           =   7695
-      Begin VB.PictureBox Picture2 
-         BorderStyle     =   0  'None
-         Height          =   345
-         Left            =   3000
-         ScaleHeight     =   345
-         ScaleWidth      =   4155
-         TabIndex        =   3
-         Top             =   0
-         Width           =   4150
-         Begin VB.CommandButton btnFirst 
-            Height          =   315
-            Left            =   2760
-            Style           =   1  'Graphical
-            TabIndex        =   7
-            ToolTipText     =   "First 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnPrev 
-            Height          =   315
-            Left            =   3075
-            Style           =   1  'Graphical
-            TabIndex        =   6
-            ToolTipText     =   "Previous 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnLast 
-            Height          =   315
-            Left            =   3705
-            Style           =   1  'Graphical
-            TabIndex        =   5
-            ToolTipText     =   "Last 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnNext 
-            Height          =   315
-            Left            =   3390
-            Style           =   1  'Graphical
-            TabIndex        =   4
-            ToolTipText     =   "Next 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.Label lblPageInfo 
-            Alignment       =   1  'Right Justify
-            BackStyle       =   0  'Transparent
-            Caption         =   "0 - 0 of 0"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   8
-            Top             =   60
-            Visible         =   0   'False
-            Width           =   2535
-         End
+      Begin VB.ComboBox cbShow 
+         Height          =   315
+         ItemData        =   "frmDepartement.frx":038A
+         Left            =   3780
+         List            =   "frmDepartement.frx":038C
+         TabIndex        =   8
+         Text            =   "30"
+         Top             =   30
+         Width           =   735
+      End
+      Begin VB.ComboBox cbSort 
+         Height          =   315
+         ItemData        =   "frmDepartement.frx":038E
+         Left            =   4920
+         List            =   "frmDepartement.frx":0398
+         TabIndex        =   7
+         Text            =   "Kd Departemen"
+         Top             =   30
+         Width           =   1695
+      End
+      Begin VB.ComboBox cbSortType 
+         Height          =   315
+         ItemData        =   "frmDepartement.frx":03BC
+         Left            =   6600
+         List            =   "frmDepartement.frx":03C6
+         TabIndex        =   6
+         Text            =   "ASC"
+         Top             =   30
+         Width           =   855
+      End
+      Begin VB.Label Label1 
+         AutoSize        =   -1  'True
+         Caption         =   "Show"
+         Height          =   195
+         Left            =   3360
+         TabIndex        =   11
+         Top             =   60
+         Width           =   390
+      End
+      Begin VB.Label Label2 
+         AutoSize        =   -1  'True
+         Caption         =   "Sort"
+         Height          =   195
+         Left            =   4560
+         TabIndex        =   10
+         Top             =   60
+         Width           =   300
+      End
+      Begin VB.Label lbltotal 
+         AutoSize        =   -1  'True
+         Caption         =   "Total Record : 0"
+         Height          =   195
+         Left            =   1680
+         TabIndex        =   9
+         Top             =   60
+         Width           =   1515
       End
       Begin VB.Label lblCurrentRecord 
          AutoSize        =   -1  'True
          Caption         =   "Selected Record: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   9
+         TabIndex        =   3
          Top             =   60
          Width           =   1365
       End
@@ -122,7 +118,7 @@ Begin VB.Form frmDepartement
    Begin MSComctlLib.ListView lvList 
       Height          =   4875
       Left            =   0
-      TabIndex        =   10
+      TabIndex        =   4
       Top             =   240
       Width           =   7620
       _ExtentX        =   13441
@@ -224,7 +220,7 @@ Begin VB.Form frmDepartement
       ForeColor       =   &H80000014&
       Height          =   210
       Left            =   120
-      TabIndex        =   11
+      TabIndex        =   5
       Top             =   0
       Width           =   4815
    End
@@ -375,6 +371,30 @@ Private Sub btnRecOp_Click()
     frmSupplierRecOp.show vbModal
 End Sub
 
+Private Sub cbShow_Change()
+    cbShow.Text = "30"
+End Sub
+
+Private Sub cbShow_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSort_Change()
+    cbSort.Text = "Kd Departemen"
+End Sub
+
+Private Sub cbSort_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSortType_Change()
+    cbSortType.Text = "ASC"
+End Sub
+
+Private Sub cbSortType_Click()
+    Call Form_Load
+End Sub
+
 Private Sub Form_Activate()
     HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "tttttft"
 End Sub
@@ -397,29 +417,27 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Form_Load()
-    MDIMainMenu.AddToWin Me.Caption, Name
+    Dim sort As String
+    Call LoadShow(cbShow)
     'Set the graphics for the controls
     With MDIMainMenu
         'For listview
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-    
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
+        .AddToWin Me.Caption, Name
     End With
+    
+    'sort berdsarkan
+    Select Case cbSort.Text
+        Case "Kd Departemen": sort = "d.kd_departement " & cbSortType.Text
+        Case "Nama Departemen": sort = "d.nm_departement " & cbSortType.Text
+    End Select
     
     With SQLParser
         .Fields = "d.id_departement,d.kd_departement,d.nm_departement,d2.nm_departement,d.bn,d.an,d.vn,d.rn,d.pn,DATE_FORMAT(d.tgl_input,'%Y-%m-%d'),p.nm_pengguna"
         .Tables = "tbl_departement d LEFT JOIN tbl_departement d2 ON d2.id_departement=d.parent_id LEFT JOIN tbl_pengguna p ON p.id=d.id_pengguna"
         .wCondition = "d.id_departement<>0"
-        .SortOrder = "d.kd_departement ASC"
+        .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement
     End With
         
@@ -431,7 +449,7 @@ Private Sub Form_Load()
         .Start rsDepartement, 10000000
         FillList 1
     End With
-    
+    lbltotal.Caption = lvList.ListItems.Count
 End Sub
 
 Private Sub FillList(ByVal whichPage As Long)
@@ -441,8 +459,6 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsDepartement, RecordPage.PageStart, RecordPage.PageEnd, 13, 2, False, True, , , , "id_departement")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
-    lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvList_Click
 End Sub
 
@@ -516,8 +532,4 @@ End Sub
 
 Private Sub lvList_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = 38 Or KeyCode = 40 Or KeyCode = 33 Or KeyCode = 34 Then lvList_Click
-End Sub
-
-Private Sub Picture1_Resize()
-    Picture2.Left = Picture1.ScaleWidth - Picture2.ScaleWidth
 End Sub
