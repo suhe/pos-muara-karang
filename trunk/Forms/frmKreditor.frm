@@ -22,73 +22,67 @@ Begin VB.Form frmKreditor
       TabIndex        =   2
       Top             =   5460
       Width           =   7695
-      Begin VB.PictureBox Picture2 
-         BorderStyle     =   0  'None
-         Height          =   345
-         Left            =   3000
-         ScaleHeight     =   345
-         ScaleWidth      =   4155
-         TabIndex        =   3
-         Top             =   0
-         Width           =   4150
-         Begin VB.CommandButton btnFirst 
-            Height          =   315
-            Left            =   2760
-            Style           =   1  'Graphical
-            TabIndex        =   7
-            ToolTipText     =   "First 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnPrev 
-            Height          =   315
-            Left            =   3075
-            Style           =   1  'Graphical
-            TabIndex        =   6
-            ToolTipText     =   "Previous 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnLast 
-            Height          =   315
-            Left            =   3705
-            Style           =   1  'Graphical
-            TabIndex        =   5
-            ToolTipText     =   "Last 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnNext 
-            Height          =   315
-            Left            =   3390
-            Style           =   1  'Graphical
-            TabIndex        =   4
-            ToolTipText     =   "Next 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.Label lblPageInfo 
-            Alignment       =   1  'Right Justify
-            BackStyle       =   0  'Transparent
-            Caption         =   "0 - 0 of 0"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   8
-            Top             =   60
-            Visible         =   0   'False
-            Width           =   2535
-         End
+      Begin VB.ComboBox cbShow 
+         Height          =   315
+         Left            =   3780
+         TabIndex        =   8
+         Text            =   "30"
+         Top             =   30
+         Width           =   735
+      End
+      Begin VB.ComboBox cbSort 
+         Height          =   315
+         ItemData        =   "frmKreditor.frx":038A
+         Left            =   4920
+         List            =   "frmKreditor.frx":0394
+         TabIndex        =   7
+         Text            =   "ID Kreditor"
+         Top             =   30
+         Width           =   1695
+      End
+      Begin VB.ComboBox cbSortType 
+         Height          =   315
+         ItemData        =   "frmKreditor.frx":03B4
+         Left            =   6600
+         List            =   "frmKreditor.frx":03BE
+         TabIndex        =   6
+         Text            =   "ASC"
+         Top             =   30
+         Width           =   855
+      End
+      Begin VB.Label Label1 
+         AutoSize        =   -1  'True
+         Caption         =   "Show"
+         Height          =   195
+         Left            =   3360
+         TabIndex        =   11
+         Top             =   60
+         Width           =   390
+      End
+      Begin VB.Label Label2 
+         AutoSize        =   -1  'True
+         Caption         =   "Sort"
+         Height          =   195
+         Left            =   4560
+         TabIndex        =   10
+         Top             =   60
+         Width           =   300
+      End
+      Begin VB.Label lbltotal 
+         AutoSize        =   -1  'True
+         Caption         =   "Total Record : 0"
+         Height          =   195
+         Left            =   1920
+         TabIndex        =   9
+         Top             =   60
+         Width           =   1395
       End
       Begin VB.Label lblCurrentRecord 
          AutoSize        =   -1  'True
          Caption         =   "Selected Record: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   9
+         TabIndex        =   3
          Top             =   60
          Width           =   1365
       End
@@ -122,7 +116,7 @@ Begin VB.Form frmKreditor
    Begin MSComctlLib.ListView lvList 
       Height          =   3435
       Left            =   0
-      TabIndex        =   10
+      TabIndex        =   4
       Top             =   240
       Width           =   7620
       _ExtentX        =   13441
@@ -210,7 +204,7 @@ Begin VB.Form frmKreditor
       ForeColor       =   &H80000014&
       Height          =   210
       Left            =   120
-      TabIndex        =   11
+      TabIndex        =   5
       Top             =   0
       Width           =   4815
    End
@@ -363,6 +357,30 @@ Private Sub btnRecOp_Click()
     frmSupplierRecOp.show vbModal
 End Sub
 
+Private Sub cbShow_Change()
+    cbShow.Text = "30"
+End Sub
+
+Private Sub cbShow_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSort_Change()
+    cbSort.Text = "ID Kreditor"
+End Sub
+
+Private Sub cbSort_Click()
+    Call Form_Load
+End Sub
+
+Private Sub cbSortType_Change()
+    cbSortType.Text = "ASC"
+End Sub
+
+Private Sub cbSortType_Click()
+    Call Form_Load
+End Sub
+
 Private Sub Form_Activate()
     'HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "", True
     HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "tttttft"
@@ -386,26 +404,25 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Form_Load()
-    MDIMainMenu.AddToWin Me.Caption, Name
+    Dim sort As String
+    Call LoadShow(cbShow)
+    'MDIMainMenu
     With MDIMainMenu
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-    
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
+        .AddToWin Me.Caption, Name
     End With
+    
+    'sort berdsarkan
+    Select Case cbSort.Text
+        Case "ID Kreditor": sort = "ABS(k.id_kreditor) " & cbSortType.Text
+        Case "Nama Kreditor": sort = "k.nm_kreditor " & cbSortType.Text
+    End Select
     
     With SQLParser
         .Fields = "k.id_kreditor,k.nm_kreditor,k.almt_kreditor,k.kota_kreditor,k.tlp_kreditor,cp_kreditor,k.plafon,k.tgl_input,p.nm_pengguna"
         .Tables = "tbl_kreditor k LEFT JOIN tbl_pengguna p ON p.id=k.id_pengguna"
-        .SortOrder = "id_kreditor ASC"
+        .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement
     End With
     
@@ -417,7 +434,7 @@ Private Sub Form_Load()
         .Start rsKreditor, 10000000
         FillList 1
     End With
-    rsKreditor.Close
+    lbltotal.Caption = "Total Record : " & lvList.ListItems.Count
 End Sub
 
 Private Sub FillList(ByVal whichPage As Long)
@@ -427,10 +444,7 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsKreditor, RecordPage.PageStart, RecordPage.PageEnd, 14, 2, False, True, , , , "id_kreditor")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
     'Display the page information
-    lblPageInfo.Caption = "Record " & RecordPage.PageInfo
-    'Display the selected record
     lvList_Click
 End Sub
 
@@ -439,9 +453,7 @@ Private Sub Form_Resize()
     If WindowState <> vbMinimized Then
         If Me.Width < 9195 Then Me.Width = 9195
         If Me.Height < 4500 Then Me.Height = 4500
-        
         shpBar.Width = ScaleWidth
-        
         lvList.Width = Me.ScaleWidth
         lvList.Height = (Me.ScaleHeight - Picture1.Height) - lvList.Top
     End If
@@ -452,32 +464,6 @@ Private Sub Form_Unload(Cancel As Integer)
     MDIMainMenu.HideTBButton "", True
     Set rsKreditor = Nothing
     Set frmKreditor = Nothing
-End Sub
-
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
 End Sub
 
 Private Sub lvList_Click()
@@ -509,6 +495,3 @@ Private Sub lvList_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = 38 Or KeyCode = 40 Or KeyCode = 33 Or KeyCode = 34 Then lvList_Click
 End Sub
 
-Private Sub Picture1_Resize()
-    Picture2.Left = Picture1.ScaleWidth - Picture2.ScaleWidth
-End Sub

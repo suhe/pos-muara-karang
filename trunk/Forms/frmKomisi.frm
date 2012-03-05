@@ -70,9 +70,7 @@ Begin VB.Form frmKomisi
       End
       Begin VB.ComboBox cbShow 
          Height          =   315
-         ItemData        =   "frmKomisi.frx":003E
          Left            =   3540
-         List            =   "frmKomisi.frx":0040
          TabIndex        =   6
          Text            =   "30"
          Top             =   30
@@ -465,6 +463,7 @@ Private Sub Form_Load()
         .Start rsKomisi, 10000000
         FillList 1
     End With
+    lbltotal.Caption = "Total Record : " & lvList.ListItems.Count
 End Sub
 
 Private Sub FillList(ByVal whichPage As Long)
