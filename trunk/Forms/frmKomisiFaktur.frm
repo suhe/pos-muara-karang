@@ -363,7 +363,6 @@ Private Sub Command1_Click()
           If (lvList.ListItems.Count > 0) Then
             Unload Me
             Call printKomisi
-            Call LunasKomisi
           End If
     Else
             MsgBox "No Item Selected !", vbCritical + vbQuestion
