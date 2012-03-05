@@ -449,7 +449,7 @@ Private Sub Form_Load()
         .Start rsDepartement, 10000000
         FillList 1
     End With
-    lbltotal.Caption = lvList.ListItems.Count
+    lbltotal.Caption = "Total Record : " & lvList.ListItems.Count
 End Sub
 
 Private Sub FillList(ByVal whichPage As Long)
