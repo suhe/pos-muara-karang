@@ -143,7 +143,7 @@ Begin VB.Form frmSales
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      NumItems        =   23
+      NumItems        =   22
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID Jual"
          Object.Width           =   0
@@ -220,44 +220,39 @@ Begin VB.Form frmSales
       EndProperty
       BeginProperty ColumnHeader(16) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          SubItemIndex    =   15
-         Text            =   "Nm Cabang"
-         Object.Width           =   3528
-      EndProperty
-      BeginProperty ColumnHeader(17) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   16
          Text            =   "Type"
          Object.Width           =   0
       EndProperty
-      BeginProperty ColumnHeader(18) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   17
+      BeginProperty ColumnHeader(17) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   16
          Text            =   "Payment"
          Object.Width           =   0
       EndProperty
-      BeginProperty ColumnHeader(19) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+      BeginProperty ColumnHeader(18) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
-         SubItemIndex    =   18
+         SubItemIndex    =   17
          Text            =   "Piutang"
          Object.Width           =   2646
       EndProperty
-      BeginProperty ColumnHeader(20) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   19
+      BeginProperty ColumnHeader(19) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   18
          Text            =   "Sisa"
          Object.Width           =   2646
+      EndProperty
+      BeginProperty ColumnHeader(20) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
+         SubItemIndex    =   19
+         Text            =   "Komisi"
+         Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(21) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   20
-         Text            =   "Komisi"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(22) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   21
          Text            =   "Laba Bersih"
          Object.Width           =   2540
       EndProperty
-      BeginProperty ColumnHeader(23) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   22
+      BeginProperty ColumnHeader(22) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   21
          Text            =   "Nm Pengguna"
          Object.Width           =   1940
       EndProperty
@@ -512,8 +507,8 @@ Private Sub Form_Load()
     
     '(IF(j.flag_kreditor=0,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Tagih')),'Lunas')) ,'Lunas'))AS statusjual
     With SQLParser
-            .Fields = "j.id_jual,j.no_jual,DATE_FORMAT(j.tgl_jual,'%Y-%m-%d %H:%i:%s'),j.tgl_bayar,j.flag_kreditor,j.flag_debitor,j.tgl_komisi,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.piutang,(j.bayar-j.piutang) as sisa,j.komisi,((j.bayar-j.piutang)-j.komisi) as laba,pp.nm_pengguna "
-            .Tables = "tbl_jual j LEFT JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor LEFT JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_cabang c ON c.id_cabang=j.id_cabang LEFT JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
+            .Fields = "j.id_jual,j.no_jual,DATE_FORMAT(j.tgl_jual,'%Y-%m-%d %H:%i:%s'),j.tgl_bayar,j.flag_kreditor,j.flag_debitor,j.tgl_komisi,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,j.type,j.payment,j.piutang,(j.bayar-j.piutang) as sisa,j.komisi,((j.bayar-j.piutang)-j.komisi) as laba,pp.nm_pengguna "
+            .Tables = "tbl_jual j INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor LEFT JOIN tbl_departement d ON d.id_departement=j.id_departement INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
             .SortOrder = sort & " LIMIT " & cbShow.Text
             .SaveStatement
     End With
