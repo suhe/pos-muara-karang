@@ -516,7 +516,7 @@ Private Sub Form_Load()
     
     With SQLParser
         .Fields = sql
-        .Tables = " tbl_obat o LEFT JOIN tbl_kategori k ON k.id_kategori =o.id_kategori LEFT JOIN tbl_pengguna p ON p.id=o.id_pengguna "
+        .Tables = " tbl_obat o INNER JOIN tbl_kategori k ON k.id_kategori =o.id_kategori INNER JOIN tbl_pengguna p ON p.id=o.id_pengguna "
         .SortOrder = sort & " LIMIT  " & cbShow.Text
         .SaveStatement
     End With
@@ -539,8 +539,6 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsproduct, RecordPage.PageStart, RecordPage.PageEnd, 17, 2, False, True, , , , "id_obat")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    'SetNavigation
-    'lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvList_Click
 End Sub
 
@@ -592,4 +590,3 @@ End Sub
 Private Sub Picture1_Resize()
     Picture2.Left = Picture1.ScaleWidth - Picture2.ScaleWidth
 End Sub
-

@@ -20,6 +20,7 @@ Begin VB.Form frmSalesDetails
       Left            =   4200
       TabIndex        =   46
       Top             =   2760
+      Visible         =   0   'False
       Width           =   1695
    End
    Begin VB.Frame Frame3 
@@ -897,7 +898,7 @@ Private Sub Form_Load()
     
     With SQLParser
         .Fields = "tbd.id_obat,o.kd_obat,o.nm_obat,tbd.harga_jual,tbd.jumlah,(tbd.jumlah* tbd.harga_jual) as subtotal"
-        .Tables = "tbl_jual_details tbd JOIN tbl_obat o ON o.id_obat=tbd.id_obat"
+        .Tables = "tbl_jual_details tbd INNER JOIN tbl_obat o ON o.id_obat=tbd.id_obat"
         .wCondition = " tbd.no_jual='" & tbl.TABLE_NO_FAK & "'"
         .SaveStatement
     End With

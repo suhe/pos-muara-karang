@@ -728,7 +728,7 @@ Private Sub Form_Load()
     
     With SQLParser
             .Fields = "j.id_jual,j.no_jual,j.tgl_jual,j.kd_pasien,p.nm_pasien,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.bayar,j.piutang,(j.bayar-j.piutang) as sisa,pp.nm_pengguna "
-            .Tables = "tbl_jual j JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_cabang c ON c.id_cabang=j.id_cabang LEFT JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
+            .Tables = "tbl_jual j INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien INNER JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor INNER JOIN tbl_departement d ON d.id_departement=j.id_departement INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
             .SortOrder = "j.id_jual DESC"
             .wCondition = "j.id_kreditor = " & tbl.TABLE_ID_KREDITUR & " AND j.piutang > 0 "
             .SaveStatement

@@ -421,7 +421,7 @@ Private Sub Form_Load()
     
     With SQLParser
         .Fields = "k.id_kreditor,k.nm_kreditor,k.almt_kreditor,k.kota_kreditor,k.tlp_kreditor,cp_kreditor,k.plafon,k.tgl_input,p.nm_pengguna"
-        .Tables = "tbl_kreditor k LEFT JOIN tbl_pengguna p ON p.id=k.id_pengguna"
+        .Tables = "tbl_kreditor k INNER JOIN tbl_pengguna p ON p.id=k.id_pengguna"
         .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement
     End With

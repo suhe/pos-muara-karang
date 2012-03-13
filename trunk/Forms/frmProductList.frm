@@ -430,7 +430,7 @@ Private Sub Form_Load()
     sql = " DATE_FORMAT(b.tgl_beli,'%Y-%m-%d'),o.kd_obat,o.nm_obat,o.nm_ilmiah,s.nm_supplier,d.harga_beli,d.jumlah,(d.harga_beli* d.jumlah) as total,p.nm_pengguna"
     With SQLParser
         .Fields = sql
-        .Tables = " tbl_beli_details d JOIN tbl_beli b ON b.no_beli=d.no_beli LEFT JOIN tbl_obat o ON o.id_obat =d.id_obat LEFT JOIN tbl_supplier s ON s.id_supplier =b.id_supplier LEFT JOIN tbl_pengguna p ON p.id=b.id_pengguna "
+        .Tables = " tbl_beli_details d INNER JOIN tbl_beli b ON b.no_beli=d.no_beli INNER JOIN tbl_obat o ON o.id_obat =d.id_obat INNER JOIN tbl_supplier s ON s.id_supplier =b.id_supplier INNER JOIN tbl_pengguna p ON p.id=b.id_pengguna "
         '.Tables = "tbl_obat o LEFT JOIN tbl_kategori k ON k.id_kategori =o.id_kategori LEFT JOIN tbl_pengguna p ON p.id=o.id_pengguna"
         .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement

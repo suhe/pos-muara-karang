@@ -449,7 +449,7 @@ Private Sub Form_Load()
     
     With SQLParser
         .Fields = " b.no_beli,DATE_FORMAT(b.tgl_beli,'%Y-%m-%d'),d.tgl_retur,s.nm_supplier,o.nm_obat,d.jumlah,d.retur,(d.jumlah-d.retur) AS sisa,(d.retur*d.harga_beli) AS rugi"
-        .Tables = " tbl_beli_details d LEFT JOIN tbl_beli b ON b.no_beli=d.no_beli LEFT JOIN tbl_obat o ON o.id_obat=d.id_obat LEFT JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
+        .Tables = " tbl_beli_details d INNER JOIN tbl_beli b ON b.no_beli=d.no_beli INNER JOIN tbl_obat o ON o.id_obat=d.id_obat INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
         .wCondition = " d.retur > 0"
         .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement

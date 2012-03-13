@@ -55,7 +55,7 @@ Begin VB.Form frmPurchase
          Left            =   6120
          List            =   "frmPurchase.frx":0394
          TabIndex        =   14
-         Text            =   "ASC"
+         Text            =   "DESC"
          Top             =   30
          Width           =   855
       End
@@ -488,7 +488,7 @@ Private Sub Form_Load()
     
     With SQLParser
         .Fields = "b.id_beli,b.no_beli,DATE_FORMAT(b.tgl_input,'%Y-%m-%d'),b.tgl_bayar,b.flag_supplier,b.id_supplier,s.nm_supplier,b.type,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa,p.nm_pengguna"
-        .Tables = "tbl_beli b JOIN tbl_supplier s ON s.id_supplier=b.id_supplier LEFT JOIN tbl_pengguna p ON p.id=b.id_pengguna "
+        .Tables = "tbl_beli b INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier INNER JOIN tbl_pengguna p ON p.id=b.id_pengguna "
         .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement
     End With

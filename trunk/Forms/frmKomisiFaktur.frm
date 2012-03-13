@@ -428,7 +428,7 @@ Private Sub Form_Load()
      
     With SQLParser
             .Fields = "j.id_jual,j.no_jual,j.tgl_jual,j.flag_debitor,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.bayar,j.komisi,pp.nm_pengguna "
-            .Tables = "tbl_jual j LEFT JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_cabang c ON c.id_cabang=j.id_cabang LEFT JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
+            .Tables = "tbl_jual j INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien INNER JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor INNER JOIN tbl_departement d ON d.id_departement=j.id_departement INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
             .wCondition = sql2
             .SortOrder = "j.id_jual DESC"
             .SaveStatement
@@ -442,7 +442,6 @@ Private Sub Form_Load()
         .Start rsKomisiFaktur, 10000000
         FillList 1
     End With
-    'lvList.ListItems.Item.Checked
 End Sub
 
 Private Sub FillList(ByVal whichPage As Long)

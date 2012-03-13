@@ -5,12 +5,12 @@ Begin VB.Form frmStockOpname
    ClientHeight    =   4335
    ClientLeft      =   60
    ClientTop       =   345
-   ClientWidth     =   8865
+   ClientWidth     =   9180
    Icon            =   "frmStockOpname.frx":0000
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    ScaleHeight     =   4335
-   ScaleWidth      =   8865
+   ScaleWidth      =   9180
    WindowState     =   2  'Maximized
    Begin VB.PictureBox Picture1 
       Align           =   2  'Align Bottom
@@ -18,10 +18,10 @@ Begin VB.Form frmStockOpname
       Height          =   375
       Left            =   0
       ScaleHeight     =   375
-      ScaleWidth      =   8865
+      ScaleWidth      =   9180
       TabIndex        =   2
       Top             =   3960
-      Width           =   8865
+      Width           =   9180
       Begin VB.PictureBox Picture2 
          BorderStyle     =   0  'None
          Height          =   345
@@ -86,10 +86,10 @@ Begin VB.Form frmStockOpname
       Index           =   0
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   8865
+      ScaleWidth      =   9180
       TabIndex        =   1
       Top             =   3945
-      Width           =   8865
+      Width           =   9180
    End
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -99,10 +99,10 @@ Begin VB.Form frmStockOpname
       Index           =   1
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   8865
+      ScaleWidth      =   9180
       TabIndex        =   0
       Top             =   3930
-      Width           =   8865
+      Width           =   9180
    End
    Begin MSComctlLib.ListView lvList 
       Height          =   3495
@@ -405,7 +405,7 @@ Private Sub Form_Load()
     sql = "DATE_FORMAT(s.tgl_input,'%d-%m-%Y'),DATE_FORMAT(s.tgl_input,'%H:%i:%s'),o.kd_obat,o.nm_obat,o.harga_beli,FORMAT(s.stok_sblm,0),FORMAT(@so:=((o.box_sedang*s.kem_sedang)+(o.box_kecil*s.kem_kecil)+(s.satuan)),0) as so,FORMAT(@ss:=(@so-s.stok_sblm),0)as selisih,(@ss * o.harga_beli) as value,p.nm_pengguna"
     With SQLParser
         .Fields = sql
-        .Tables = " tbl_opname s LEFT JOIN vw_stok o ON s.id_obat =o.id_obat LEFT JOIN tbl_pengguna p ON p.id=s.id_pengguna "
+        .Tables = " tbl_opname s INNER JOIN vw_stok o ON s.id_obat =o.id_obat INNER JOIN tbl_pengguna p ON p.id=s.id_pengguna "
         .wCondition = " s.flag_opname = 1"
         .SortOrder = " DATE_FORMAT(s.tgl_input,'%d-%m-%Y') ASC,DATE_FORMAT(s.tgl_input,'%H:%i:%s') ASC"
         .SaveStatement

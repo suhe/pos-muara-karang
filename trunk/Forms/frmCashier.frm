@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "COMCTL32.ocx"
+Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "comctl32.ocx"
 Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
 Begin VB.Form frmCashier 
    Caption         =   "Cashier"
@@ -1399,7 +1399,6 @@ Private Sub cmdNew_Click()
     Command1.Visible = True
     Call clearText
     dcDepartement.Text = ""
-    'Combo1.Text = Empty
     Combo1.Visible = False
     Label1.Visible = False
     Label5.Visible = False
@@ -1421,7 +1420,7 @@ Private Sub cmdNew_Click()
 End Sub
 
 Private Sub clearText()
-    lbltotal.Caption = 0
+    lblTotal.Caption = 0
     txtFak.Text = ""
     txtSrchStrPasien.Text = ""
     txtPayment.Text = ""
@@ -1429,19 +1428,13 @@ Private Sub clearText()
     lstOrders.ListItems.Clear
     lvList.ListItems.Clear
     lblBrand.Caption = "---"
-    lblStock.Caption = "---"
+    lblstock.Caption = "---"
     lblPrice.Caption = "---"
     lblKdPasien.Caption = "..."
     lblNmPasien.Caption = "..."
     lblAlmtPasien.Caption = "..."
     lblRelasi.Caption = "..."
     lblTlpPasien.Caption = "..."
-End Sub
-
-
-Private Sub cmdPickup_LostFocus()
-    'On Error Resume Next
-    'txtAmount.SetFocus
 End Sub
 
 Private Sub cmdPrint_Click()
@@ -1458,7 +1451,6 @@ End Sub
 
 Private Sub cmdProcess_Click()
     On Error Resume Next
-    'lvListObat.Visible = False
     If CurrBiz.BUSINNES_NEW = 1 And CurrBiz.BUSINNES_RECEPT = 0 Then
         Call newPatient
     ElseIf CurrBiz.BUSINNES_RECEPT = 1 And CurrBiz.BUSINNES_NEW = 0 Then
@@ -1536,9 +1528,7 @@ Private Sub recipeMedicine()
     Dim intResponse As Integer
     payment = Format(txtPayment.Text, "")
     payment = Replace(payment, ".", ",")
-    total = Format(lbltotal.Caption, "")
-    'MsgBox total & "-" & payment
-    'If (Val(payment) >= Val(total)) Then
+    total = Format(lblTotal.Caption, "")
     If (txtPayment.Text <> "Credit") Then
         'If (Val(total) < Val(payment)) Then MsgBox "1Sorry Not Enought Money ,Please Insert Money! ", vbOKOnly + vbCritical: Exit Sub
         If (Val(total) > Val(payment)) Then MsgBox "Sorry Not Enought Money ,Please Insert Money! ", vbOKOnly + vbCritical: Exit Sub
@@ -1556,7 +1546,7 @@ Private Sub recipeMedicine()
             tbl.TABLE_TYPE = "Cash"
         Else
             bayar = 0
-            piutang = Format(lbltotal.Caption, "")
+            piutang = Format(lblTotal.Caption, "")
             strpay = "Piutang"
             tbl.TABLE_TYPE = "Credit"
         End If
@@ -1682,7 +1672,7 @@ Private Sub recipeMedicine()
         tbl.TABLE_NM_DEPT = dcDepartement.Text
         tbl.TABLE_ID_KREDITUR = Trim(txtKreditor.Text)
         tbl.TABLE_TANGGAL = Format(Now, "DD-MM-YYYY")
-        tbl.TABLE_TOTAL = lbltotal.Caption
+        tbl.TABLE_TOTAL = lblTotal.Caption
         tbl.TABLE_KOMISI = komisi
         If txtPayment <> "Credit" Then
             tbl.TABLE_MONEY = txtPayment.Text
@@ -1711,7 +1701,7 @@ Private Sub cmdRemove_Click()
 End Sub
 
 Private Sub clearPayment()
-    lbltotal.Caption = 0
+    lblTotal.Caption = 0
     txtPayment.Text = ""
     txtMoneyBack.Text = ""
     txtKreditor.Text = 0
@@ -1808,7 +1798,7 @@ Public Sub counttotal()
             subtotal = subtotal + (lstOrders.ListItems(i).SubItems(4) * lstOrders.ListItems(i).SubItems(5))
         Next i
     End If
-    lbltotal.Caption = Format(subtotal, "##,###0.00")
+    lblTotal.Caption = Format(subtotal, "##,###0.00")
 End Sub
 
 Private Sub Form_Deactivate()
@@ -1981,9 +1971,9 @@ Private Sub callBrand()
         End If
         
         If (lvListObat.SelectedItem.SubItems(5) = 0) Then
-            .lblStock.Caption = 0
+            .lblstock.Caption = 0
         Else
-            .lblStock.Caption = lvListObat.SelectedItem.SubItems(5)
+            .lblstock.Caption = lvListObat.SelectedItem.SubItems(5)
         End If
     End With
 End Sub
@@ -2005,7 +1995,7 @@ Private Sub lvListObat_Click()
         With lvListObat.SelectedItem
             lblBrand.Caption = .SubItems(2)
             lblPrice.Caption = .SubItems(4)
-            lblStock.Caption = .SubItems(5)
+            lblstock.Caption = .SubItems(5)
         End With
     End If
 End Sub
@@ -2084,7 +2074,7 @@ Private Sub txtPayment_Change()
     txtPayment.Text = Format(txtPayment.Text, "#,##0")
     Dim payment, total, cback As Double
     payment = Format(txtPayment.Text, "")
-    total = Format(lbltotal.Caption, "")
+    total = Format(lblTotal.Caption, "")
     cback = payment - total
     txtMoneyBack.Text = Format(cback, "#,###0")
     txtPayment.SelStart = Len(txtPayment.Text)
@@ -2122,7 +2112,7 @@ Private Sub txtSrchStr_Change()
 
         With SQLParser
             .Fields = sql
-            .Tables = " tbl_obat o LEFT JOIN tbl_kategori k ON k.id_kategori =o.id_kategori LEFT JOIN tbl_pengguna p ON p.id=o.id_pengguna "
+            .Tables = " tbl_obat o INNER JOIN tbl_kategori k ON k.id_kategori =o.id_kategori INNER JOIN tbl_pengguna p ON p.id=o.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStr.Text & "%'  "
             .SortOrder = " o.id_obat ASC LIMIT 10"
             .SaveStatement
@@ -2135,7 +2125,6 @@ Private Sub txtSrchStr_Change()
             .Start rscashier, 20
             FillList2 1
         End With
-        'rscashier.Close
     End If
 End Sub
 
@@ -2170,7 +2159,7 @@ Private Sub txtSrchStrPasien_Change()
         sql = "p.kd_pasien,p.nm_pasien,p.no_tlp,p.alamat,(YEAR(curdate())-YEAR(p.tgl_lahir)) as umur"
         With SQLParser
             .Fields = sql
-            .Tables = " tbl_pasien p LEFT JOIN tbl_pengguna pp ON pp.id=p.id_pengguna "
+            .Tables = " tbl_pasien p INNER JOIN tbl_pengguna pp ON pp.id=p.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStrPasien.Text & "%'"
             .SortOrder = " p.kd_pasien ASC LIMIT 10"
             .SaveStatement
@@ -2184,6 +2173,5 @@ Private Sub txtSrchStrPasien_Change()
             .Start rscashier, 20
             FillList 1
         End With
-        'rscashier.Close
     End If
 End Sub

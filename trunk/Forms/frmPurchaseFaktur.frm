@@ -387,7 +387,7 @@ Private Sub Form_Load()
     
     With SQLParser
         .Fields = "b.id_beli,b.no_beli,b.tgl_input,b.tgl_akhir,b.flag_supplier,b.id_supplier,s.nm_supplier,b.type,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa,p.nm_pengguna"
-        .Tables = "tbl_beli b JOIN tbl_supplier s ON s.id_supplier=b.id_supplier LEFT JOIN tbl_pengguna p ON p.id=b.id_pengguna "
+        .Tables = "tbl_beli b INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier INNER JOIN tbl_pengguna p ON p.id=b.id_pengguna "
         .wCondition = sql
         .SortOrder = "b.id_beli DESC "
         .SaveStatement
