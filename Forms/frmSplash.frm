@@ -35,7 +35,7 @@ Begin VB.Form frmSplash
    End
    Begin VB.Label Label2 
       BackStyle       =   0  'Transparent
-      Caption         =   "Updated 5 Maret 2012"
+      Caption         =   "Updated 13 Maret 2012"
       BeginProperty Font 
          Name            =   "Arial Narrow"
          Size            =   8.25
@@ -53,7 +53,7 @@ Begin VB.Form frmSplash
    End
    Begin VB.Label Label1 
       BackStyle       =   0  'Transparent
-      Caption         =   "Beta 1.1"
+      Caption         =   "Beta 1.2"
       BeginProperty Font 
          Name            =   "Arial Narrow"
          Size            =   15.75
