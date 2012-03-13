@@ -427,7 +427,7 @@ Private Sub Form_Load()
     
     With SQLParser
         .Fields = "s.id_supplier,s.nm_supplier,s.almt_supplier,s.tlp_supplier,s.cp_supplier,s.kota_supplier,s.negara_supplier,DATE_FORMAT(s.tgl_input,'%Y-%m-%d'),p.nm_pengguna,s.id_supplier"
-        .Tables = "tbl_supplier s LEFT JOIN tbl_pengguna p ON p.id=s.id_pengguna "
+        .Tables = "tbl_supplier s INNER JOIN tbl_pengguna p ON p.id=s.id_pengguna "
         .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement
     End With

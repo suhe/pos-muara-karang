@@ -427,7 +427,7 @@ Private Sub Form_Load()
     
     With SQLParser
         .Fields = " j.id_kreditor,k.nm_kreditor,k.almt_kreditor,k.kota_kreditor,k.tlp_kreditor,k.cp_kreditor,k.plafon,SUM(j.piutang) AS piutang,(k.plafon-SUM(j.piutang)) as sisa "
-        .Tables = " tbl_jual j JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor "
+        .Tables = " tbl_jual j INNER JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor "
         .wCondition = " j.flag_kreditor=1 "
         .GroupOrder = " j.id_kreditor "
         .SortOrder = sort & " LIMIT " & cbShow.Text

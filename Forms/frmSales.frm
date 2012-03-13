@@ -48,7 +48,7 @@ Begin VB.Form frmSales
          Left            =   6120
          List            =   "frmSales.frx":03C2
          TabIndex        =   12
-         Text            =   "ASC"
+         Text            =   "DESC"
          Top             =   30
          Width           =   855
       End
@@ -505,10 +505,9 @@ Private Sub Form_Load()
         .TABLE_TANGGAL_AKHIR = ""
     End With
     
-    '(IF(j.flag_kreditor=0,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Tagih')),'Lunas')) ,'Lunas'))AS statusjual
     With SQLParser
             .Fields = "j.id_jual,j.no_jual,DATE_FORMAT(j.tgl_jual,'%Y-%m-%d %H:%i:%s'),j.tgl_bayar,j.flag_kreditor,j.flag_debitor,j.tgl_komisi,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,j.type,j.payment,j.piutang,(j.bayar-j.piutang) as sisa,j.komisi,((j.bayar-j.piutang)-j.komisi) as laba,pp.nm_pengguna "
-            .Tables = "tbl_jual j INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor LEFT JOIN tbl_departement d ON d.id_departement=j.id_departement INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
+            .Tables = "tbl_jual j INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor INNER JOIN tbl_departement d ON d.id_departement=j.id_departement INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
             .SortOrder = sort & " LIMIT " & cbShow.Text
             .SaveStatement
     End With
@@ -518,7 +517,7 @@ Private Sub Form_Load()
     rsSales.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     
     With RecordPage
-        .Start rsSales, 100000
+        .Start rsSales, 1000000
         FillList 1
     End With
     lbltotal.Caption = "Total Record : " & lvList.ListItems.Count
