@@ -113,12 +113,6 @@ Public Sub cetak_Faktur()
         Printer.Print " ----------------------------------- ----------------------- -------------- ------------------- ---------------- "
             .CurrentY = .CurrentY + 1
         Next xx
-        'Printer.Print ""
-        '.CurrentX = .CurrentX + 500
-        'Printer.Print " --------------------------------------------------------------------------------------------------------------- "
-        'Printer.Print ""
-        '.CurrentX = .CurrentX + 500
-        'Printer.Print Tab(40); "" & CurrBiz.BUSINNES_NOTE & ""
         .EndDoc
      End With
 opps:
@@ -301,14 +295,7 @@ Public Sub cetak_Faktur3()
         .CurrentX = .CurrentX + 500
         Printer.Print Tab(40); "" & CurrBiz.BUSINNES_NOTE & ""
         .EndDoc
-        'Unload frmCashierDesc
-        'Else
-        '    MsgBox "No Data"
-        'End If
      End With
-     'Else
-        'ACRInvoice.show
-     'End If
 opps:
     'MsgBox "Printer Error.", "Printer", "Error Message"
 End Sub
@@ -399,7 +386,7 @@ Public Sub cetak_FakturBeli()
         .CurrentX = .CurrentX + 500
         Printer.Print " --------------------------------------------------------------------------------------------------------------- "
         .CurrentY = .CurrentY + 0
-        sql = "SELECT *,(j.harga_jual * j.jumlah) as total FROM tbl_jual_details j JOIN tbl_obat O ON O.id_obat=j.id_obat"
+        sql = "SELECT *,(j.harga_jual * j.jumlah) as total FROM tbl_jual_details j INNER JOIN tbl_obat O ON O.id_obat=j.id_obat"
         Set rscetak = New Recordset
         'Call OpenDB
         rscetak.CursorLocation = adUseClient
@@ -449,7 +436,7 @@ Public Sub printStock()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblTgl.Caption = "Tgl Print : " & Format(Date, "DD/MM/YYYY")
@@ -468,37 +455,13 @@ Public Sub printStock()
             gb = "<="
             gk = ">="
         End If
-        'sql = "SELECT *,(o.harga_jual-o.harga_beli) as profit, "
-        'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0)) AS beli,"
-        'sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0)) AS jual,"
-        'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0)) AS rugi,"
-        
-        'sql = sql & "@stok:=((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
-        'sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
-        'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
-        'sql = sql & " ) AS sisa, "
-        'sql = sql & " stok_min,@max:=(stok_min * 4)  as max,"
-        'sql = sql & "(stok_min-((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
-        'sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
-        'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
-        'sql = sql & " )) AS permintaan1,(@max - @stok) as  permintaan "
-        'sql = sql & " FROM tbl_obat o JOIN tbl_kategori k ON k.id_kategori=o.id_kategori WHERE o.id_obat " & gb & " " & baw & " AND o.id_obat " & gk & " " & bak & ""
-        'sql = sql & " AND stok_min > ((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
-        'sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
-        'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
-        'sql = sql & " ) "
-        'sql = sql & " ORDER BY o.id_kategori,o.kd_obat ASC"
         sql = "SELECT *,@max:=(stok_min * 4) as max,(@max-sisa) as permintaan FROM vw_stok "
-        'MsgBox sql
         .DataControl1.Source = sql
         .GroupHeader1.DataField = "id_kategori"
         .txtCategoryName.DataField = "nm_kategori"
         .txtKodeProduct.DataField = "kd_obat"
         .txtName.DataField = "nm_obat"
         .txtMerk.DataField = "kemasan"
-        '.txtPriceBuy.DataField = "harga_beli"
-        '.txtPriceSell.DataField = "harga_jual"
-        '.txtProfit.DataField = "profit"
         .txtGudang.DataField = "stok"
         .txtBeli.DataField = "beli"
         .txtJual.DataField = "jual"
@@ -516,7 +479,7 @@ Public Sub printStockMin()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblTgl.Caption = "Tgl Print : " & Format(Date, "DD/MM/YYYY")
@@ -529,9 +492,6 @@ Public Sub printStockMin()
         .txtKodeProduct.DataField = "kd_obat"
         .txtName.DataField = "nm_obat"
         .txtMerk.DataField = "kemasan"
-        '.txtPriceBuy.DataField = "harga_beli"
-        '.txtPriceSell.DataField = "harga_jual"
-        '.txtProfit.DataField = "profit"
         .txtGudang.DataField = "stok"
         .txtBeli.DataField = "beli"
         .txtJual.DataField = "jual"
@@ -561,11 +521,11 @@ Public Sub printPasien()
     
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         
@@ -601,18 +561,18 @@ Public Sub printCashFlow()
     
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         
         .DataControl1.CursorLocation = ddADOUseClient
         .DataControl1.ConnectionString = DBPath
         sql = "SELECT tgl_cash,(jual+jual_sebelumnya) as jual,(beli+beli_sebelumnya) as beli FROM vw_cash_flow WHERE flag=1 AND id " & gb & " " & baw & " AND  id  " & gk & " " & bak & " ORDER BY tgl_cash ASC "
-        'MsgBox sql
+
         .DataControl1.Source = sql
         .txtDate.DataField = "tgl_cash"
         .txtPenjualan.DataField = "jual"
@@ -657,20 +617,14 @@ Public Sub printCashFlowdetails()
     
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblTanggal.Caption = "Dari Tanggal " & tbl.TABLE_TANGGAL_AWAL & " Sampai " & tbl.TABLE_TANGGAL_AKHIR
-         
-         'If tbl.TABLE_TANGGAL_AKHIR <> "" Then
-         '       tbl.TABLE_TANGGAL_AWAL = Format(tbl.TABLE_TANGGAL_AWAL, "YYYY-MM-DD")
-         '       tbl.TABLE_TANGGAL_AKHIR = Format(tbl.TABLE_TANGGAL_AKHIR, "YYYY-MM-DD")
-         'End If
-        
         .DataControl1.CursorLocation = ddADOUseClient
         .DataControl1.ConnectionString = DBPath
         'AND id " & gb & " " & baw & " AND  id  " & gk & " " & bak & "
@@ -682,11 +636,7 @@ Public Sub printCashFlowdetails()
             tbl.TABLE_TANGGAL_AKHIR = ""
          End If
          sql = sql & " ORDER BY vf.id ASC "
-        'sql = "SELECT * FROM vw_cash_flow"
-        'sql = "SELECT *,vf.tgl_cash,vf.jual,vf.beli,vk.komisi as komisidep,vk.pasien as vkpasien FROM vw_cash_flow vf LEFT JOIN vw_komisi vk ON vk.tgl_jual=vf.tgl_cash ORDER BY vf.id ASC "
-        'MsgBox sql
         .DataControl1.Source = sql
-        'MsgBox sql
         .GroupHeader1.DataField = "tgl_cash"
         .txtDate.DataField = "tgl_cash"
         
@@ -741,25 +691,8 @@ Public Sub printCashFlowdetails()
         .txtSumPasien.SummaryDistinctField = "tgl_cash"
         .txtSumBYr.DataField = "lunas"
         .txtSumBYr.SummaryDistinctField = "tgl_cash"
-        '.PrintReport True
         .show
      End With
-End Sub
-
-Public Sub closedCash()
-    'Dim i As Byte
-    ' Dim total As Integer
-    ' total = frmCashFlow.lvList.ListItems.Count
-    ' If total > 0 Then
-    '    For i = 1 To total
-    '       sql = "UPDATE tbl_cash "
-    '       sql = sql + " SET "
-    '       sql = sql + " flag = 1"
-    '       sql = sql + " WHERE id=" & frmCashFlow.lvList.ListItems(i).Text
-    '       CN.Execute sql
-    '    Next i
-    ' End If
-    ' frmCashFlow.RefreshRecords
 End Sub
 
 Public Sub printSalesSummary()
@@ -768,7 +701,7 @@ Public Sub printSalesSummary()
     Set rpt = New ACRSalesSummary
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .DataControl1.CursorLocation = ddADOUseClient
@@ -791,10 +724,7 @@ Public Sub printSalesSummary()
         End If
         
         .lblTanggal.Caption = "Dari Tanggal " & tbl.TABLE_TANGGAL_AWAL & " Sampai " & tbl.TABLE_TANGGAL_AKHIR
-        'AND j.tgl_jual < curdate()
-        'DATE_FORMAT(tgl_jual,'%Y-%m-%d') as
-        sql = "SELECT j.no_jual,j.tgl_jual,(IF(j.flag_kreditor=1,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Jatuh Tempo')),'Lunas')) ,'Lunas'))AS status,j.tgl_bayar,j.kd_pasien,p.nm_pasien,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.flag_kreditor,j.flag_debitor,j.bayar,j.piutang,j.komisi,(j.bayar-j.komisi) as total FROM tbl_jual j JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_cabang c ON c.id_cabang=j.id_cabang LEFT OUTER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna WHERE j.id_jual " & gb & " " & baw & " And j.id_jual " & gk & " " & bak & "  ORDER BY j.tgl_bayar ASC,j.no_jual ASC,j.kd_pasien ASC " 'DATE_FORMAT(j.tgl_jual,'%Y-%m-%d') ASC
-        'MsgBox sql
+        sql = "SELECT j.no_jual,j.tgl_jual,(IF(j.flag_kreditor=1,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Jatuh Tempo')),'Lunas')) ,'Lunas'))AS status,j.tgl_bayar,j.kd_pasien,p.nm_pasien,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.flag_kreditor,j.flag_debitor,j.bayar,j.piutang,j.komisi,(j.bayar-j.komisi) as total FROM tbl_jual j INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor INNER JOIN tbl_departement d ON d.id_departement=j.id_departement INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna WHERE j.id_jual " & gb & " " & baw & " And j.id_jual " & gk & " " & bak & "  ORDER BY j.tgl_bayar ASC,j.no_jual ASC,j.kd_pasien ASC " 'DATE_FORMAT(j.tgl_jual,'%Y-%m-%d') ASC
         .DataControl1.Source = sql
         '.GroupHeader1.DataField = "tgl_jual"
         .GroupHeader1.DataField = "tgl_bayar"
@@ -807,14 +737,9 @@ Public Sub printSalesSummary()
         .txtCustomerName.DataField = "nm_pasien"
         .txtKreditor.DataField = "nm_kreditor"
         .txtNmDep.DataField = "nm_departement"
-        '.txtCabang.DataField = "nm_cabang"
-        '.txtTypeKreditor.DataField = "flag_kreditor"
-        '.txtTypeDebitor.DataField = "flag_debitor"
         .txtKas.DataField = "bayar"
         .txtPiutang.DataField = "piutang"
-        '.txtKomisi.DataField = "komisi"
         .txtKasTotal.DataField = "total"
-        '.txtStatus.DataField = "status"
         'Group 1
         .txtSubKas.DataField = "bayar"
         .txtSubPiutang.DataField = "piutang"
@@ -823,7 +748,6 @@ Public Sub printSalesSummary()
         'All
         .txtGrandKas.DataField = "bayar"
         .txtGrandPiutang.DataField = "piutang"
-        '.txtGrandKomisi.DataField = "komisi"
         .txtGrandTotal.DataField = "total"
         
         .lblTgl1.Caption = " Tgl." & Format(Date, "DD/MM/YYYY")
@@ -838,7 +762,7 @@ Public Sub printSalesCommision()
     Set rpt = New ACRListKomisi
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .DataControl1.CursorLocation = ddADOUseClient
@@ -893,7 +817,7 @@ Public Sub printPurchaseSummary()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         
@@ -911,7 +835,7 @@ Public Sub printPurchaseSummary()
             gk = ">="
         End If
         'DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') as tgl_beli
-        sql = "SELECT b.no_beli,b.tgl_beli,b.tgl_bayar,b.id_supplier,s.nm_supplier,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa FROM tbl_beli b JOIN tbl_supplier s ON s.id_supplier=b.id_supplier WHERE b.id_beli " & gb & " " & baw & " And b.id_beli " & gk & " " & bak & "  ORDER BY b.tgl_bayar " 'DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') ASC
+        sql = "SELECT b.no_beli,b.tgl_beli,b.tgl_bayar,b.id_supplier,s.nm_supplier,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa FROM tbl_beli b INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier WHERE b.id_beli " & gb & " " & baw & " And b.id_beli " & gk & " " & bak & "  ORDER BY b.tgl_bayar " 'DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') ASC
         .DataControl1.Source = sql
         '.GroupHeader1.DataField = "tgl_beli"
         .GroupHeader1.DataField = "tgl_bayar"
@@ -942,7 +866,7 @@ Public Sub printPurchaseDetails()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         
@@ -961,11 +885,11 @@ Public Sub printPurchaseDetails()
         End If
         sql = "SELECT *,"
         sql = sql + " (d.harga_beli * d.jumlah) as total FROM tbl_beli b "
-        sql = sql + " JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
-        sql = sql + " JOIN tbl_beli_details d ON d.no_beli=b.no_beli "
-        sql = sql + " JOIN tbl_obat o ON o.id_obat=d.id_obat "
+        sql = sql + " INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
+        sql = sql + " INNER JOIN tbl_beli_details d ON d.no_beli=b.no_beli "
+        sql = sql + " INNER JOIN tbl_obat o ON o.id_obat=d.id_obat "
         sql = sql + " WHERE b.id_beli " & gb & " " & baw & " And b.id_beli " & gk & " " & bak & "  ORDER BY o.kd_obat ASC,DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') ASC "
-        'MsgBox sql
+        
         .DataControl1.Source = sql
         .GroupHeader1.DataField = "kd_obat"
         .txtKodeProduct.DataField = "kd_obat"
@@ -994,7 +918,7 @@ Public Sub printRetur()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         
@@ -1014,7 +938,7 @@ Public Sub printRetur()
         End If
         sql = "SELECT *,(d.harga_beli*d.retur)as total "
         sql = sql & " FROM tbl_beli b JOIN tbl_beli_details d ON d.no_beli=b.no_beli "
-        sql = sql & " LEFT JOIN tbl_obat o ON o.id_obat=d.id_obat LEFT JOIN tbl_kategori k ON k.id_kategori=o.id_kategori "
+        sql = sql & " INNER JOIN tbl_obat o ON o.id_obat=d.id_obat INNER JOIN tbl_kategori k ON k.id_kategori=o.id_kategori "
         sql = sql & " WHERE d.retur > 0 "
         sql = sql & " ORDER BY o.id_kategori,o.kd_obat ASC"
         .ADO1.Source = sql
@@ -1039,9 +963,8 @@ Public Sub printInvoice()
     MDIMainMenu.HideTBButton "", True
     With rpt
         .lblname.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblkota.Caption = CurrBiz.BUSINNES_CITY
-        '.lblkotaprov.Caption = CurrBiz.BUSINNES_CITY
         .lblTgl.Caption = Format(Date, "DD/MM/YYYY")
         
         .lblNamaKreditor.Caption = tbl.TABLE_NM_KREDITUR
@@ -1053,17 +976,14 @@ Public Sub printInvoice()
         sql = " SELECT j.no_jual,j.tgl_jual,j.kd_pasien,p.nm_pasien,d.nm_departement,(j.piutang+j.bayar) as piutang"
         sql = sql + " From "
         sql = sql + " tbl_jual j"
-        sql = sql + " JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
-        sql = sql + " JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor"
-        sql = sql + " JOIN tbl_departement d ON d.id_departement=j.id_departement"
+        sql = sql + " INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
+        sql = sql + " LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor"
+        sql = sql + " INNER JOIN tbl_departement d ON d.id_departement=j.id_departement"
         sql = sql + " WHERE j.id_kreditor= " & tbl.TABLE_ID_KREDITUR & " AND j.flag_kreditor=1 AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')< CURDATE() "
         If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
             sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
             sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
         End If
-        'MsgBox sql
-              'HighlightInWin ACRInvoice.Name: MDIMainMenu.ShowTBButton "fffffft"
-        
         .DataControl1.Source = sql
         .txtKdFaktur.DataField = "no_jual"
         .txtTanggal.DataField = "tgl_jual"
@@ -1082,15 +1002,14 @@ End Sub
 Public Sub Invoice_lunas()
     Dim total As Integer
     Dim bayar As Double
-    'Dim sql2 As String
     Dim rsJual As New Recordset
     
     sql = " SELECT j.id_jual,j.no_jual,j.tgl_jual,j.kd_pasien,p.nm_pasien,d.nm_departement,(j.piutang+j.bayar) as piutang"
     sql = sql + " From "
     sql = sql + " tbl_jual j"
-    sql = sql + " JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
-    sql = sql + " JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor"
-    sql = sql + " JOIN tbl_departement d ON d.id_departement=j.id_departement"
+    sql = sql + " INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
+    sql = sql + " LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor"
+    sql = sql + " INNER JOIN tbl_departement d ON d.id_departement=j.id_departement"
     sql = sql + " WHERE j.id_kreditor= " & tbl.TABLE_ID_KREDITUR & " AND j.flag_kreditor=1 AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')< CURDATE() "
     If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
             sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
@@ -1170,7 +1089,7 @@ Public Sub printInvoicePembelian()
     MDIMainMenu.HideTBButton "", True
     With rpt
         .lblname.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblkota.Caption = CurrBiz.BUSINNES_CITY
         '.lblkotaprov.Caption = CurrBiz.BUSINNES_CITY
         .lblTgl.Caption = Format(Date, "DD/MM/YYYY")
@@ -1183,16 +1102,15 @@ Public Sub printInvoicePembelian()
         .DataControl1.ConnectionString = DBPath
         sql = " SELECT b.no_beli,b.tgl_beli,o.kd_obat,o.nm_obat,d.harga_beli,d.jumlah,(d.harga_beli * d.jumlah) as total"
         sql = sql + " FROM tbl_beli b"
-        sql = sql + " LEFT JOIN tbl_beli_details d ON d.no_beli=b.no_beli"
-        sql = sql + " LEFT JOIN tbl_obat o ON o.id_obat=d.id_obat"
+        sql = sql + " INNER JOIN tbl_beli_details d ON d.no_beli=b.no_beli"
+        sql = sql + " INNER JOIN tbl_obat o ON o.id_obat=d.id_obat"
         sql = sql + " WHERE b.flag_supplier=1 AND b.id_supplier = " & Trim(tbl.TABLE_ID_SUPPLIER) & " "
         
         If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
             sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
             sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
         End If
-        
-        'HighlightInWin ACRInvoicePembelian.Name: MDIMainMenu.ShowTBButton "fffffft"
+
         .DataControl1.Source = sql
         .txtKdFaktur.DataField = "no_beli"
         .txtTanggal.DataField = "tgl_beli"
@@ -1203,11 +1121,7 @@ Public Sub printInvoicePembelian()
         .txtTotal.DataField = "total"
         .txtSumTotal.DataField = "total"
      End With
-     
      MsgBox "Print Invoice Pengeluaran, Akan Melunasi Seluruh Hutang yang telah ada di Invoice !  ", vbCritical + vbInformation
-     
-      'End If
-     'End With
 End Sub
 
 Public Sub cetak_Invoice_Pembelian()
@@ -1253,7 +1167,7 @@ Public Sub printKomisi()
     MDIMainMenu.HideTBButton "", True
     With rpt
         .lblname.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblkota.Caption = CurrBiz.BUSINNES_CITY
         '.lblkotaprov.Caption = CurrBiz.BUSINNES_CITY
         
@@ -1266,9 +1180,9 @@ Public Sub printKomisi()
         sql = " SELECT j.no_jual,j.tgl_jual,j.kd_pasien,p.nm_pasien,k.nm_kreditor,j.komisi"
         sql = sql + " From "
         sql = sql + " tbl_jual j"
-        sql = sql + " LEFT JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
+        sql = sql + " INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
         sql = sql + " LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor"
-        sql = sql + " JOIN tbl_departement d ON d.id_departement=j.id_departement"
+        sql = sql + " INNER JOIN tbl_departement d ON d.id_departement=j.id_departement"
         'AND j.flag_debitor= 0
         sql = sql + " WHERE j.id_departement= " & tbl.TABLE_ID_DEPT & " AND j.flag_kreditor=0 AND j.flag_debitor=1  AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= CURDATE() "
         
@@ -1304,9 +1218,9 @@ Public Sub LunasKomisi()
     sql = " SELECT j.no_jual,j.tgl_jual,j.kd_pasien,p.nm_pasien,k.nm_kreditor,j.komisi"
     sql = sql + " From "
     sql = sql + " tbl_jual j"
-    sql = sql + " LEFT JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
+    sql = sql + " INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
     sql = sql + " LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor"
-    sql = sql + " JOIN tbl_departement d ON d.id_departement=j.id_departement"
+    sql = sql + " INNER JOIN tbl_departement d ON d.id_departement=j.id_departement"
     sql = sql + " WHERE j.id_departement= " & tbl.TABLE_ID_DEPT & " AND j.flag_kreditor=0 AND j.flag_debitor=1  AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= CURDATE() "
     If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
         sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
@@ -1389,7 +1303,7 @@ Public Sub printStockOpname()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblTgl.Caption = "Tgl Print : " & Format(Date, "DD/MM/YYYY")
@@ -1399,8 +1313,8 @@ Public Sub printStockOpname()
         
         sql = "SELECT *,DATE_FORMAT(op.tgl_input,'%d-%m-%Y') as dateop,DATE_FORMAT(op.tgl_input,'%H:%i:%s') as timeop,@sf:=((o.box_sedang * op.kem_sedang)+(o.box_kecil*op.kem_kecil)+op.satuan) as sf,@s:=(@sf-op.stok_sblm) as sisa,(@s*o.harga_beli) as total,p.nm_pengguna "
         sql = sql & " FROM tbl_opname op "
-        sql = sql & " LEFT JOIN tbl_obat o ON o.id_obat=op.id_obat "
-        sql = sql & " LEFT JOIN tbl_pengguna p ON p.id=op.id_pengguna "
+        sql = sql & " INNER JOIN tbl_obat o ON o.id_obat=op.id_obat "
+        sql = sql & " INNER JOIN tbl_pengguna p ON p.id=op.id_pengguna "
         sql = sql & " WHERE op.flag_opname=1 "
         sql = sql & " ORDER BY DATE_FORMAT(op.tgl_input,'%d-%m-%Y') ASC,DATE_FORMAT(op.tgl_input,'%H:%i:%s') ASC,op.id_obat ASC "
         
@@ -1420,4 +1334,3 @@ Public Sub printStockOpname()
         .show
      End With
 End Sub
-
