@@ -31,19 +31,13 @@ End Sub
 Private Sub ActiveReport_KeyDown(KeyCode As Integer, ByVal Shift As Integer)
      On Error Resume Next
     Select Case KeyCode
-        'Case vbKeyF2: CommandPass "New"
-        'Case vbKeyF3: CommandPass "Edit"
-        'Case vbKeyF4: CommandPass "Search"
-        'Case vbKeyF5: CommandPass "Delete"
-        'Case vbKeyF6: CommandPass "Refresh"
         Case vbKeyF8: CommandPass "Close"
     End Select
 End Sub
 
 Private Sub ActiveReport_ReportEnd()
-    MDIMainMenu.RemToWin Me.Caption
     On Error Resume Next
-    Call closedCash
+    MDIMainMenu.RemToWin Me.Caption
 End Sub
 
 Private Sub ActiveReport_ReportStart()
