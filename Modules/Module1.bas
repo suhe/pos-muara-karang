@@ -436,7 +436,7 @@ Public Sub printStock()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblTgl.Caption = "Tgl Print : " & Format(Date, "DD/MM/YYYY")
@@ -479,7 +479,7 @@ Public Sub printStockMin()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblTgl.Caption = "Tgl Print : " & Format(Date, "DD/MM/YYYY")
@@ -521,11 +521,11 @@ Public Sub printPasien()
     
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         
@@ -561,11 +561,11 @@ Public Sub printCashFlow()
     
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         
@@ -617,11 +617,11 @@ Public Sub printCashFlowdetails()
     
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblTanggal.Caption = "Dari Tanggal " & tbl.TABLE_TANGGAL_AWAL & " Sampai " & tbl.TABLE_TANGGAL_AKHIR
@@ -701,7 +701,7 @@ Public Sub printSalesSummary()
     Set rpt = New ACRSalesSummary
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .DataControl1.CursorLocation = ddADOUseClient
@@ -777,7 +777,7 @@ Public Sub printSalesCommision()
     Set rpt = New ACRListKomisi
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .DataControl1.CursorLocation = ddADOUseClient
@@ -832,7 +832,7 @@ Public Sub printPurchaseSummary()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         
@@ -900,7 +900,7 @@ Public Sub printPurchaseDetails()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         
@@ -974,7 +974,7 @@ Public Sub printRetur()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         
@@ -1019,7 +1019,7 @@ Public Sub printInvoice()
     MDIMainMenu.HideTBButton "", True
     With rpt
         .lblname.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblkota.Caption = CurrBiz.BUSINNES_CITY
         .lblTgl.Caption = Format(Date, "DD/MM/YYYY")
         
@@ -1140,7 +1140,7 @@ Public Sub printInvoicePembelian()
     MDIMainMenu.HideTBButton "", True
     With rpt
         .lblname.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblkota.Caption = CurrBiz.BUSINNES_CITY
         '.lblkotaprov.Caption = CurrBiz.BUSINNES_CITY
         .lblTgl.Caption = Format(Date, "DD/MM/YYYY")
@@ -1195,9 +1195,9 @@ Public Sub cetak_Invoice_Pembelian()
         .CurrentX = .CurrentX + 500 ' Skip some space
         Printer.Print " Nama Supplier  "; Spc(4); ":"; Spc(5); "" & tbl.TABLE_NM_SUPPLIER & ""; Tab(70); " "; Spc(5); ""; Spc(2); ""
         .CurrentX = .CurrentX + 500 ' Skip some space
-        Printer.Print " Total Obat"; Spc(10); ":"; Spc(5); "" & tbl.TABLE_TOTAL_OBAT & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
+        Printer.Print " Total Obat"; Spc(10); ":"; Spc(5); "" & Format(tbl.TABLE_TOTAL_OBAT, "#,##0") & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
         .CurrentX = .CurrentX + 500 ' Skip some space
-        Printer.Print " Total Uang"; Spc(9); ":"; Spc(5); "" & tbl.TABLE_TOTAL & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
+        Printer.Print " Total Uang"; Spc(9); ":"; Spc(5); "" & Format(tbl.TABLE_TOTAL, "#,##0") & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
         Printer.Print ""
         .CurrentX = .CurrentX + 500
         Printer.Print " --------------------------------------------------------------------------------------------------------------- "
@@ -1219,7 +1219,7 @@ Public Sub printKomisi()
     MDIMainMenu.HideTBButton "", True
     With rpt
         .lblname.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblkota.Caption = CurrBiz.BUSINNES_CITY
         '.lblkotaprov.Caption = CurrBiz.BUSINNES_CITY
         
@@ -1358,7 +1358,7 @@ Public Sub printStockOpname()
     DBPath = "DSN=" + CurrUser.User_DSN + ""
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
-        .lblalamat.Caption = CurrBiz.BUSINESS_ADDRESS
+        .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblCity.Caption = CurrBiz.BUSINNES_CITY
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .lblTgl.Caption = "Tgl Print : " & Format(Date, "DD/MM/YYYY")

@@ -41,7 +41,7 @@ End Sub
 
 Private Sub ActiveReport_ReportEnd()
     MDIMainMenu.RemToWin Me.Caption
-        Dim total As Integer
+        Dim total As Long
         Dim bayar As Double
         Dim rsPay As New Recordset
        
