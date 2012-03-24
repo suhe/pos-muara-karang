@@ -42,6 +42,7 @@ End Sub
 
 Private Sub ActiveReport_ReportEnd()
     MDIMainMenu.RemToWin Me.Caption
+    Call Invoice_lunas
 End Sub
 
 Private Sub ActiveReport_ReportStart()

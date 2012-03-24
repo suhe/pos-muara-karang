@@ -301,10 +301,14 @@ Public Sub CommandPass(ByVal srcPerformWhat As String)
                 End With
             End If
         Case "Refresh"
+            tbl.TABLE_ID_DEPT = ""
+            tbl.TABLE_TANGGAL_AWAL = ""
+            tbl.TABLE_TANGGAL_AKHIR = ""
             Call Deactive
             RefreshRecords
          Case "Print"
             If lvList.ListItems.Count > 0 Then
+                 RefreshRecords
                  Call printSalesCommision
               Else
                  MsgBox "Data Is empty", vbOKOnly + vbCritical, "Warning"
