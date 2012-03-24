@@ -802,8 +802,26 @@ Public Sub printSalesCommision()
         .lblTanggal.Caption = "Dari Tanggal " & tbl.TABLE_TANGGAL_AWAL & " Sampai " & tbl.TABLE_TANGGAL_AKHIR
         'AND j.tgl_jual < curdate()
         'DATE_FORMAT(tgl_jual,'%Y-%m-%d') as
-        sql = "SELECT j.no_jual,j.tgl_jual,(IF(j.flag_kreditor=1,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Jatuh Tempo')),'Lunas')) ,'Lunas'))AS status,j.tgl_komisi,j.kd_pasien,p.nm_pasien,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.flag_kreditor,j.flag_debitor,j.bayar,j.piutang,j.komisi,(j.bayar-j.komisi) as total FROM tbl_jual j JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_cabang c ON c.id_cabang=j.id_cabang LEFT OUTER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna WHERE j.flag_kreditor=1 AND j.id_jual " & gb & " " & baw & " And j.id_jual " & gk & " " & bak & "  ORDER BY j.tgl_komisi ASC,j.no_jual ASC,j.kd_pasien ASC " 'DATE_FORMAT(j.tgl_jual,'%Y-%m-%d') ASC
-        'MsgBox sql
+        sql = "SELECT j.no_jual,j.tgl_jual,(IF(j.flag_kreditor=1,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Jatuh Tempo')),'Lunas')) ,'Lunas'))AS status,j.tgl_komisi,j.kd_pasien,p.nm_pasien,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.flag_kreditor,j.flag_debitor,j.bayar,j.piutang,j.komisi,(j.bayar-j.komisi) as total "
+        sql = sql & " FROM tbl_jual j "
+        sql = sql & " INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
+        sql = sql & " LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor "
+        sql = sql & " INNER JOIN tbl_departement d ON d.id_departement=j.id_departement "
+        sql = sql & " INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang "
+        sql = sql & " INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna "
+        sql = sql & " WHERE j.no_jual<>''  "
+        
+        If (tbl.TABLE_ID_DEPT <> "") Then
+            sql = sql + " AND j.id_departement= " & tbl.TABLE_ID_DEPT & " AND j.flag_debitor=1 AND j.flag_kreditor=0 AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= CURDATE() "
+        End If
+        
+        If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
+            sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
+            sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
+        End If
+        
+        sql = sql & " ORDER BY j.tgl_komisi ASC,j.no_jual ASC,j.kd_pasien ASC " 'DATE_FORMAT(j.tgl_jual,'%Y-%m-%d') ASC
+        
         .DataControl1.Source = sql
         '.GroupHeader1.DataField = "tgl_jual"
         .GroupHeader1.DataField = "tgl_komisi"
@@ -1122,7 +1140,7 @@ Public Sub cetak_Invoice()
         .CurrentX = .CurrentX + 500 ' Skip some space
         Printer.Print " Total Pasien  "; Spc(7); ":"; Spc(5); "" & tbl.TABLE_TOTAL_PASIEN & ""
         .CurrentX = .CurrentX + 500 ' Skip some space
-        Printer.Print " Total Uang"; Spc(9); ":"; Spc(5); "" & Format(tbl.TABLE_TOTAL, "##,###0.00") & ""
+        Printer.Print " Total Uang"; Spc(9); ":"; Spc(5); "" & Format(tbl.TABLE_TOTAL, "##,###0") & ""
         Printer.Print ""
         .CurrentX = .CurrentX + 500
         Printer.Print " --------------------------------------------------------------------------------------------------------------- "
@@ -1274,6 +1292,7 @@ Public Sub LunasKomisi()
     sql = sql + " LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor"
     sql = sql + " INNER JOIN tbl_departement d ON d.id_departement=j.id_departement"
     sql = sql + " WHERE j.id_departement= " & tbl.TABLE_ID_DEPT & " AND j.flag_kreditor=0 AND j.flag_debitor=1  AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= CURDATE() "
+    
     If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
         sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
         sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
@@ -1293,7 +1312,7 @@ Public Sub LunasKomisi()
                 sql = "UPDATE tbl_jual "
                 sql = sql + "SET "
                 sql = sql + " flag_debitor= 0,  "
-                sql = sql + " tgl_komisi= '" & rsKom.Fields("tgl_komisi") & "'"
+                sql = sql + " tgl_komisi= '" & Format(Date, "YYYY-MM-DD") & "'"
                 sql = sql + " WHERE no_jual='" & rsKom.Fields("no_jual") & "'"
                 CN.Execute sql
                 bayar = bayar + Val(Format(rsKom.Fields("komisi"), ""))

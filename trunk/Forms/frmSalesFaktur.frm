@@ -380,7 +380,6 @@ Private Sub Command1_Click()
         If (lvList.ListItems.Count > 0) Then
             Unload Me
             Call printInvoice
-            Call Invoice_lunas
         Else
             MsgBox "No Data Selected to Print !"
         End If
