@@ -384,6 +384,10 @@ End Sub
 Private Sub Form_Activate()
     'HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "", True
     HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "tttttft"
+    With MDIMainMenu
+         .tbMenu.Buttons(3).Caption = "New"
+         .tbMenu.Buttons(3).Image = 1
+    End With
 End Sub
 
 Private Sub Form_Deactivate()

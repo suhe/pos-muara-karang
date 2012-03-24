@@ -468,6 +468,11 @@ Private Sub Form_Activate()
     Else
         HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "tftfttt"
     End If
+    
+    With MDIMainMenu
+         .tbMenu.Buttons(3).Caption = "New"
+         .tbMenu.Buttons(3).Image = 1
+    End With
 End Sub
 
 Private Sub Form_Deactivate()
