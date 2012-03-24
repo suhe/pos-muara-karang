@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {9EB8768B-CDFA-44DF-8F3E-857A8405E1DB} ACRInvoicePembelian 
    Caption         =   "Laporan Pembelian"
-   ClientHeight    =   11010
+   ClientHeight    =   10950
    ClientLeft      =   60
    ClientTop       =   450
    ClientWidth     =   15240
@@ -48,8 +48,8 @@ Private Sub ActiveReport_ReportEnd()
        
         sql = " SELECT b.id_beli,b.no_beli,b.tgl_beli,o.kd_obat,o.nm_obat,b.hutang,d.harga_beli,d.jumlah,(d.harga_beli * d.jumlah) as total"
         sql = sql + " FROM tbl_beli b"
-        sql = sql + " LEFT JOIN tbl_beli_details d ON d.no_beli=b.no_beli"
-        sql = sql + " LEFT JOIN tbl_obat o ON o.id_obat=d.id_obat"
+        sql = sql + " INNER JOIN tbl_beli_details d ON d.no_beli=b.no_beli"
+        sql = sql + " INNER JOIN tbl_obat o ON o.id_obat=d.id_obat"
         sql = sql + " WHERE b.flag_supplier=1 AND b.id_supplier = " & Trim(tbl.TABLE_ID_SUPPLIER) & " "
         
         If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
@@ -63,6 +63,7 @@ Private Sub ActiveReport_ReportEnd()
         If rsPay.State = 1 Then rsPay.Close
         rsPay.Open sql, CN, adOpenStatic, adLockReadOnly
         
+        total = 0
         Do While Not rsPay.EOF
         'total = .lvList.ListItems.Count
         'If (total > 0) Then
@@ -76,8 +77,9 @@ Private Sub ActiveReport_ReportEnd()
                 sql = sql + " hutang= 0, "
                 sql = sql + " bayar=" & rsPay.Fields("hutang") & " "
                 sql = sql + " WHERE id_beli=" & rsPay.Fields("id_beli") & ""
-                bayar = bayar + Val(Format(rsPay.Fields("hutang"), ""))
+                bayar = bayar + (Val(Format(rsPay.Fields("hutang"), "")) + Val(Format(rsPay.Fields("bayar"), "")))
                 CN.Execute sql
+            total = total + 1
             rsPay.MoveNext
            Loop
             
