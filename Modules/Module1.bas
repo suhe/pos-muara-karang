@@ -835,7 +835,26 @@ Public Sub printPurchaseSummary()
             gk = ">="
         End If
         'DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') as tgl_beli
-        sql = "SELECT b.no_beli,b.tgl_beli,b.tgl_bayar,b.id_supplier,s.nm_supplier,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa FROM tbl_beli b INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier WHERE b.id_beli " & gb & " " & baw & " And b.id_beli " & gk & " " & bak & "  ORDER BY b.tgl_bayar " 'DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') ASC
+        'sql = "SELECT b.no_beli,b.tgl_beli,b.tgl_bayar,b.id_supplier,s.nm_supplier,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa FROM tbl_beli b INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier WHERE b.id_beli " & gb & " " & baw & " And b.id_beli " & gk & " " & bak & "  ORDER BY b.tgl_bayar " 'DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') ASC
+        sql = " SELECT b.no_beli,b.tgl_beli,b.tgl_bayar,b.id_supplier,s.nm_supplier,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa "
+        sql = sql + " FROM tbl_beli b"
+        sql = sql + " INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
+        sql = sql + " WHERE b.no_beli <> '' "
+        
+        If (tbl.TABLE_ID_SUPPLIER <> "") Then
+            sql = sql + " AND b.flag_supplier=1 AND b.id_supplier = " & Trim(tbl.TABLE_ID_SUPPLIER) & " "
+        End If
+        
+        If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
+        End If
+
+        If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
+        End If
+        
         .DataControl1.Source = sql
         '.GroupHeader1.DataField = "tgl_beli"
         .GroupHeader1.DataField = "tgl_bayar"
@@ -883,12 +902,34 @@ Public Sub printPurchaseDetails()
             gb = "<="
             gk = ">="
         End If
-        sql = "SELECT *,"
-        sql = sql + " (d.harga_beli * d.jumlah) as total FROM tbl_beli b "
+        'sql = "SELECT *,"
+        'sql = sql + " (d.harga_beli * d.jumlah) as total FROM tbl_beli b "
+        'sql = sql + " INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
+        'sql = sql + " INNER JOIN tbl_beli_details d ON d.no_beli=b.no_beli "
+        'sql = sql + " INNER JOIN tbl_obat o ON o.id_obat=d.id_obat "
+        'sql = sql + " WHERE b.id_beli " & gb & " " & baw & " And b.id_beli " & gk & " " & bak & "  ORDER BY o.kd_obat ASC,DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') ASC "
+        
+        sql = " SELECT *,(d.harga_beli * d.jumlah) as total "
+        sql = sql + " FROM tbl_beli b"
         sql = sql + " INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
         sql = sql + " INNER JOIN tbl_beli_details d ON d.no_beli=b.no_beli "
         sql = sql + " INNER JOIN tbl_obat o ON o.id_obat=d.id_obat "
-        sql = sql + " WHERE b.id_beli " & gb & " " & baw & " And b.id_beli " & gk & " " & bak & "  ORDER BY o.kd_obat ASC,DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') ASC "
+        sql = sql + " WHERE b.no_beli <> '' "
+        
+        If (tbl.TABLE_ID_SUPPLIER <> "") Then
+            sql = sql + " AND b.flag_supplier=1 AND b.id_supplier = " & Trim(tbl.TABLE_ID_SUPPLIER) & " "
+        End If
+        
+        If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
+        End If
+
+        If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
+            sql = sql + " AND DATE_FORMAT(b.tgl_beli,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
+        End If
+        
         
         .DataControl1.Source = sql
         .GroupHeader1.DataField = "kd_obat"
@@ -1018,36 +1059,31 @@ Public Sub Invoice_lunas()
     If rsJual.State = 1 Then rsJual.Close
     rsJual.CursorLocation = adUseClient
     rsJual.Open sql, CN, adOpenStatic, adLockReadOnly
-     
-     
-     'With frmSalesFaktur
-        'total = .lvList.ListItems.Count
-        'If (total > 0) Then
-            bayar = 0
-            Do While Not rsJual.EOF
-            'For i = 1 To total
-                sql = "UPDATE tbl_jual "
-                sql = sql + "SET "
-                sql = sql + " tgl_bayar='" & Format(Date, "YYYY-MM-DD") & "',"
-                sql = sql + " payment='Lunas', "
-                sql = sql + " flag_kreditor= 0 , "
-                sql = sql + " bayar=" & Format(rsJual.Fields("piutang"), "") & ", "
-                sql = sql + " dibayar=" & Format(rsJual.Fields("piutang"), "") & ", "
-                sql = sql + " piutang= 0  "
-                sql = sql + " WHERE id_jual=" & Format(rsJual.Fields("id_jual"), "") & ""
-                bayar = bayar + Val(Format(Format(rsJual.Fields("piutang"), "")))
-                CN.Execute sql
-            'Next i
-            Loop
+    
+    bayar = 0
+    total = 0
+    Do While Not rsJual.EOF
+        sql = "UPDATE tbl_jual "
+        sql = sql + "SET "
+        sql = sql + " tgl_bayar='" & Format(Date, "YYYY-MM-DD") & "',"
+        sql = sql + " payment='Lunas', "
+        sql = sql + " flag_kreditor= 0 , "
+        sql = sql + " bayar=" & Format(rsJual.Fields("piutang"), "") & ", "
+        sql = sql + " dibayar=" & Format(rsJual.Fields("piutang"), "") & ", "
+        sql = sql + " piutang= 0  "
+        sql = sql + " WHERE id_jual=" & Format(rsJual.Fields("id_jual"), "") & ""
+        bayar = bayar + Val(Format(Format(rsJual.Fields("piutang"), "")))
+        CN.Execute sql
+        rsJual.MoveNext
+        total = total + 1
+    Loop
             
-            rsJual.MoveFirst
-            tbl.TABLE_TANGGAL_AWAL = rsJual.Fields("tgl_jual")
-            rsJual.MoveLast
-            tbl.TABLE_TANGGAL_AKHIR = rsJual.Fields("tgl_jual")
-            tbl.TABLE_TOTAL = bayar
-            tbl.TABLE_TOTAL_PASIEN = total
-        'End If
-    'End With
+    rsJual.MoveFirst
+    tbl.TABLE_TANGGAL_AWAL = rsJual.Fields("tgl_jual")
+    rsJual.MoveLast
+    tbl.TABLE_TANGGAL_AKHIR = rsJual.Fields("tgl_jual")
+    tbl.TABLE_TOTAL = bayar
+    tbl.TABLE_TOTAL_PASIEN = total
 End Sub
 
 Public Sub cetak_Invoice()
@@ -1232,8 +1268,10 @@ Public Sub LunasKomisi()
     rsKom.Open sql, CN, adOpenStatic, adLockReadOnly
      'With frmKomisiFaktur
      'total = (.lvList.ListItems.Count)
+     total = 0
         'If (total > 0) Then
             bayar = 0
+            total = 0
             Do While Not rsKom.EOF
             'For i = 1 To total
                 sql = "UPDATE tbl_jual "
@@ -1244,7 +1282,8 @@ Public Sub LunasKomisi()
                 CN.Execute sql
                 bayar = bayar + Val(Format(rsKom.Fields("komisi"), ""))
                 total = total + Val(Format(rsKom.Fields("kd_pasien"), ""))
-            'Next i
+            rsKom.MoveNext
+            total = total + 1
             Loop
             rsKom.MoveFirst
             tbl.TABLE_TANGGAL_AWAL = rsKom.Fields("tgl_jual")

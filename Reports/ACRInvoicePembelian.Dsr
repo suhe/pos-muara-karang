@@ -41,7 +41,6 @@ End Sub
 
 Private Sub ActiveReport_ReportEnd()
     MDIMainMenu.RemToWin Me.Caption
-     'With frmPurchaseFaktur
         Dim total As Integer
         Dim bayar As Double
         Dim rsPay As New Recordset
