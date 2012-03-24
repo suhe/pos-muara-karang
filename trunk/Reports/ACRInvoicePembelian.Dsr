@@ -63,22 +63,22 @@ Private Sub ActiveReport_ReportEnd()
         rsPay.Open sql, CN, adOpenStatic, adLockReadOnly
         
         total = 0
+        bayar = 0
         Do While Not rsPay.EOF
         'total = .lvList.ListItems.Count
         'If (total > 0) Then
-            bayar = 0
             'For i = 1 To total
                 sql = "UPDATE tbl_beli "
-                sql = sql + "SET "
+                sql = sql + " SET "
                 sql = sql + " tgl_bayar='" & Format(Date, "YYYY-MM-DD") & "',"
                 sql = sql + " payment='Lunas', "
                 sql = sql + " flag_supplier= 0, "
                 sql = sql + " hutang= 0, "
                 sql = sql + " bayar=" & rsPay.Fields("hutang") & " "
                 sql = sql + " WHERE id_beli=" & rsPay.Fields("id_beli") & ""
-                bayar = bayar + (Val(Format(rsPay.Fields("hutang"), "")) + Val(Format(rsPay.Fields("bayar"), "")))
+                bayar = bayar + Val(Format(rsPay.Fields("total"), ""))
                 CN.Execute sql
-            total = total + 1
+            total = total + rsPay.Fields("jumlah")
             rsPay.MoveNext
            Loop
             

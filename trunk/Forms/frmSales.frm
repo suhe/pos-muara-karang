@@ -360,6 +360,9 @@ Public Sub CommandPass(ByVal srcPerformWhat As String)
                 End With
             End If
         Case "Refresh"
+            tbl.TABLE_ID_KREDITUR = ""
+             tbl.TABLE_TANGGAL_AWAL = ""
+             tbl.TABLE_TANGGAL_AKHIR = ""
             Call Deactive
             RefreshRecords
         Case "Print"
