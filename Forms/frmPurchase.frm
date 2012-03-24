@@ -338,8 +338,11 @@ Public Sub CommandPass(ByVal srcPerformWhat As String)
                 End With
             End If
         Case "Refresh"
-            Call Deactive
-            RefreshRecords
+             tbl.TABLE_ID_SUPPLIER = ""
+             tbl.TABLE_TANGGAL_AWAL = ""
+             tbl.TABLE_TANGGAL_AKHIR = ""
+             Call Deactive
+             RefreshRecords
         Case "Print"
             If lvList.ListItems.Count > 0 Then
                  frmPurchasePrint.show vbModal
