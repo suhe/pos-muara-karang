@@ -8,7 +8,7 @@ Begin {9EB8768B-CDFA-44DF-8F3E-857A8405E1DB} ACRInvoicePembelian
    ControlBox      =   0   'False
    MDIChild        =   -1  'True
    _ExtentX        =   26882
-   _ExtentY        =   19420
+   _ExtentY        =   19315
    SectionData     =   "ACRInvoicePembelian.dsx":0000
 End
 Attribute VB_Name = "ACRInvoicePembelian"
@@ -46,7 +46,7 @@ Private Sub ActiveReport_ReportEnd()
         Dim bayar As Double
         Dim rsPay As New Recordset
        
-        sql = " SELECT b.id_beli,b.no_beli,b.tgl_beli,o.kd_obat,o.nm_obat,b.hutang,d.harga_beli,d.jumlah,(d.harga_beli * d.jumlah) as total"
+        sql = " SELECT b.id_beli,b.no_beli,b.tgl_beli,o.kd_obat,o.nm_obat,b.hutang,d.harga_beli,d.jumlah,(d.harga_beli * d.jumlah) as total,b.bayar"
         sql = sql + " FROM tbl_beli b"
         sql = sql + " INNER JOIN tbl_beli_details d ON d.no_beli=b.no_beli"
         sql = sql + " INNER JOIN tbl_obat o ON o.id_obat=d.id_obat"
