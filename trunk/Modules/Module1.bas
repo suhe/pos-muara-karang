@@ -724,14 +724,29 @@ Public Sub printSalesSummary()
         End If
         
         .lblTanggal.Caption = "Dari Tanggal " & tbl.TABLE_TANGGAL_AWAL & " Sampai " & tbl.TABLE_TANGGAL_AKHIR
-        sql = "SELECT j.no_jual,j.tgl_jual,(IF(j.flag_kreditor=1,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Jatuh Tempo')),'Lunas')) ,'Lunas'))AS status,j.tgl_bayar,j.kd_pasien,p.nm_pasien,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.flag_kreditor,j.flag_debitor,j.bayar,j.piutang,j.komisi,(j.bayar-j.komisi) as total FROM tbl_jual j INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor INNER JOIN tbl_departement d ON d.id_departement=j.id_departement INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna WHERE j.id_jual " & gb & " " & baw & " And j.id_jual " & gk & " " & bak & "  ORDER BY j.tgl_bayar ASC,j.no_jual ASC,j.kd_pasien ASC " 'DATE_FORMAT(j.tgl_jual,'%Y-%m-%d') ASC
+        'sql = "SELECT j.no_jual,j.tgl_jual,(IF(j.flag_kreditor=1,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Jatuh Tempo')),'Lunas')) ,'Lunas'))AS status,j.tgl_bayar,j.kd_pasien,p.nm_pasien,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.flag_kreditor,j.flag_debitor,j.bayar,j.piutang,j.komisi,(j.bayar-j.komisi) as total FROM tbl_jual j INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor INNER JOIN tbl_departement d ON d.id_departement=j.id_departement INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna WHERE j.id_jual " & gb & " " & baw & " And j.id_jual " & gk & " " & bak & "  ORDER BY j.tgl_bayar ASC,j.no_jual ASC,j.kd_pasien ASC " 'DATE_FORMAT(j.tgl_jual,'%Y-%m-%d') ASC
+        sql = " SELECT j.no_jual,j.tgl_jual,(IF(j.flag_kreditor=1,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Jatuh Tempo')),'Lunas')) ,'Lunas'))AS status,j.tgl_bayar,j.kd_pasien,p.nm_pasien,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.flag_kreditor,j.flag_debitor,j.bayar,j.piutang,j.komisi,(j.bayar-j.komisi) as total "
+        sql = sql + " From "
+        sql = sql + " tbl_jual j"
+        sql = sql + " INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
+        sql = sql + " LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor"
+        sql = sql + " INNER JOIN tbl_departement d ON d.id_departement=j.id_departement"
+        sql = sql + " INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang"
+        sql = sql + " WHERE j.no_jual<>'' "
+        
+        If (tbl.TABLE_ID_KREDITUR <> "") Then
+            sql = sql + " AND j.id_kreditor= " & tbl.TABLE_ID_KREDITUR & " AND j.flag_kreditor=1 AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')< CURDATE() "
+        End If
+        
+        If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
+            sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
+            sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
+        End If
+        
         .DataControl1.Source = sql
-        '.GroupHeader1.DataField = "tgl_jual"
         .GroupHeader1.DataField = "tgl_bayar"
-        '.txtDate.DataField = "tgl_jual"
         .txtDate.DataField = "tgl_bayar"
         .txtFak.DataField = "no_jual"
-        '.txtTglBayar.DataField = "tgl_bayar"
         .txtTglBayar.DataField = "tgl_jual"
         .txtCustID.DataField = "kd_pasien"
         .txtCustomerName.DataField = "nm_pasien"

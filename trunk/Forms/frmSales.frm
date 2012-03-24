@@ -364,6 +364,7 @@ Public Sub CommandPass(ByVal srcPerformWhat As String)
             RefreshRecords
         Case "Print"
             If lvList.ListItems.Count > 0 Then
+                 RefreshRecords
                  Call printSalesSummary
               Else
                  MsgBox "Data Is empty", vbOKOnly + vbCritical, "Warning"
