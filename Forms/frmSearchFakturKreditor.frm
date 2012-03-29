@@ -6,13 +6,13 @@ Begin VB.Form frmSearchFakturKreditor
    ClientHeight    =   7410
    ClientLeft      =   45
    ClientTop       =   330
-   ClientWidth     =   7320
+   ClientWidth     =   7275
    Icon            =   "frmSearchFakturKreditor.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   7410
-   ScaleWidth      =   7320
+   ScaleWidth      =   7275
    StartUpPosition =   2  'CenterScreen
    Begin VB.Frame freSearch 
       BeginProperty Font 
@@ -70,10 +70,10 @@ Begin VB.Form frmSearchFakturKreditor
       Height          =   380
       Left            =   0
       ScaleHeight     =   375
-      ScaleWidth      =   7320
+      ScaleWidth      =   7275
       TabIndex        =   2
       Top             =   7035
-      Width           =   7320
+      Width           =   7275
       Begin VB.PictureBox Picture2 
          BorderStyle     =   0  'None
          Height          =   345
@@ -153,10 +153,10 @@ Begin VB.Form frmSearchFakturKreditor
       Index           =   0
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   7320
+      ScaleWidth      =   7275
       TabIndex        =   1
       Top             =   7020
-      Width           =   7320
+      Width           =   7275
    End
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -166,10 +166,10 @@ Begin VB.Form frmSearchFakturKreditor
       Index           =   1
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   7320
+      ScaleWidth      =   7275
       TabIndex        =   0
       Top             =   7005
-      Width           =   7320
+      Width           =   7275
    End
    Begin MSComctlLib.ListView lvList 
       Height          =   6075
@@ -488,7 +488,6 @@ Private Sub txtSrchStr_Change()
             .SaveStatement
         End With
         
-        'SQLParser =
         If rsSearchKreditor.State = 1 Then rsSearchKreditor.Close
         rsSearchKreditor.CursorLocation = adUseClient
         rsSearchKreditor.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
@@ -497,8 +496,6 @@ Private Sub txtSrchStr_Change()
             .Start rsSearchKreditor, 20
             FillList 1
         End With
-        
-        rsSearchKreditor.Close
     End If
 End Sub
 

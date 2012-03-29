@@ -269,6 +269,7 @@ Begin VB.Form frmCashier
       End
       Begin VB.CommandButton Command2 
          Caption         =   "..."
+         Enabled         =   0   'False
          Height          =   375
          Left            =   2520
          TabIndex        =   57
@@ -323,6 +324,7 @@ Begin VB.Form frmCashier
          _ExtentX        =   4683
          _ExtentY        =   635
          _Version        =   393216
+         Enabled         =   0   'False
          Appearance      =   0
          Style           =   2
          Text            =   ""
@@ -1291,6 +1293,7 @@ Private Sub CONTROL(Active As Boolean)
     cmdProcess.Enabled = Active
     txtPayment.Enabled = Active
     txtMoneyBack.Enabled = Active
+    Command2.Enabled = Active
 End Sub
 
 Private Sub controlPasien(Active As Boolean)
@@ -1374,11 +1377,6 @@ Private Sub cmdBrowse_Click()
     frmCashierCustomer.show vbModal
 End Sub
 
-Private Sub cmdBrowse_LostFocus()
-    'On Error Resume Next
-    'txtSrchStr.SetFocus
-End Sub
-
 Private Sub cmdCancel_Click()
     Set rsdetails = Nothing
     Call txtSrchStr_Change
@@ -1399,6 +1397,7 @@ Private Sub cmdNew_Click()
     Command1.Visible = True
     Call clearText
     dcDepartement.Text = ""
+    dcDepartement.Enabled = False
     Combo1.Visible = False
     Label1.Visible = False
     Label5.Visible = False
@@ -1444,7 +1443,7 @@ Private Sub cmdPrint_Click()
     Else
         intResponse = MsgBox("Are you sure you want to Print!", vbYesNo + vbCritical, "Warning")
         If intResponse = vbYes Then
-            'Call printStruk
+            
         End If
     End If
 End Sub
@@ -1469,9 +1468,9 @@ Private Sub newPatient()
     If lblKdPasien.Caption = "..." Then MsgBox "Data Pasien Tidak Boleh Kosong !": Exit Sub
     details = getRecordCount("no_jual", "tbl_jual", "WHERE no_jual ='" & PK & "' AND kd_pasien='" & Trim(lblKdPasien.Caption) & "' ")
     If rs.State = 1 Then rs.Close
-    rs.Open "SELECT * FROM tbl_jual WHERE no_jual='" & PK & "'", CN, adOpenStatic, adLockOptimistic
+    rs.Open "SELECT * FROM tbl_jual WHERE no_jual='" & PK & "' LIMIT 1 ", CN, adOpenStatic, adLockOptimistic
     If (rs.RecordCount > 0) Then
-        MsgBox "test data !"
+        MsgBox "Not A Data this Faktur !"
     Else
         With rs
             .AddNew
@@ -1484,7 +1483,7 @@ Private Sub newPatient()
             .Fields("id_pengguna") = CurrUser.USER_PK
             .Update
         End With
-            'rs.Close
+            
             tbl.TABLE_NO_FAK = Trim(txtFak.Text)
             tbl.TABLE_KD_PASIEN = Trim(lblKdPasien.Caption)
             tbl.TABLE_NM_PASIEN = lblNmPasien.Caption
@@ -1493,14 +1492,8 @@ Private Sub newPatient()
             tbl.TABLE_TLP_PASIEN = lblTlpPasien.Caption
             tbl.TABLE_TANGGAL = Format(Now, "DD-MM-YYYY")
             MsgBox "Thank You!", vbOKOnly + vbInformation, "Warning"
-            'intResponse = MsgBox("Print Struk !", vbYesNo + vbInformation, "Warning")
-            'If intResponse = vbYes Then
-                Call cetak_Faktur
-             '   controlPasien True
-            'Else
-                controlPasien True
-            'End If
-         rs.Close
+            Call cetak_Faktur
+            controlPasien True
          Call Form_Load
          Combo1.Visible = False
          Label1.Visible = False
@@ -1530,10 +1523,9 @@ Private Sub recipeMedicine()
     payment = Replace(payment, ".", ",")
     total = Format(lblTotal.Caption, "")
     If (txtPayment.Text <> "Credit") Then
-        'If (Val(total) < Val(payment)) Then MsgBox "1Sorry Not Enought Money ,Please Insert Money! ", vbOKOnly + vbCritical: Exit Sub
         If (Val(total) > Val(payment)) Then MsgBox "Sorry Not Enought Money ,Please Insert Money! ", vbOKOnly + vbCritical: Exit Sub
     Else
-        'MsgBox "testing"
+    
     End If
     
         'Perhitungan Komisi
@@ -1574,16 +1566,12 @@ Private Sub recipeMedicine()
         rsKomisi.Close
         Set rsKomisi = Nothing
         'perhitungan komisi
-        'Om = Omset
         Om = bayar + piutang
         If (Left(kode, 1) = 1) Then
         'Rumus Kn = ((Om - Vn) * Rn) + Pn
              Kn = ((Om - VN) * RN) + PN
         ElseIf (Left(kode, 1) = 2) Then
         '  Rumus Kn = ((Om - Vn) * Rn) + Pn
-            'MsgBox Om
-            'MsgBox BN
-            'MsgBox AN
             If (Om > BN) And (Om < AN) Then
                 Kn = ((Om - VN) * RN) + PN
             Else
@@ -1625,8 +1613,6 @@ Private Sub recipeMedicine()
         End With
         rsdetails.Close
         
-        'Kn = Replace(Kn, ",", ".")
-        
         sql = "UPDATE tbl_jual "
         sql = sql + " SET "
         sql = sql + " payment='" & strpay & "', "
@@ -1654,7 +1640,7 @@ Private Sub recipeMedicine()
         sql = sql + " komisi=" & Replace(Kn, ",", ".") & " "
         sql = sql + " WHERE no_jual='" & Trim(txtFak.Text) & "' "
         sql = sql + " AND kd_pasien='" & Trim(lblKdPasien.Caption) & "'"
-        'MsgBox sql
+        
         CN.Execute sql
         Call txtSrchStr_Change
         CONTROL False
@@ -1723,7 +1709,6 @@ Private Sub cmdResep_Click()
     Call clearPayment
     txtPayment.Enabled = True
     txtMoneyBack.Enabled = True
-    'Combo1.Text = ""
     Combo1.Visible = False
     Label1.Visible = False
     Label5.Visible = False
@@ -1761,10 +1746,9 @@ End Sub
 
 Private Sub Cashier()
     If rs.State = 1 Then rs.Close
-    rs.Open "SELECT * FROM tbl_jual j JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor WHERE j.no_jual='" & tbl.TABLE_NO_FAK & "'", CN, adOpenStatic, adLockOptimistic
+    rs.Open "SELECT * FROM tbl_jual j INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_departement d ON d.id_departement=j.id_departement LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor WHERE j.no_jual='" & tbl.TABLE_NO_FAK & "' LIMIT 1 ", CN, adOpenStatic, adLockOptimistic
     If rsdetails.State = 1 Then rsdetails.Close
-    rsdetails.Open "SELECT * FROM tbl_jual_details WHERE no_jual='" & tbl.TABLE_NO_FAK & "'", CN, adOpenStatic, adLockOptimistic
-    'MsgBox rs.Fields("no_jual")
+    rsdetails.Open "SELECT * FROM tbl_jual_details WHERE no_jual='" & tbl.TABLE_NO_FAK & "' LIMIT 1 ", CN, adOpenStatic, adLockOptimistic
     If (rs.RecordCount > 0) Then
         txtFak.Text = rs.Fields("no_jual")
         lblKdPasien.Caption = rs.Fields("kd_pasien")
@@ -1818,7 +1802,6 @@ End Sub
 
 Private Sub Form_Load()
     On Error Resume Next
-    'Call listviewHeader
     MDIMainMenu.AddToWin Me.Caption, Name
     lstOrders.ListItems.Clear
     'Set the graphics for the controls
@@ -1857,7 +1840,6 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rscashier, RecordPage.PageStart, RecordPage.PageEnd, 16, 2, False, True, , , , "kd_pasien")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
     'Display the page information
     lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     'Display the selected record
@@ -1870,15 +1852,10 @@ Private Sub Form_Resize()
         If Me.Width < 9195 Then Me.Width = 9195
         If Me.Height < 4500 Then Me.Height = 4500
         shpBar.Width = ScaleWidth
-        'lvList.Width = Me.ScaleWidth
-        'lvList.Height = (Me.ScaleHeight - Picture1.Height) - lvList.Top
-        'list view resize
         lvList.Width = ScaleWidth - (lvList.Left + 100)
         lvListObat.Width = ScaleWidth - (lvListObat.Left + 100)
         lstOrders.Width = Me.ScaleWidth
         lstOrders.Height = (Me.ScaleHeight - Picture1.Height) - lvList.Top
-        'text search produk and frame
-        'fraPasien.Width = ScaleWidth - (fraPasien.Left + 100)
         fraSearch.Width = ScaleWidth - (fraSearch.Left + 100)
         txtSrchStrPasien.Width = fraSearch.Width - (txtSrchStrPasien.Left)
         txtSrchStr.Width = fraSearch.Width - (txtSrchStr.Left)
@@ -1889,36 +1866,6 @@ Private Sub Form_Unload(Cancel As Integer)
     MDIMainMenu.RemToWin Me.Caption
     MDIMainMenu.HideTBButton "", True
     Set frmCashier = Nothing
-End Sub
-
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
-End Sub
-
-Private Sub fraCustomer_DragDrop(Source As CONTROL, X As Single, Y As Single)
-
 End Sub
 
 Private Sub lstOrders_AfterLabelEdit(Cancel As Integer, NewString As String)
@@ -2088,10 +2035,6 @@ Private Sub txtPayment_KeyPress(KeyAscii As Integer)
     End If
 End Sub
 
-Private Sub txtPayment_KeyUp(KeyCode As Integer, Shift As Integer)
-    'KeyCode = vbKeyEnd
-End Sub
-
 Private Sub txtPayment_Validate(Cancel As Boolean)
     toMoney (toNumber(txtPayment.Text))
 End Sub
@@ -2104,7 +2047,7 @@ Private Sub txtSrchStr_Change()
         str = "o.nm_obat"
     End If
     If txtSrchStr.Text <> "" Then
-        sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.kemasan,o.harga_jual,"
+        sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.kemasan,FORMAT(o.harga_jual,0),"
         sql = sql & "((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
         sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
         sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
@@ -2114,7 +2057,7 @@ Private Sub txtSrchStr_Change()
             .Fields = sql
             .Tables = " tbl_obat o INNER JOIN tbl_kategori k ON k.id_kategori =o.id_kategori INNER JOIN tbl_pengguna p ON p.id=o.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStr.Text & "%'  "
-            .SortOrder = " o.id_obat ASC LIMIT 10"
+            .SortOrder = " o.id_obat ASC LIMIT 15"
             .SaveStatement
         End With
         
@@ -2122,7 +2065,7 @@ Private Sub txtSrchStr_Change()
         rscashier.CursorLocation = adUseClient
         rscashier.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
         With RecordPage
-            .Start rscashier, 20
+            .Start rscashier, 15
             FillList2 1
         End With
     End If
@@ -2135,7 +2078,6 @@ Private Sub FillList2(ByVal whichPage As Long)
     Call pageFillListView(lvListObat, rscashier, RecordPage.PageStart, RecordPage.PageEnd, 16, 2, False, True, , , , "id_obat")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
     lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvListObat_Click
 End Sub
@@ -2161,7 +2103,7 @@ Private Sub txtSrchStrPasien_Change()
             .Fields = sql
             .Tables = " tbl_pasien p INNER JOIN tbl_pengguna pp ON pp.id=p.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStrPasien.Text & "%'"
-            .SortOrder = " p.kd_pasien ASC LIMIT 10"
+            .SortOrder = " p.kd_pasien ASC LIMIT 15"
             .SaveStatement
         End With
         
@@ -2170,7 +2112,7 @@ Private Sub txtSrchStrPasien_Change()
         rscashier.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
         
         With RecordPage
-            .Start rscashier, 20
+            .Start rscashier, 15
             FillList 1
         End With
     End If
