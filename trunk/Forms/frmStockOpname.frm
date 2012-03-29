@@ -341,22 +341,6 @@ Private Sub btnClose_Click()
     Unload Me
 End Sub
 
-Private Sub btnFirst_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList 1
-End Sub
-
-Private Sub btnLast_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_TOTAL
-End Sub
-
-Private Sub btnNext_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_NEXT
-End Sub
-
-Private Sub btnPrev_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList RecordPage.PAGE_PREVIOUS
-End Sub
-
 Private Sub Form_Activate()
     If CurrUser.USER_ISADMIN Then
         HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "fftfttt"
@@ -390,16 +374,6 @@ Private Sub Form_Load()
         'For listview
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-    
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
     
     sql = "DATE_FORMAT(s.tgl_input,'%d-%m-%Y'),DATE_FORMAT(s.tgl_input,'%H:%i:%s'),o.kd_obat,o.nm_obat,o.harga_beli,FORMAT(s.stok_sblm,0),FORMAT(@so:=((o.box_sedang*s.kem_sedang)+(o.box_kecil*s.kem_kecil)+(s.satuan)),0) as so,FORMAT(@ss:=(@so-s.stok_sblm),0)as selisih,(@ss * o.harga_beli) as value,p.nm_pengguna"
@@ -412,6 +386,7 @@ Private Sub Form_Load()
     End With
     
     If rsOpname.State = 1 Then rsOpname.Close
+    Set rsOpname = New ADODB.Recordset
     rsOpname.CursorLocation = adUseClient
     rsOpname.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     
@@ -428,7 +403,6 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsOpname, RecordPage.PageStart, RecordPage.PageEnd, 16, 2, False, True, , , , "id_obat")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
     lvList_Click
 End Sub
 
@@ -446,33 +420,7 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     MDIMainMenu.RemToWin Me.Caption
     MDIMainMenu.HideTBButton "", True
-    Set frmProduct = Nothing
-End Sub
-
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
+    Set frmStockOpname = Nothing
 End Sub
 
 Private Sub lvList_Click()

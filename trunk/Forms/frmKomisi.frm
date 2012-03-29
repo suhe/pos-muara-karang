@@ -350,26 +350,6 @@ Private Sub btnClose_Click()
     Unload Me
 End Sub
 
-Private Sub btnFirst_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList 1
-End Sub
-
-Private Sub btnLast_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_TOTAL
-End Sub
-
-Private Sub btnNext_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_NEXT
-End Sub
-
-Private Sub btnPrev_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList RecordPage.PAGE_PREVIOUS
-End Sub
-
-Private Sub btnRecOp_Click()
-    frmCustomerRecOp.show vbModal
-End Sub
-
 Private Sub cbShow_Change()
     cbShow.Text = "30"
 End Sub
@@ -419,12 +399,8 @@ End Sub
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     On Error Resume Next
     Select Case KeyCode
-        'Case vbKeyF1: CommandPass "New"
-        'Case vbKeyF2: CommandPass "Edit"
         Case vbKeyF3: CommandPass "Search"
-        'Case vbKeyF4: CommandPass "Delete"
         Case vbKeyF5: CommandPass "Refresh"
-        'Case vbKeyF6: CommandPass "Print"
         Case vbKeyF8: CommandPass "Close"
     End Select
 End Sub
@@ -453,13 +429,14 @@ Private Sub Form_Load()
     
     With SQLParser
             .Fields = "j.id_jual,j.no_jual,DATE_FORMAT(j.tgl_jual,'%Y-%m-%d %H:%i:%s'),j.tgl_komisi,j.flag_debitor,j.kd_pasien,p.nm_pasien,p.no_tlp,p.relasi,j.id_kreditor,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.type,j.payment,j.bayar,j.komisi,pp.nm_pengguna "
-            .Tables = "tbl_jual j INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien INNER JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor INNER JOIN tbl_departement d ON d.id_departement=j.id_departement INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
+            .Tables = "tbl_jual j INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor INNER JOIN tbl_departement d ON d.id_departement=j.id_departement INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna"
             .wCondition = " j.flag_kreditor = 0  "
             .SortOrder = sort & " LIMIT " & cbShow.Text
             .SaveStatement
     End With
     
     If rsKomisi.State = 1 Then rsKomisi.Close
+    Set rsKomisi = New ADODB.Recordset
     rsKomisi.CursorLocation = adUseClient
     rsKomisi.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     

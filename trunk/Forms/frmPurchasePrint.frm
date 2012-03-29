@@ -61,6 +61,7 @@ Begin VB.Form frmPurchasePrint
          Left            =   360
          List            =   "frmPurchasePrint.frx":0394
          TabIndex        =   1
+         Text            =   "Ascending"
          Top             =   840
          Width           =   3435
       End

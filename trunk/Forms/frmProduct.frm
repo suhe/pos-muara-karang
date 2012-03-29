@@ -527,6 +527,7 @@ Private Sub Form_Load()
     End With
     
     If rsproduct.State = 1 Then rsproduct.Close
+    Set rsproduct = New ADODB.Recordset
     rsproduct.CursorLocation = adUseClient
     rsproduct.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     

@@ -21,7 +21,7 @@ Begin VB.Form frmDebtDetails
       MaxLength       =   255
       MultiLine       =   -1  'True
       ScrollBars      =   3  'Both
-      TabIndex        =   24
+      TabIndex        =   20
       Tag             =   "Remarks"
       Top             =   -120
       Width           =   3105
@@ -30,7 +30,7 @@ Begin VB.Form frmDebtDetails
       Caption         =   "Cancel"
       Height          =   315
       Left            =   16635
-      TabIndex        =   23
+      TabIndex        =   19
       Top             =   3105
       Width           =   1335
    End
@@ -39,7 +39,7 @@ Begin VB.Form frmDebtDetails
       Default         =   -1  'True
       Height          =   315
       Left            =   15195
-      TabIndex        =   22
+      TabIndex        =   18
       Top             =   3105
       Width           =   1335
    End
@@ -48,7 +48,7 @@ Begin VB.Form frmDebtDetails
       Left            =   9720
       ScaleHeight     =   30
       ScaleWidth      =   12015
-      TabIndex        =   21
+      TabIndex        =   17
       Top             =   2955
       Width           =   12015
    End
@@ -71,53 +71,13 @@ Begin VB.Form frmDebtDetails
          TabIndex        =   13
          Top             =   0
          Width           =   4150
-         Begin VB.CommandButton btnFirst 
-            Height          =   315
-            Left            =   2760
-            Style           =   1  'Graphical
-            TabIndex        =   17
-            ToolTipText     =   "First 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnPrev 
-            Height          =   315
-            Left            =   3075
-            Style           =   1  'Graphical
-            TabIndex        =   16
-            ToolTipText     =   "Previous 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnLast 
-            Height          =   315
-            Left            =   3705
-            Style           =   1  'Graphical
-            TabIndex        =   15
-            ToolTipText     =   "Last 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnNext 
-            Height          =   315
-            Left            =   3390
-            Style           =   1  'Graphical
-            TabIndex        =   14
-            ToolTipText     =   "Next 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
          Begin VB.Label lblPageInfo 
             Alignment       =   1  'Right Justify
             BackStyle       =   0  'Transparent
             Caption         =   "0 - 0 of 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   18
+            TabIndex        =   14
             Top             =   60
             Visible         =   0   'False
             Width           =   2535
@@ -128,7 +88,7 @@ Begin VB.Form frmDebtDetails
          Caption         =   "Selected Record: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   19
+         TabIndex        =   15
          Top             =   60
          Width           =   1365
       End
@@ -179,7 +139,7 @@ Begin VB.Form frmDebtDetails
          Index           =   7
          Left            =   5520
          MaxLength       =   20
-         TabIndex        =   37
+         TabIndex        =   33
          Top             =   960
          Width           =   2490
       End
@@ -188,7 +148,7 @@ Begin VB.Form frmDebtDetails
          Index           =   6
          Left            =   1440
          MaxLength       =   100
-         TabIndex        =   35
+         TabIndex        =   31
          Top             =   960
          Width           =   2970
       End
@@ -197,7 +157,7 @@ Begin VB.Form frmDebtDetails
          Index           =   3
          Left            =   5520
          MaxLength       =   100
-         TabIndex        =   33
+         TabIndex        =   29
          Top             =   600
          Width           =   2415
       End
@@ -206,7 +166,7 @@ Begin VB.Form frmDebtDetails
          Index           =   2
          Left            =   5520
          MaxLength       =   200
-         TabIndex        =   31
+         TabIndex        =   27
          Top             =   240
          Width           =   3735
       End
@@ -215,7 +175,7 @@ Begin VB.Form frmDebtDetails
          Index           =   1
          Left            =   1440
          MaxLength       =   100
-         TabIndex        =   29
+         TabIndex        =   25
          Tag             =   "Name"
          Top             =   600
          Width           =   2415
@@ -227,7 +187,7 @@ Begin VB.Form frmDebtDetails
          Index           =   0
          Left            =   1440
          Locked          =   -1  'True
-         TabIndex        =   27
+         TabIndex        =   23
          TabStop         =   0   'False
          Top             =   240
          Width           =   1485
@@ -238,7 +198,7 @@ Begin VB.Form frmDebtDetails
          Height          =   240
          Index           =   7
          Left            =   4560
-         TabIndex        =   36
+         TabIndex        =   32
          Top             =   960
          Width           =   885
       End
@@ -248,7 +208,7 @@ Begin VB.Form frmDebtDetails
          Height          =   240
          Index           =   6
          Left            =   120
-         TabIndex        =   34
+         TabIndex        =   30
          Top             =   960
          Width           =   1125
       End
@@ -258,7 +218,7 @@ Begin VB.Form frmDebtDetails
          Height          =   240
          Index           =   3
          Left            =   4440
-         TabIndex        =   32
+         TabIndex        =   28
          Top             =   600
          Width           =   1005
       End
@@ -268,7 +228,7 @@ Begin VB.Form frmDebtDetails
          Height          =   240
          Index           =   2
          Left            =   4800
-         TabIndex        =   30
+         TabIndex        =   26
          Top             =   240
          Width           =   645
       End
@@ -278,7 +238,7 @@ Begin VB.Form frmDebtDetails
          Height          =   240
          Index           =   1
          Left            =   120
-         TabIndex        =   28
+         TabIndex        =   24
          Top             =   600
          Width           =   495
       End
@@ -288,7 +248,7 @@ Begin VB.Form frmDebtDetails
          Height          =   240
          Index           =   0
          Left            =   120
-         TabIndex        =   26
+         TabIndex        =   22
          Top             =   240
          Width           =   315
       End
@@ -424,7 +384,7 @@ Begin VB.Form frmDebtDetails
    Begin MSComctlLib.ListView lvList 
       Height          =   4275
       Left            =   0
-      TabIndex        =   39
+      TabIndex        =   35
       Top             =   2160
       Width           =   9420
       _ExtentX        =   16616
@@ -548,7 +508,7 @@ Begin VB.Form frmDebtDetails
       ForeColor       =   &H80000014&
       Height          =   210
       Left            =   240
-      TabIndex        =   38
+      TabIndex        =   34
       Top             =   1920
       Width           =   4815
    End
@@ -558,7 +518,7 @@ Begin VB.Form frmDebtDetails
       Height          =   240
       Index           =   8
       Left            =   13845
-      TabIndex        =   25
+      TabIndex        =   21
       Top             =   -120
       Width           =   990
    End
@@ -577,7 +537,7 @@ Begin VB.Form frmDebtDetails
       ForeColor       =   &H80000014&
       Height          =   210
       Left            =   120
-      TabIndex        =   20
+      TabIndex        =   16
       Top             =   0
       Width           =   4815
    End
@@ -599,7 +559,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Dim CURR_COL As Integer
-Dim rsSales As New Recordset
+Dim rsSalesDetails As New Recordset
 Dim RecordPage As New clsPaging
 Dim SQLParser As New clsSQLSelectParser
 
@@ -644,7 +604,7 @@ End Sub
 
 Public Sub ReloadRecords(ByVal srcSQL As String)
     On Error GoTo err
-    With rsSales
+    With rsSalesDetails
         If .State = adStateOpen Then .Close
         .Open srcSQL
     End With
@@ -667,22 +627,6 @@ End Sub
 
 Private Sub btnClose_Click()
     Unload Me
-End Sub
-
-Private Sub btnFirst_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList 1
-End Sub
-
-Private Sub btnLast_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_TOTAL
-End Sub
-
-Private Sub btnNext_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_NEXT
-End Sub
-
-Private Sub btnPrev_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList RecordPage.PAGE_PREVIOUS
 End Sub
 
 Private Sub cmdInvoice_Click()
@@ -714,16 +658,6 @@ Private Sub Form_Load()
         'For listview
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-    
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
     
     With SQLParser
@@ -734,12 +668,13 @@ Private Sub Form_Load()
             .SaveStatement
     End With
     
-    If rsSales.State = 1 Then rsSales.Close
-    rsSales.CursorLocation = adUseClient
-    rsSales.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
+    If rsSalesDetails.State = 1 Then rsSalesDetails.Close
+    Set rsSalesDetails = New ADODB.Recordset
+    rsSalesDetails.CursorLocation = adUseClient
+    rsSalesDetails.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     
     With RecordPage
-        .Start rsSales, 10000000
+        .Start rsSalesDetails, 10000000
         FillList 1
     End With
 End Sub
@@ -748,10 +683,9 @@ Private Sub FillList(ByVal whichPage As Long)
     RecordPage.CurrentPosition = whichPage
     Screen.MousePointer = vbHourglass
     Me.Enabled = False
-    Call pageFillListView(lvList, rsSales, RecordPage.PageStart, RecordPage.PageEnd, 16, 2, False, True, , , , "id_jual")
+    Call pageFillListView(lvList, rsSalesDetails, RecordPage.PageStart, RecordPage.PageEnd, 16, 2, False, True, , , , "id_jual")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
     lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvList_Click
 End Sub
@@ -769,32 +703,6 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     Set frmDebtDetails = Nothing
-End Sub
-
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
 End Sub
 
 Private Sub lvList_Click()
@@ -875,4 +783,3 @@ Private Sub DisplayForEditing()
 err:
         If err.Number = 94 Then Resume Next
 End Sub
-

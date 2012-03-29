@@ -431,12 +431,12 @@ Private Sub Form_Load()
     With SQLParser
         .Fields = sql
         .Tables = " tbl_beli_details d INNER JOIN tbl_beli b ON b.no_beli=d.no_beli INNER JOIN tbl_obat o ON o.id_obat =d.id_obat INNER JOIN tbl_supplier s ON s.id_supplier =b.id_supplier INNER JOIN tbl_pengguna p ON p.id=b.id_pengguna "
-        '.Tables = "tbl_obat o LEFT JOIN tbl_kategori k ON k.id_kategori =o.id_kategori LEFT JOIN tbl_pengguna p ON p.id=o.id_pengguna"
         .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement
     End With
     
     If rsProductList.State = 1 Then rsProductList.Close
+    Set rsProductList = New ADODB.Recordset
     rsProductList.CursorLocation = adUseClient
     rsProductList.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     
@@ -470,7 +470,7 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     MDIMainMenu.RemToWin Me.Caption
     MDIMainMenu.HideTBButton "", True
-    Set frmProduct = Nothing
+    Set frmProductList = Nothing
 End Sub
 
 Private Sub lvList_Click()

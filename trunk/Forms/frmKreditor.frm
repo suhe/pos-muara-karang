@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmKreditor 
    Caption         =   "Kreditor"
-   ClientHeight    =   5835
+   ClientHeight    =   5085
    ClientLeft      =   60
    ClientTop       =   450
    ClientWidth     =   7695
@@ -10,7 +10,7 @@ Begin VB.Form frmKreditor
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
-   ScaleHeight     =   5835
+   ScaleHeight     =   5085
    ScaleWidth      =   7695
    Begin VB.PictureBox Picture1 
       Align           =   2  'Align Bottom
@@ -20,7 +20,7 @@ Begin VB.Form frmKreditor
       ScaleHeight     =   375
       ScaleWidth      =   7695
       TabIndex        =   2
-      Top             =   5460
+      Top             =   4710
       Width           =   7695
       Begin VB.ComboBox cbShow 
          Height          =   315
@@ -97,7 +97,7 @@ Begin VB.Form frmKreditor
       ScaleHeight     =   15
       ScaleWidth      =   7695
       TabIndex        =   1
-      Top             =   5445
+      Top             =   4695
       Width           =   7695
    End
    Begin VB.PictureBox picLine 
@@ -110,7 +110,7 @@ Begin VB.Form frmKreditor
       ScaleHeight     =   15
       ScaleWidth      =   7695
       TabIndex        =   0
-      Top             =   5430
+      Top             =   4680
       Width           =   7695
    End
    Begin MSComctlLib.ListView lvList 
@@ -382,7 +382,6 @@ Private Sub cbSortType_Click()
 End Sub
 
 Private Sub Form_Activate()
-    'HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "", True
     HighlightInWin Me.Name: MDIMainMenu.ShowTBButton "tttttft"
     With MDIMainMenu
          .tbMenu.Buttons(3).Caption = "New"
@@ -410,13 +409,11 @@ End Sub
 Private Sub Form_Load()
     Dim sort As String
     Call LoadShow(cbShow)
-    'MDIMainMenu
     With MDIMainMenu
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
         .AddToWin Me.Caption, Name
     End With
-    
     'sort berdsarkan
     Select Case cbSort.Text
         Case "ID Kreditor": sort = "ABS(k.id_kreditor) " & cbSortType.Text
@@ -431,6 +428,7 @@ Private Sub Form_Load()
     End With
     
     If rsKreditor.State = 1 Then rsKreditor.Close
+    Set rsKreditor = New ADODB.Recordset
     rsKreditor.CursorLocation = adUseClient
     rsKreditor.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     

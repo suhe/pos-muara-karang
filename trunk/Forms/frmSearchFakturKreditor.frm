@@ -26,7 +26,7 @@ Begin VB.Form frmSearchFakturKreditor
       EndProperty
       Height          =   735
       Left            =   0
-      TabIndex        =   10
+      TabIndex        =   6
       Top             =   4560
       Width           =   7215
       Begin VB.ComboBox cboFilter 
@@ -35,7 +35,7 @@ Begin VB.Form frmSearchFakturKreditor
          Left            =   240
          List            =   "frmSearchFakturKreditor.frx":038C
          Style           =   2  'Dropdown List
-         TabIndex        =   12
+         TabIndex        =   8
          Top             =   240
          Width           =   1575
       End
@@ -52,7 +52,7 @@ Begin VB.Form frmSearchFakturKreditor
          ForeColor       =   &H80000011&
          Height          =   300
          Left            =   1920
-         TabIndex        =   11
+         TabIndex        =   7
          Top             =   240
          Width           =   4695
       End
@@ -83,53 +83,13 @@ Begin VB.Form frmSearchFakturKreditor
          TabIndex        =   3
          Top             =   0
          Width           =   4150
-         Begin VB.CommandButton btnFirst 
-            Height          =   315
-            Left            =   2760
-            Style           =   1  'Graphical
-            TabIndex        =   7
-            ToolTipText     =   "First 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnPrev 
-            Height          =   315
-            Left            =   3075
-            Style           =   1  'Graphical
-            TabIndex        =   6
-            ToolTipText     =   "Previous 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnLast 
-            Height          =   315
-            Left            =   3705
-            Style           =   1  'Graphical
-            TabIndex        =   5
-            ToolTipText     =   "Last 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnNext 
-            Height          =   315
-            Left            =   3390
-            Style           =   1  'Graphical
-            TabIndex        =   4
-            ToolTipText     =   "Next 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
          Begin VB.Label lblPageInfo 
             Alignment       =   1  'Right Justify
             BackStyle       =   0  'Transparent
             Caption         =   "0 - 0 of 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   8
+            TabIndex        =   4
             Top             =   60
             Visible         =   0   'False
             Width           =   2535
@@ -140,7 +100,7 @@ Begin VB.Form frmSearchFakturKreditor
          Caption         =   "Selected Record: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   9
+         TabIndex        =   5
          Top             =   60
          Width           =   1365
       End
@@ -174,7 +134,7 @@ Begin VB.Form frmSearchFakturKreditor
    Begin MSComctlLib.ListView lvList 
       Height          =   4275
       Left            =   0
-      TabIndex        =   13
+      TabIndex        =   9
       Top             =   240
       Width           =   7260
       _ExtentX        =   12806
@@ -246,7 +206,7 @@ Begin VB.Form frmSearchFakturKreditor
       ForeColor       =   &H80000014&
       Height          =   210
       Left            =   75
-      TabIndex        =   14
+      TabIndex        =   10
       Top             =   10
       Width           =   4815
    End
@@ -312,22 +272,6 @@ Private Sub btnClose_Click()
     Unload Me
 End Sub
 
-Private Sub btnFirst_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList 1
-End Sub
-
-Private Sub btnLast_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_TOTAL
-End Sub
-
-Private Sub btnNext_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_NEXT
-End Sub
-
-Private Sub btnPrev_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList RecordPage.PAGE_PREVIOUS
-End Sub
-
 Private Sub Form_Load()
     On Error Resume Next
     Me.txtSrchStr.SetFocus
@@ -341,16 +285,6 @@ Private Sub Form_Load()
         'For listview
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-    
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
 End Sub
 
@@ -361,7 +295,6 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsSearchKreditor, RecordPage.PageStart, RecordPage.PageEnd, 12, 2, False, True, , , , "id_kreditor")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
     lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvList_Click
 End Sub
@@ -380,35 +313,7 @@ Private Sub Form_Resize()
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    'MDIMainMenu.RemToWin Me.Caption
-    'MDIMainMenu.HideTBButton "", True
     Set frmSearchFakturKreditor = Nothing
-End Sub
-
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
 End Sub
 
 Private Sub lvList_Click()
@@ -456,10 +361,6 @@ End Sub
 
 Private Sub lvList_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = 38 Or KeyCode = 40 Or KeyCode = 33 Or KeyCode = 34 Then lvList_Click
-End Sub
-
-Private Sub lvList_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-'If Button = 2 Then PopupMenu MAIN.mnuRecA
 End Sub
 
 Private Sub Picture1_Resize()

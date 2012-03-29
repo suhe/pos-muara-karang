@@ -350,25 +350,6 @@ Private Sub btnClose_Click()
     Unload Me
 End Sub
 
-Private Sub btnFirst_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList 1
-End Sub
-
-Private Sub btnLast_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_TOTAL
-End Sub
-
-Private Sub btnNext_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_NEXT
-End Sub
-
-Private Sub btnPrev_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList RecordPage.PAGE_PREVIOUS
-End Sub
-
-Private Sub btnRecOp_Click()
-    frmCustomerRecOp.show vbModal
-End Sub
 
 Private Sub Active()
      With MDIMainMenu
@@ -456,6 +437,7 @@ Private Sub Form_Load()
     End With
     
     If rsReturPurchase.State = 1 Then rsReturPurchase.Close
+    Set rsReturPurchase = New ADODB.Recordset
     rsReturPurchase.CursorLocation = adUseClient
     rsReturPurchase.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     
@@ -476,7 +458,7 @@ Private Sub FillList(ByVal whichPage As Long)
 End Sub
 
 Private Sub Form_Resize()
-    'On Error Resume Next
+    On Error Resume Next
     If WindowState <> vbMinimized Then
         If Me.Width < 9195 Then Me.Width = 9195
         If Me.Height < 4500 Then Me.Height = 4500

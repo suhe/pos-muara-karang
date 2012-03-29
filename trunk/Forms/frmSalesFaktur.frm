@@ -26,14 +26,14 @@ Begin VB.Form frmSalesFaktur
       EndProperty
       Height          =   735
       Left            =   120
-      TabIndex        =   11
+      TabIndex        =   7
       Top             =   5160
       Width           =   9615
       Begin VB.CommandButton cmdKeluar 
          Caption         =   "&Keluar (F6)"
          Height          =   375
          Left            =   1200
-         TabIndex        =   13
+         TabIndex        =   9
          Top             =   240
          Width           =   1095
       End
@@ -41,7 +41,7 @@ Begin VB.Form frmSalesFaktur
          Caption         =   "&Lunasi* (F2)"
          Height          =   375
          Left            =   120
-         TabIndex        =   12
+         TabIndex        =   8
          Top             =   240
          Width           =   1095
       End
@@ -55,7 +55,7 @@ Begin VB.Form frmSalesFaktur
       Left            =   0
       ScaleHeight     =   15
       ScaleWidth      =   9900
-      TabIndex        =   9
+      TabIndex        =   5
       Top             =   5910
       Width           =   9900
    End
@@ -68,7 +68,7 @@ Begin VB.Form frmSalesFaktur
       Left            =   0
       ScaleHeight     =   15
       ScaleWidth      =   9900
-      TabIndex        =   8
+      TabIndex        =   4
       Top             =   5925
       Width           =   9900
    End
@@ -91,53 +91,13 @@ Begin VB.Form frmSalesFaktur
          TabIndex        =   1
          Top             =   0
          Width           =   4150
-         Begin VB.CommandButton btnNext 
-            Height          =   315
-            Left            =   3390
-            Style           =   1  'Graphical
-            TabIndex        =   5
-            ToolTipText     =   "Next 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnLast 
-            Height          =   315
-            Left            =   3705
-            Style           =   1  'Graphical
-            TabIndex        =   4
-            ToolTipText     =   "Last 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnPrev 
-            Height          =   315
-            Left            =   3075
-            Style           =   1  'Graphical
-            TabIndex        =   3
-            ToolTipText     =   "Previous 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnFirst 
-            Height          =   315
-            Left            =   2760
-            Style           =   1  'Graphical
-            TabIndex        =   2
-            ToolTipText     =   "First 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
          Begin VB.Label lblPageInfo 
             Alignment       =   1  'Right Justify
             BackStyle       =   0  'Transparent
             Caption         =   "0 - 0 of 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   6
+            TabIndex        =   2
             Top             =   60
             Visible         =   0   'False
             Width           =   2535
@@ -148,7 +108,7 @@ Begin VB.Form frmSalesFaktur
          Caption         =   "Selected Record: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   7
+         TabIndex        =   3
          Top             =   60
          Width           =   1365
       End
@@ -156,7 +116,7 @@ Begin VB.Form frmSalesFaktur
    Begin MSComctlLib.ListView lvList 
       Height          =   5115
       Left            =   120
-      TabIndex        =   10
+      TabIndex        =   6
       Top             =   0
       Width           =   9660
       _ExtentX        =   17039
@@ -308,7 +268,6 @@ Dim rsSalesFaktur As New Recordset
 Dim RecordPage As New clsPaging
 Dim SQLParser As New clsSQLSelectParser
 
-'Procedure used to filter records
 Public Sub FilterRecord(ByVal srcCondition As String)
     SQLParser.RestoreStatement
     SQLParser.wCondition = srcCondition
@@ -345,26 +304,6 @@ End Sub
 
 Private Sub btnClose_Click()
     Unload Me
-End Sub
-
-Private Sub btnFirst_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList 1
-End Sub
-
-Private Sub btnLast_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_TOTAL
-End Sub
-
-Private Sub btnNext_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_NEXT
-End Sub
-
-Private Sub btnPrev_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList RecordPage.PAGE_PREVIOUS
-End Sub
-
-Private Sub btnRecOp_Click()
-    frmCustomerRecOp.show vbModal
 End Sub
 
 Private Sub cmdKeluar_Click()
@@ -418,16 +357,6 @@ Private Sub Form_Load()
         'For listview
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-    
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
     
     Dim sql2 As String
@@ -452,6 +381,7 @@ Private Sub Form_Load()
     End With
     
     If rsSalesFaktur.State = 1 Then rsSalesFaktur.Close
+    Set rsSalesFaktur = New ADODB.Recordset
     rsSalesFaktur.CursorLocation = adUseClient
     rsSalesFaktur.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     
@@ -468,39 +398,12 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsSalesFaktur, RecordPage.PageStart, RecordPage.PageEnd, 22, 2, False, True, , , , "id_jual")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
     lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvList_Click
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     Set frmSalesFaktur = Nothing
-End Sub
-
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
 End Sub
 
 Private Sub lvList_Click()
