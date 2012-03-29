@@ -1,7 +1,7 @@
 frmProduct = 220, 220, 720, 666, , 198, 198, 698, 644, C
 clsBlowfish = 0, 0, 0, 0, C
 clsPaging = 0, 0, 0, 0, C
-clsSQLSelectParser = 22, 22, 522, 468, Z
+clsSQLSelectParser = 22, 22, 522, 468, 
 modADO = 0, 0, 0, 0, C
 modAPI = 0, 0, 0, 0, C
 modEncrypt = 0, 0, 0, 0, C
@@ -30,7 +30,7 @@ frmCashierCustomer = 0, 0, 0, 0, C, 110, 110, 610, 556, C
 frmCategories = 0, 0, 500, 446, , 132, 132, 632, 578, C
 frmCategoriesAE = 0, 0, 0, 0, C, 154, 154, 654, 600, C
 Mod_Print = 0, 0, 500, 446, 
-frmSales = 66, 66, 566, 512, , 44, 44, 544, 490, C
+frmSales = 66, 66, 566, 512, Z, 44, 44, 544, 490, C
 frmPurchasing = 154, 154, 654, 600, , 132, 132, 632, 578, C
 frmPurchasingAE = 0, 0, 0, 0, C, 176, 176, 676, 622, C
 frmPurchasingSupplier = 0, 0, 500, 446, , 220, 220, 720, 666, C
