@@ -18,7 +18,7 @@ Begin VB.Form frmSalesDetails
       Caption         =   "&Lunasi* (F2)"
       Height          =   495
       Left            =   4200
-      TabIndex        =   46
+      TabIndex        =   42
       Top             =   2760
       Visible         =   0   'False
       Width           =   1695
@@ -35,7 +35,7 @@ Begin VB.Form frmSalesDetails
       EndProperty
       Height          =   855
       Left            =   0
-      TabIndex        =   41
+      TabIndex        =   37
       Top             =   6480
       Width           =   9135
       Begin VB.TextBox txtPiutang 
@@ -45,7 +45,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   45
+         TabIndex        =   41
          Text            =   "frmSalesDetails.frx":038A
          Top             =   360
          Width           =   2775
@@ -57,7 +57,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   42
+         TabIndex        =   38
          Text            =   "frmSalesDetails.frx":0397
          Top             =   360
          Width           =   2775
@@ -77,7 +77,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   6240
-         TabIndex        =   44
+         TabIndex        =   40
          Top             =   120
          Width           =   645
       End
@@ -96,7 +96,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   3360
-         TabIndex        =   43
+         TabIndex        =   39
          Top             =   120
          Width           =   975
       End
@@ -114,14 +114,14 @@ Begin VB.Form frmSalesDetails
       EndProperty
       Height          =   1335
       Left            =   4080
-      TabIndex        =   33
+      TabIndex        =   29
       Top             =   1440
       Width           =   5175
       Begin VB.CheckBox chKreditor 
          Caption         =   "Lunas Kreditor"
          Height          =   255
          Left            =   2280
-         TabIndex        =   48
+         TabIndex        =   44
          Top             =   360
          Width           =   1815
       End
@@ -131,7 +131,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   35
+         TabIndex        =   31
          Text            =   "frmSalesDetails.frx":03A5
          Top             =   360
          Width           =   1455
@@ -142,7 +142,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   34
+         TabIndex        =   30
          Text            =   "frmSalesDetails.frx":03A9
          Top             =   840
          Width           =   4335
@@ -162,7 +162,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   120
-         TabIndex        =   38
+         TabIndex        =   34
          Top             =   360
          Width           =   420
       End
@@ -181,7 +181,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   360
-         TabIndex        =   37
+         TabIndex        =   33
          Top             =   3960
          Width           =   765
       End
@@ -200,7 +200,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   120
-         TabIndex        =   36
+         TabIndex        =   32
          Top             =   840
          Width           =   480
       End
@@ -218,14 +218,14 @@ Begin VB.Form frmSalesDetails
       EndProperty
       Height          =   1335
       Left            =   0
-      TabIndex        =   27
+      TabIndex        =   23
       Top             =   1440
       Width           =   3975
       Begin VB.CheckBox chDep 
          Caption         =   "Lunas Debitor"
          Height          =   255
          Left            =   2280
-         TabIndex        =   47
+         TabIndex        =   43
          Top             =   360
          Width           =   1335
       End
@@ -235,7 +235,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   29
+         TabIndex        =   25
          Text            =   "frmSalesDetails.frx":03C3
          Top             =   360
          Width           =   1455
@@ -246,7 +246,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   28
+         TabIndex        =   24
          Text            =   "frmSalesDetails.frx":03C8
          Top             =   840
          Width           =   3135
@@ -266,7 +266,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   120
-         TabIndex        =   32
+         TabIndex        =   28
          Top             =   360
          Width           =   420
       End
@@ -285,7 +285,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   360
-         TabIndex        =   31
+         TabIndex        =   27
          Top             =   3960
          Width           =   765
       End
@@ -304,7 +304,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   120
-         TabIndex        =   30
+         TabIndex        =   26
          Top             =   840
          Width           =   480
       End
@@ -313,7 +313,7 @@ Begin VB.Form frmSalesDetails
       Caption         =   "&Keluar (F6)"
       Height          =   495
       Left            =   7560
-      TabIndex        =   26
+      TabIndex        =   22
       Top             =   2760
       Width           =   1695
    End
@@ -321,7 +321,7 @@ Begin VB.Form frmSalesDetails
       Caption         =   "&Cetak Struk (F3)"
       Height          =   495
       Left            =   5880
-      TabIndex        =   25
+      TabIndex        =   21
       Top             =   2760
       Width           =   1695
    End
@@ -338,7 +338,7 @@ Begin VB.Form frmSalesDetails
       EndProperty
       Height          =   1455
       Left            =   4080
-      TabIndex        =   15
+      TabIndex        =   11
       Top             =   0
       Width           =   5175
       Begin VB.TextBox txtNmPasien 
@@ -347,7 +347,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   20
+         TabIndex        =   16
          Text            =   "frmSalesDetails.frx":03D6
          Top             =   840
          Width           =   4335
@@ -358,7 +358,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   18
+         TabIndex        =   14
          Text            =   "frmSalesDetails.frx":03E4
          Top             =   360
          Width           =   1455
@@ -378,7 +378,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   120
-         TabIndex        =   19
+         TabIndex        =   15
          Top             =   840
          Width           =   480
       End
@@ -397,7 +397,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   360
-         TabIndex        =   17
+         TabIndex        =   13
          Top             =   3960
          Width           =   765
       End
@@ -416,7 +416,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   120
-         TabIndex        =   16
+         TabIndex        =   12
          Top             =   360
          Width           =   420
       End
@@ -434,7 +434,7 @@ Begin VB.Form frmSalesDetails
       EndProperty
       Height          =   1455
       Left            =   0
-      TabIndex        =   12
+      TabIndex        =   8
       Top             =   0
       Width           =   3975
       Begin VB.TextBox txtTanggal 
@@ -443,7 +443,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   40
+         TabIndex        =   36
          Text            =   "frmSalesDetails.frx":03E9
          Top             =   480
          Width           =   1335
@@ -454,7 +454,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   24
+         TabIndex        =   20
          Text            =   "frmSalesDetails.frx":03F6
          Top             =   960
          Width           =   1215
@@ -465,7 +465,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   22
+         TabIndex        =   18
          Text            =   "frmSalesDetails.frx":03FF
          Top             =   960
          Width           =   1335
@@ -476,7 +476,7 @@ Begin VB.Form frmSalesDetails
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   13
+         TabIndex        =   9
          Top             =   480
          Width           =   2295
       End
@@ -495,7 +495,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   2520
-         TabIndex        =   39
+         TabIndex        =   35
          Top             =   240
          Width           =   720
       End
@@ -514,7 +514,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   2040
-         TabIndex        =   23
+         TabIndex        =   19
          Top             =   960
          Width           =   495
       End
@@ -533,7 +533,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   120
-         TabIndex        =   21
+         TabIndex        =   17
          Top             =   960
          Width           =   420
       End
@@ -552,7 +552,7 @@ Begin VB.Form frmSalesDetails
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   120
-         TabIndex        =   14
+         TabIndex        =   10
          Top             =   240
          Width           =   255
       End
@@ -566,7 +566,7 @@ Begin VB.Form frmSalesDetails
       Left            =   0
       ScaleHeight     =   15
       ScaleWidth      =   9270
-      TabIndex        =   9
+      TabIndex        =   5
       Top             =   7425
       Width           =   9270
    End
@@ -579,7 +579,7 @@ Begin VB.Form frmSalesDetails
       Left            =   0
       ScaleHeight     =   15
       ScaleWidth      =   9270
-      TabIndex        =   8
+      TabIndex        =   4
       Top             =   7440
       Width           =   9270
    End
@@ -602,53 +602,13 @@ Begin VB.Form frmSalesDetails
          TabIndex        =   1
          Top             =   0
          Width           =   4150
-         Begin VB.CommandButton btnNext 
-            Height          =   315
-            Left            =   3390
-            Style           =   1  'Graphical
-            TabIndex        =   5
-            ToolTipText     =   "Next 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnLast 
-            Height          =   315
-            Left            =   3705
-            Style           =   1  'Graphical
-            TabIndex        =   4
-            ToolTipText     =   "Last 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnPrev 
-            Height          =   315
-            Left            =   3075
-            Style           =   1  'Graphical
-            TabIndex        =   3
-            ToolTipText     =   "Previous 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnFirst 
-            Height          =   315
-            Left            =   2760
-            Style           =   1  'Graphical
-            TabIndex        =   2
-            ToolTipText     =   "First 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
          Begin VB.Label lblPageInfo 
             Alignment       =   1  'Right Justify
             BackStyle       =   0  'Transparent
             Caption         =   "0 - 0 of 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   6
+            TabIndex        =   2
             Top             =   60
             Visible         =   0   'False
             Width           =   2535
@@ -659,7 +619,7 @@ Begin VB.Form frmSalesDetails
          Caption         =   "Selected Record: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   7
+         TabIndex        =   3
          Top             =   60
          Width           =   1365
       End
@@ -667,7 +627,7 @@ Begin VB.Form frmSalesDetails
    Begin MSComctlLib.ListView lvList 
       Height          =   3075
       Left            =   0
-      TabIndex        =   10
+      TabIndex        =   6
       Top             =   3360
       Width           =   9195
       _ExtentX        =   16219
@@ -742,7 +702,7 @@ Begin VB.Form frmSalesDetails
       ForeColor       =   &H80000014&
       Height          =   210
       Left            =   120
-      TabIndex        =   11
+      TabIndex        =   7
       Top             =   0
       Width           =   4815
    End
@@ -884,16 +844,6 @@ Private Sub Form_Load()
         'For listview
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-    
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
     
     With SQLParser
@@ -904,6 +854,7 @@ Private Sub Form_Load()
     End With
     
     If rsSalesDetails.State = 1 Then rsSalesDetails.Close
+    Set rsSalesDetails = New ADODB.Recordset
     rsSalesDetails.CursorLocation = adUseClient
     rsSalesDetails.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     
@@ -911,7 +862,7 @@ Private Sub Form_Load()
         .Start rsSalesDetails, 1000000
         FillList 1
     End With
-    'rsSalesDetails .Close
+    
     txtFak.Text = tbl.TABLE_NO_FAK
     txtTanggal.Text = tbl.TABLE_TANGGAL
     txtKdPasien.Text = tbl.TABLE_KD_PASIEN
@@ -952,7 +903,6 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsSalesDetails, RecordPage.PageStart, RecordPage.PageEnd, 9, 2, False, True, , , , "id_obat")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
     'Display the page information
     lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     'Display the selected record
@@ -974,32 +924,6 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     Set frmSalesDetails = Nothing
-End Sub
-
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
 End Sub
 
 Private Sub lvList_Click()
@@ -1030,4 +954,3 @@ End Sub
 Private Sub Picture1_Resize()
     Picture2.Left = Picture1.ScaleWidth - Picture2.ScaleWidth
 End Sub
-

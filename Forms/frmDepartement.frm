@@ -446,6 +446,7 @@ Private Sub Form_Load()
     End With
         
     If rsDepartement.State = 1 Then rsDepartement.Close
+    Set rsDepartement = New ADODB.Recordset
     rsDepartement.CursorLocation = adUseClient
     rsDepartement.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     

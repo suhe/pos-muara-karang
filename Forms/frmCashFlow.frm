@@ -144,7 +144,7 @@ Begin VB.Form frmCashFlow
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      NumItems        =   11
+      NumItems        =   12
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID"
          Object.Width           =   0
@@ -207,6 +207,12 @@ Begin VB.Form frmCashFlow
          SubItemIndex    =   10
          Text            =   "Kas Total"
          Object.Width           =   2117
+      EndProperty
+      BeginProperty ColumnHeader(12) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
+         SubItemIndex    =   11
+         Text            =   "Pasien"
+         Object.Width           =   1940
       EndProperty
    End
    Begin VB.Label lblTitle 
@@ -441,18 +447,19 @@ Private Sub Form_Load()
     End Select
     
     With SQLParser
-        .Fields = "id,DATE_FORMAT(tgl_cash,'%Y-%m-%d'),money_cash,jual_sebelumnya,jual,beli_sebelumnya,beli,komisi,laba,cash,(kas_total+(retur)) as kas_total"
+        .Fields = "id,DATE_FORMAT(tgl_cash,'%Y-%m-%d'),FORMAT(money_cash,0),FORMAT(jual_sebelumnya,0),FORMAT(jual,0),FORMAT(beli_sebelumnya,0),FORMAT(beli,0),FORMAT(komisi,0),FORMAT(laba,0),FORMAT(cash,0),FORMAT((kas_total+(retur)),0) as kas_total,pasien"
         .Tables = "vw_cash_flow"
         .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement
     End With
     
     If rsCashFlow.State = 1 Then rsCashFlow.Close
+    Set rsCashFlow = New ADODB.Recordset
     rsCashFlow.CursorLocation = adUseClient
     rsCashFlow.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     
     With RecordPage
-        .Start rsCashFlow, 10000
+        .Start rsCashFlow, 1000000
         FillList 1
     End With
     lbltotal.Caption = "Total Record : " & lvList.ListItems.Count

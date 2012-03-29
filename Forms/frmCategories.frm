@@ -419,6 +419,7 @@ Private Sub Form_Load()
     End With
         
     If rsCategory.State = 1 Then rsCategory.Close
+    Set rsCategory = New ADODB.Recordset
     rsCategory.CursorLocation = adUseClient
     rsCategory.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     

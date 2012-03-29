@@ -77,7 +77,7 @@ Begin VB.Form frmPurchasing
       EndProperty
       Height          =   1095
       Left            =   120
-      TabIndex        =   35
+      TabIndex        =   31
       Top             =   3000
       Width           =   6855
       Begin VB.Label lblTotal 
@@ -107,7 +107,7 @@ Begin VB.Form frmPurchasing
          ForeColor       =   &H00404040&
          Height          =   675
          Left            =   2040
-         TabIndex        =   36
+         TabIndex        =   32
          Top             =   240
          Width           =   4560
       End
@@ -124,7 +124,7 @@ Begin VB.Form frmPurchasing
       EndProperty
       Height          =   735
       Left            =   7080
-      TabIndex        =   32
+      TabIndex        =   28
       Top             =   120
       Width           =   4815
       Begin VB.ComboBox cboFilter 
@@ -175,7 +175,7 @@ Begin VB.Form frmPurchasing
       EndProperty
       Height          =   1695
       Left            =   120
-      TabIndex        =   24
+      TabIndex        =   20
       Top             =   1200
       Width           =   3855
       Begin VB.Label Label6 
@@ -193,7 +193,7 @@ Begin VB.Form frmPurchasing
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   240
-         TabIndex        =   31
+         TabIndex        =   27
          Top             =   1320
          Width           =   855
       End
@@ -212,7 +212,7 @@ Begin VB.Form frmPurchasing
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   240
-         TabIndex        =   30
+         TabIndex        =   26
          Top             =   840
          Width           =   435
       End
@@ -231,7 +231,7 @@ Begin VB.Form frmPurchasing
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   240
-         TabIndex        =   29
+         TabIndex        =   25
          Top             =   360
          Width           =   930
       End
@@ -250,7 +250,7 @@ Begin VB.Form frmPurchasing
          ForeColor       =   &H00404040&
          Height          =   240
          Left            =   1320
-         TabIndex        =   28
+         TabIndex        =   24
          Top             =   360
          Width           =   2385
       End
@@ -269,7 +269,7 @@ Begin VB.Form frmPurchasing
          ForeColor       =   &H00404040&
          Height          =   240
          Left            =   1320
-         TabIndex        =   27
+         TabIndex        =   23
          Top             =   1320
          Width           =   2385
       End
@@ -288,7 +288,7 @@ Begin VB.Form frmPurchasing
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   360
-         TabIndex        =   26
+         TabIndex        =   22
          Top             =   3960
          Width           =   765
       End
@@ -307,7 +307,7 @@ Begin VB.Form frmPurchasing
          ForeColor       =   &H00404040&
          Height          =   240
          Left            =   1320
-         TabIndex        =   25
+         TabIndex        =   21
          Top             =   840
          Width           =   2385
       End
@@ -325,7 +325,7 @@ Begin VB.Form frmPurchasing
       EndProperty
       Height          =   1095
       Left            =   120
-      TabIndex        =   21
+      TabIndex        =   17
       Top             =   120
       Width           =   3495
       Begin VB.TextBox txtFak 
@@ -334,7 +334,7 @@ Begin VB.Form frmPurchasing
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   22
+         TabIndex        =   18
          Top             =   480
          Width           =   3135
       End
@@ -353,7 +353,7 @@ Begin VB.Form frmPurchasing
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   120
-         TabIndex        =   23
+         TabIndex        =   19
          Top             =   240
          Width           =   660
       End
@@ -381,7 +381,7 @@ Begin VB.Form frmPurchasing
          EndProperty
          Height          =   375
          Left            =   1920
-         TabIndex        =   38
+         TabIndex        =   34
          Top             =   0
          Visible         =   0   'False
          Width           =   1215
@@ -395,53 +395,13 @@ Begin VB.Form frmPurchasing
          TabIndex        =   14
          Top             =   0
          Width           =   4150
-         Begin VB.CommandButton btnNext 
-            Height          =   315
-            Left            =   3390
-            Style           =   1  'Graphical
-            TabIndex        =   18
-            ToolTipText     =   "Next 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnLast 
-            Height          =   315
-            Left            =   3705
-            Style           =   1  'Graphical
-            TabIndex        =   17
-            ToolTipText     =   "Last 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnPrev 
-            Height          =   315
-            Left            =   3075
-            Style           =   1  'Graphical
-            TabIndex        =   16
-            ToolTipText     =   "Previous 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
-         Begin VB.CommandButton btnFirst 
-            Height          =   315
-            Left            =   2760
-            Style           =   1  'Graphical
-            TabIndex        =   15
-            ToolTipText     =   "First 250"
-            Top             =   10
-            Visible         =   0   'False
-            Width           =   315
-         End
          Begin VB.Label lblPageInfo 
             Alignment       =   1  'Right Justify
             BackStyle       =   0  'Transparent
             Caption         =   "0 - 0 of 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   19
+            TabIndex        =   15
             Top             =   60
             Visible         =   0   'False
             Width           =   2535
@@ -452,7 +412,7 @@ Begin VB.Form frmPurchasing
          Caption         =   "Selected Record: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   20
+         TabIndex        =   16
          Top             =   60
          Width           =   1365
       End
@@ -460,7 +420,7 @@ Begin VB.Form frmPurchasing
    Begin ComctlLib.ListView lstOrders 
       Height          =   3495
       Left            =   120
-      TabIndex        =   33
+      TabIndex        =   29
       Top             =   4800
       Width           =   11775
       _ExtentX        =   20770
@@ -538,7 +498,7 @@ Begin VB.Form frmPurchasing
    Begin MSComctlLib.ListView lvList 
       Height          =   3555
       Left            =   7080
-      TabIndex        =   34
+      TabIndex        =   30
       Top             =   1080
       Width           =   4860
       _ExtentX        =   8573
@@ -660,7 +620,7 @@ Begin VB.Form frmPurchasing
       EndProperty
       Height          =   375
       Left            =   9720
-      TabIndex        =   37
+      TabIndex        =   33
       Text            =   "0"
       Top             =   7320
       Width           =   2175
@@ -687,7 +647,7 @@ Begin VB.Form frmPurchasing
          Left            =   1560
          List            =   "frmPurchasing.frx":B1EB
          Style           =   2  'Dropdown List
-         TabIndex        =   39
+         TabIndex        =   35
          Top             =   1560
          Width           =   1215
       End
@@ -723,7 +683,7 @@ Begin VB.Form frmPurchasing
          ForeColor       =   &H00404040&
          Height          =   195
          Left            =   120
-         TabIndex        =   40
+         TabIndex        =   36
          Top             =   1560
          Width           =   1080
       End
@@ -887,11 +847,6 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     On Error Resume Next
     Select Case KeyCode
         Case vbKeyF1: cmdNew_Click
-        'Case vbKeyF2: CommandPass "Edit"
-        'Case vbKeyF3: CommandPass "Search"
-        'Case vbKeyF4: CommandPass "Delete"
-        'Case vbKeyF5: CommandPass "Refresh"
-        'Case vbKeyF6: CommandPass "Print"
         Case vbKeyF8: CommandPass "Close"
         Case vbKeyF10:
             If cmdNew.Enabled = False Then
@@ -921,11 +876,9 @@ Private Sub clearText()
     txtFak.Text = ""
     txtSrchStr.Text = ""
     txtMoneyBack.Text = ""
-    'lstOrders.ListItems.Clear
     lvList.ListItems.Clear
     lblCodeCust.Caption = "......"
     lblNamaCust.Caption = "......"
-    'cbpayment.Text = "Cash"
     lblBrand.Caption = "---"
     lblstock.Caption = "---"
     lblPrice.Caption = "---"
@@ -974,22 +927,6 @@ End Sub
 
 Private Sub btnClose_Click()
     Unload Me
-End Sub
-
-Private Sub btnFirst_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList 1
-End Sub
-
-Private Sub btnLast_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_TOTAL
-End Sub
-
-Private Sub btnNext_Click()
-    If RecordPage.PAGE_CURRENT <> RecordPage.PAGE_TOTAL Then FillList RecordPage.PAGE_NEXT
-End Sub
-
-Private Sub btnPrev_Click()
-    If RecordPage.PAGE_CURRENT <> 1 Then FillList RecordPage.PAGE_PREVIOUS
 End Sub
 
 Private Sub cboFilter_LostFocus()
@@ -1075,7 +1012,6 @@ Private Sub cash()
 End Sub
 
 Private Sub cmdProcess_Click()
-    'If cbpayment.Text = "" Then MsgBox "Empty Payment", vbOKOnly + vbCritical: Exit Sub
     If cbtypePayment.Text = "" Then MsgBox "Empty Type Of Payment", vbOKOnly + vbCritical: Exit Sub
     If lstOrders.ListItems.Count < 1 Then MsgBox "Empty Product", vbOKOnly + vbCritical: Exit Sub
     If lblTotal.Caption = 0 Then MsgBox "Please Insert Medicine ! ", vbOKOnly + vbCritical: Exit Sub
@@ -1138,15 +1074,6 @@ Private Sub Form_Load()
         'For listview
         Set lvList.SmallIcons = .i16x16
         Set lvList.Icons = .i16x16
-        btnFirst.Picture = .i16x16.ListImages(3).Picture
-        btnPrev.Picture = .i16x16.ListImages(4).Picture
-        btnNext.Picture = .i16x16.ListImages(5).Picture
-        btnLast.Picture = .i16x16.ListImages(6).Picture
-        
-        btnFirst.DisabledPicture = .i16x16g.ListImages(3).Picture
-        btnPrev.DisabledPicture = .i16x16g.ListImages(4).Picture
-        btnNext.DisabledPicture = .i16x16g.ListImages(5).Picture
-        btnLast.DisabledPicture = .i16x16g.ListImages(6).Picture
     End With
     
     With cboFilter
@@ -1174,7 +1101,6 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rspurchasing, RecordPage.PageStart, RecordPage.PageEnd, 16, 2, False, True, , , , "id_obat")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
     lblPageInfo.Caption = "Record " & RecordPage.PageInfo
 End Sub
 
@@ -1196,32 +1122,6 @@ Private Sub Form_Unload(Cancel As Integer)
     MDIMainMenu.RemToWin Me.Caption
     MDIMainMenu.HideTBButton "", True
     Set frmPurchasing = Nothing
-End Sub
-
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
 End Sub
 
 Private Sub lvList_Click()
@@ -1247,7 +1147,6 @@ Private Sub callBrand()
         .lblname.Caption = lvList.SelectedItem.SubItems(2)
         .lblKemasan.Caption = lvList.SelectedItem.SubItems(3)
         .lblPrice.Caption = lvList.SelectedItem.SubItems(4)
-        '.txtPrice.Text = lvList.SelectedItem.SubItems(4)
         .lblstock.Caption = lvList.SelectedItem.SubItems(5)
     End With
 End Sub
@@ -1288,7 +1187,6 @@ Private Sub Picture1_Resize()
 End Sub
 
 Private Sub InsertList()
-   'Dim i As Long
    Dim itmX As ListItem
     With lstOrders.ListItems.Add
         .Text = "test"
@@ -1321,6 +1219,7 @@ Private Sub txtSrchStr_Change()
         End With
     
         If rspurchasing.State = 1 Then rspurchasing.Close
+        Set rspurchasing = New ADODB.Recordset
         rspurchasing.CursorLocation = adUseClient
         rspurchasing.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
         

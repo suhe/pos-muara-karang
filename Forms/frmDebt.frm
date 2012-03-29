@@ -435,6 +435,7 @@ Private Sub Form_Load()
     End With
     
     If rsDebtKreditor.State = 1 Then rsDebtKreditor.Close
+    Set rsDebtKreditor = New ADODB.Recordset
     rsDebtKreditor.CursorLocation = adUseClient
     rsDebtKreditor.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     

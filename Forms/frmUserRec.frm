@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmUserRec 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "User Records"
@@ -272,6 +272,7 @@ End Sub
 Private Sub RefreshRecords()
     Me.Enabled = False
     If rs.State = adStateOpen Then rs.Close
+    Set rs = New ADODB.Recordset
     rs.Open "SELECT p.nm_pengguna,p.jk_pengguna,p.level,c.nm_cabang,p.id FROM tbl_pengguna p LEFT JOIN tbl_cabang c ON c.id_cabang=p.user_cabang ORDER BY p.id ASC", CN, adOpenStatic, adLockOptimistic
     FillListView lvList, rs, 4, 2, False, True, "id"
     Me.Enabled = True

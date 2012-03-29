@@ -17,24 +17,19 @@ Public Sub cetak_Transfer()
         .CurrentX = .CurrentX + 500 ' Skip some space
         Printer.Print " Jam "; Spc(7); ":"; Spc(4); ""; Hour(Now); ":"; Minute(Now); ":"; Second(Now); ""
         .CurrentX = .CurrentX + 500 ' Skip some space
-        Printer.Print " Laba Bersih "; Spc(0); ":"; Spc(5); "" & Format(tbl.TABLE_LABA_BERSIH, "##,###0.00") & ""; Tab(70); ""; Spc(3); ""; Spc(2); ""
+        Printer.Print " Laba Bersih "; Spc(0); ":"; Spc(5); "" & Format(tbl.TABLE_LABA_BERSIH, "##,###0") & ""; Tab(70); ""; Spc(3); ""; Spc(2); ""
         .CurrentX = .CurrentX + 500 ' Skip some space
-        Printer.Print " Transfer  "; Spc(3); ":"; Spc(5); "" & Format(tbl.TABLE_TRANSFER, "##,###0.00") & ""; Tab(70); " "; Spc(5); ""; Spc(2); ""
+        Printer.Print " Transfer  "; Spc(3); ":"; Spc(5); "" & Format(tbl.TABLE_TRANSFER, "##,###0") & ""; Tab(70); " "; Spc(5); ""; Spc(2); ""
         .CurrentX = .CurrentX + 500 ' Skip some space
-        Printer.Print " Sisa Kas"; Spc(4); ":"; Spc(5); "" & Format(tbl.TABLE_KAS_SISA, "##,###0.00") & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
+        Printer.Print " Sisa Kas"; Spc(4); ":"; Spc(5); "" & Format(tbl.TABLE_KAS_SISA, "##,###0") & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
         Printer.Print ""
-        '.CurrentX = .CurrentX + 500
-        'Printer.Print " --------------------------------------------------------------------------------------------------------------- "
         .EndDoc
      End With
 opps:
-     'MB_Options = vbCritical
-     'MsgBox "Printer Error.", "Printer", "Error Message"
 End Sub
 
 Public Sub ReturObat()
     Dim Lines As Integer, Y As Long, OutStr As String
-    'Dim harga, total, bayar, kembali As Double
     On Error GoTo opps
      With Printer
         .Font.Name = "Arial Narrow"
@@ -62,13 +57,10 @@ Public Sub ReturObat()
         .CurrentX = .CurrentX + 500 ' Skip some space
         Printer.Print " Sisa "; Spc(9); ":"; Spc(5); "" & tbl.TABLE_SISA_RETUR & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
         Printer.Print ""
-        '.CurrentX = .CurrentX + 500
-        'Printer.Print " --------------------------------------------------------------------------------------------------------------- "
         .EndDoc
      End With
 opps:
-     'MB_Options = vbCritical
-     'MsgBox "Printer Error.", "Printer", "Error Message"
+     
 End Sub
 
 
@@ -103,9 +95,7 @@ Public Sub cetak_Faktur()
         Printer.Print " --------------------------------------------------------------------------------------------------------------- "
         .CurrentY = .CurrentY + 0
         Dim xx As Byte
-        'Do While Not rscetak.EOF
          For xx = 1 To 6 Step xx + 1
-            'Printer.Print ""
              .CurrentX = .CurrentX + 500
             Printer.Print "  "; Tab(50); "  "; Tab(65); " "; Tab(85); "  ";
             Printer.Print ""
@@ -116,8 +106,6 @@ Public Sub cetak_Faktur()
         .EndDoc
      End With
 opps:
-     'MB_Options = vbCritical
-     'MsgBox "Printer Error.", "Printer", "Error Message"
 End Sub
 
 Public Sub cetak_Faktur2()
@@ -129,7 +117,6 @@ Public Sub cetak_Faktur2()
     Dim rentang, jmlRentang, X As Byte
     rentang = 9
     On Error GoTo opps
-     'If (tbl.TABLE_PAY_TYPE = "Lunas") Then
      With Printer
         .Font.Name = "Arial Narrow"
         .Font.Size = 7
@@ -184,16 +171,9 @@ Public Sub cetak_Faktur2()
         .CurrentX = .CurrentX + 500
         Printer.Print Tab(40); "" & CurrBiz.BUSINNES_NOTE & ""
         .EndDoc
-        'Unload frmCashierDesc
-        'Else
-        '    MsgBox "No Data"
-        'End If
      End With
-     'Else
-        'ACRInvoice.show
-     'End If
 opps:
-    'MsgBox "Printer Error.", "Printer", "Error Message"
+    
 End Sub
 
 Public Sub cetak_Faktur3()
@@ -205,7 +185,6 @@ Public Sub cetak_Faktur3()
     Dim rentang, jmlRentang, X As Byte
     rentang = 9
     On Error GoTo opps
-     'If (tbl.TABLE_PAY_TYPE = "Lunas") Then
      With Printer
         .Font.Name = "Arial Narrow"
         .Font.Size = 7
@@ -249,8 +228,9 @@ Public Sub cetak_Faktur3()
         End If
         
         If tbl.TABLE_TYPE = "Credit" Then
-            If rscetak.State = 1 Then rscetak.Close
             sql = "SELECT j.no_jual,DATE_FORMAT(tgl_jual,'%Y-%m-%d') as tgl_jual,j.jw,DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY) as jatuh_tempo,j.piutang,(IF(j.flag_kreditor=0,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL+j.jw DAY)>CURDATE(),'Piutang','Tagih')),'Lunas')) ,'Lunas'))AS statusjual FROM tbl_jual j LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang WHERE j.id_kreditor=" & tbl.TABLE_ID_KREDITUR & " AND j.flag_kreditor=0  AND j.piutang>0 "
+            If rscetak.State = 1 Then rscetak.Close
+            Set rscetak = New ADODB.Recordset
             rscetak.Open sql, CN, adOpenStatic, adLockReadOnly
             If rscetak.RecordCount > 0 Then
                 Printer.Print ""
@@ -332,7 +312,7 @@ Public Sub cetak_Faktur4()
     
         Set rsobat = New Recordset
         If rsobat.State = 1 Then rsobat.Close
-        sql = "SELECT o.nm_obat,o.kemasan,d.jumlah FROM tbl_jual_details d INNER JOIN tbl_obat o ON o.id_obat=d.id_obat WHERE d.no_jual='" & tbl.TABLE_NO_FAK & "' ORDER BY o.kd_obat LIMIT 100 "
+        sql = "SELECT o.nm_obat,o.kemasan,FORMAT(d.jumlah,0) as jumlah FROM tbl_jual_details d INNER JOIN tbl_obat o ON o.id_obat=d.id_obat WHERE d.no_jual='" & tbl.TABLE_NO_FAK & "' ORDER BY o.kd_obat LIMIT 100 "
         rsobat.Open sql, CN, adOpenStatic, adLockReadOnly
         If rsobat.RecordCount > 0 Then
             Do While (Not rsobat.EOF)
@@ -368,8 +348,6 @@ Public Sub cetak_FakturBeli()
         Printer.Print " Kode Supplier"; Spc(2); ":"; Spc(5); "" & tbl.TABLE_ID_SUPPLIER & ""; Tab(70); "Jam "; Spc(7); ":"; Spc(1); "  "; Hour(Now); ":"; Minute(Now); ":"; Second(Now); ""
         .CurrentX = .CurrentX + 500 ' Skip some space
         Printer.Print " Nama Supplier "; Spc(1); ":"; Spc(5); "" & tbl.TABLE_NM_SUPPLIER & ""; Tab(70); "Telepon "; Spc(3); ":"; Spc(2); "" & tbl.TABLE_TLP_SUPPLIER & ""
-        '.CurrentX = .CurrentX + 500 ' Skip some space
-        'Printer.Print " Nama Dept  "; Spc(2); ":"; Spc(5); "" & tbl.TABLE_NM_DEPT & ""; Tab(70); "Relasi "; Spc(5); ":"; Spc(2); "" & tbl.TABLE_RELASI & ""
         Printer.Print ""
         .CurrentX = .CurrentX + 500
         Printer.Print " --------------------------------------------------------------------------------------------------------------- "
@@ -379,33 +357,33 @@ Public Sub cetak_FakturBeli()
         .CurrentX = .CurrentX + 500
         Printer.Print " --------------------------------------------------------------------------------------------------------------- "
         .CurrentY = .CurrentY + 0
-        sql = "SELECT *,(j.harga_jual * j.jumlah) as total FROM tbl_jual_details j INNER JOIN tbl_obat O ON O.id_obat=j.id_obat"
-        Set rscetak = New Recordset
-        rscetak.CursorLocation = adUseClient
+        sql = "SELECT *,FORMAT((j.harga_jual * j.jumlah),0) as total FROM tbl_jual_details j INNER JOIN tbl_obat O ON O.id_obat=j.id_obat"
         
         If rscetak.State = 1 Then rscetak.Close
+        Set rscetak = New Recordset
+        rscetak.CursorLocation = adUseClient
         rscetak.Open sql, CN, adOpenStatic, adLockReadOnly
+        
         If (rscetak.RecordCount > 0) Then
-        
-        Dim xx As Byte
-        Dim ax As Integer
-        ax = frmPurchasing.lstOrders.ListItems.Count
-        
-        For xx = 1 To ax
-            .CurrentX = .CurrentX + 500
-            Printer.Print " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(2) & " "; Tab(40); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(3) & " "; Tab(55); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(4) & " "; Tab(75); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(5) & " "; Tab(85); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(6) & " ";
+            Dim xx As Byte
+            Dim ax As Integer
+            ax = frmPurchasing.lstOrders.ListItems.Count
+            
+            For xx = 1 To ax
+                .CurrentX = .CurrentX + 500
+                Printer.Print " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(2) & " "; Tab(40); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(3) & " "; Tab(55); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(4) & " "; Tab(75); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(5) & " "; Tab(85); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(6) & " ";
+                Printer.Print ""
+                .CurrentY = .CurrentY + 50
+            Next xx
             Printer.Print ""
-            .CurrentY = .CurrentY + 50
-        Next xx
-        Printer.Print ""
-        .CurrentX = .CurrentX + 500
-        Printer.Print " --------------------------------------------------------------------------------------------------------------- "
-        Printer.Print ""
-        .CurrentX = .CurrentX + 500
-        Printer.Print Tab(75); " Bayar "; Tab(85); "" & Format(tbl.TABLE_TOTAL, "##,###0.00") & "";
-        Printer.Print ""
-        .CurrentX = .CurrentX + 500
-        .EndDoc
+            .CurrentX = .CurrentX + 500
+            Printer.Print " --------------------------------------------------------------------------------------------------------------- "
+            Printer.Print ""
+            .CurrentX = .CurrentX + 500
+            Printer.Print Tab(75); " Bayar "; Tab(85); "" & Format(tbl.TABLE_TOTAL, "##,###0.00") & "";
+            Printer.Print ""
+            .CurrentX = .CurrentX + 500
+            .EndDoc
         Else
             MsgBox "No Data"
         End If
@@ -428,17 +406,6 @@ Public Sub printStock()
         .DataControl1.CursorLocation = ddADOUseClient
         .DataControl1.ConnectionString = DBPath
     
-         Dim baw, bak As Long
-         Dim gb, gk As String
-         baw = Val(frmProduct.lvList.ListItems(1).Text)
-         bak = Val(frmProduct.lvList.ListItems(frmProduct.lvList.ListItems.Count).Text)
-         If (baw <= bak) Then
-            gb = ">="
-            gk = "<="
-         Else
-            gb = "<="
-            gk = ">="
-        End If
         sql = "SELECT *,@max:=(stok_min * 4) as max,(@max-sisa) as permintaan FROM vw_stok "
         .DataControl1.Source = sql
         .GroupHeader1.DataField = "id_kategori"
@@ -530,18 +497,7 @@ End Sub
 Public Sub printCashFlow()
     Dim rpt As ACRCashFlow
     Set rpt = New ACRCashFlow
-    Dim baw, bak As Long
-    Dim gb, gk As String
     DBPath = "DSN=" + CurrUser.User_DSN + ""
-    baw = Val(frmCashFlow.lvList.ListItems(1).Text)
-    bak = Val(frmCashFlow.lvList.ListItems(frmCashFlow.lvList.ListItems.Count).Text)
-    If (baw <= bak) Then
-        gb = ">="
-        gk = "<="
-    Else
-        gb = "<="
-        gk = ">="
-    End If
     
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
@@ -555,8 +511,8 @@ Public Sub printCashFlow()
         
         .DataControl1.CursorLocation = ddADOUseClient
         .DataControl1.ConnectionString = DBPath
-        sql = "SELECT tgl_cash,(jual+jual_sebelumnya) as jual,(beli+beli_sebelumnya) as beli FROM vw_cash_flow WHERE flag=1 AND id " & gb & " " & baw & " AND  id  " & gk & " " & bak & " ORDER BY tgl_cash ASC "
-
+         sql = "SELECT tgl_cash,(jual+jual_sebelumnya) as jual,(beli+beli_sebelumnya) as beli FROM vw_cash_flow  ORDER BY tgl_cash ASC "
+        
         .DataControl1.Source = sql
         .txtDate.DataField = "tgl_cash"
         .txtPenjualan.DataField = "jual"
@@ -567,7 +523,6 @@ Public Sub printCashFlow()
         .txtTransfer.DataField = "cash"
         .txtKasSisa.DataField = "kas_total"
         .txtTotalPasien.DataField = "pasien"
-        
         'grandtotal
         .txtSumPenjualan.DataField = "jual"
         .txtSumPembelian.DataField = "beli"
@@ -582,23 +537,8 @@ End Sub
 Public Sub printCashFlowdetails()
     Dim rpt As ACRCashFlowDetails
     Set rpt = New ACRCashFlowDetails
-    Dim baw, bak As Long
-    Dim gb, gk As String
     DBPath = "DSN=" + CurrUser.User_DSN + ""
-    baw = Val(frmCashFlow.lvList.ListItems(1).Text)
-    bak = Val(frmCashFlow.lvList.ListItems(frmCashFlow.lvList.ListItems.Count).Text)
-    If (baw <= bak) Then
-        gb = ">="
-        gk = "<="
-        tbl.TABLE_TANGGAL_AWAL = Format(frmCashFlow.lvList.ListItems(1).SubItems(1), "YYYY-MM-DD")
-        tbl.TABLE_TANGGAL_AKHIR = Format(frmCashFlow.lvList.ListItems(frmCashFlow.lvList.ListItems.Count).SubItems(1), "YYYY-MM-DD")
-    Else
-        gb = "<="
-        gk = ">="
-        tbl.TABLE_TANGGAL_AKHIR = Format(frmCashFlow.lvList.ListItems(1).SubItems(1), "YYYY-MM-DD")
-        tbl.TABLE_TANGGAL_AWAL = Format(frmCashFlow.lvList.ListItems(frmCashFlow.lvList.ListItems.Count).SubItems(1), "YYYY-MM-DD")
-    End If
-    
+
     With rpt
         .lblNama.Caption = CurrBiz.BUSINNES_NAME
         .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
@@ -725,7 +665,6 @@ Public Sub printSalesSummary()
         'Group 1
         .txtSubKas.DataField = "bayar"
         .txtSubPiutang.DataField = "piutang"
-        '.txtSubKomisi.DataField = "komisi"
         .txtSubTotal.DataField = "total"
         'All
         .txtGrandKas.DataField = "bayar"
@@ -749,26 +688,9 @@ Public Sub printSalesCommision()
         .lblTelepon.Caption = CurrBiz.BUSINESS_CONTACT_INFO
         .DataControl1.CursorLocation = ddADOUseClient
         .DataControl1.ConnectionString = DBPath
-         Dim baw, bak As Long
-         Dim gb, gk As String
-         baw = Val(frmKomisi.lvList.ListItems(1).Text)
-         bak = Val(frmKomisi.lvList.ListItems(frmKomisi.lvList.ListItems.Count).Text)
          
-         If (baw <= bak) Then
-            gb = ">="
-            gk = "<="
-            tbl.TABLE_TANGGAL_AWAL = Format(frmKomisi.lvList.ListItems(1).SubItems(3), "DD/MM/YYYY")
-            tbl.TABLE_TANGGAL_AKHIR = Format(frmKomisi.lvList.ListItems(frmKomisi.lvList.ListItems.Count).SubItems(3), "DD/MM/YYYY")
-         Else
-            gb = "<="
-            gk = ">="
-            tbl.TABLE_TANGGAL_AWAL = Format(frmKomisi.lvList.ListItems(frmKomisi.lvList.ListItems.Count).SubItems(3), "DD/MM/YYYY")
-            tbl.TABLE_TANGGAL_AKHIR = Format(frmKomisi.lvList.ListItems(1).SubItems(3), "DD/MM/YYYY")
-        End If
-        
         .lblTanggal.Caption = "Dari Tanggal " & tbl.TABLE_TANGGAL_AWAL & " Sampai " & tbl.TABLE_TANGGAL_AKHIR
-        'AND j.tgl_jual < curdate()
-        'DATE_FORMAT(tgl_jual,'%Y-%m-%d') as
+        
         sql = "SELECT j.no_jual,j.tgl_jual,(IF(j.flag_kreditor=1,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY)>CURDATE(),'Piutang','Jatuh Tempo')),'Lunas')) ,'Lunas'))AS status,j.tgl_komisi,j.kd_pasien,p.nm_pasien,k.nm_kreditor,d.kd_departement,d.nm_departement,c.nm_cabang,j.flag_kreditor,j.flag_debitor,j.bayar,j.piutang,j.komisi,(j.bayar-j.komisi) as total "
         sql = sql & " FROM tbl_jual j "
         sql = sql & " INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
@@ -776,10 +698,10 @@ Public Sub printSalesCommision()
         sql = sql & " INNER JOIN tbl_departement d ON d.id_departement=j.id_departement "
         sql = sql & " INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang "
         sql = sql & " INNER JOIN tbl_pengguna pp ON pp.id=j.id_pengguna "
-        sql = sql & " WHERE j.no_jual<>''  "
+        sql = sql & " WHERE j.no_jual<>'' AND j.flag_kreditor=0 "
         
         If (tbl.TABLE_ID_DEPT <> "") Then
-            sql = sql + " AND j.id_departement= " & tbl.TABLE_ID_DEPT & " AND j.flag_debitor=1 AND j.flag_kreditor=0 AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= CURDATE() "
+            sql = sql + " AND j.id_departement= " & tbl.TABLE_ID_DEPT & " AND j.flag_debitor=1  AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= CURDATE() "
         End If
         
         If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
@@ -790,12 +712,9 @@ Public Sub printSalesCommision()
         sql = sql & " ORDER BY j.tgl_komisi ASC,j.no_jual ASC,j.kd_pasien ASC " 'DATE_FORMAT(j.tgl_jual,'%Y-%m-%d') ASC
         
         .DataControl1.Source = sql
-        '.GroupHeader1.DataField = "tgl_jual"
         .GroupHeader1.DataField = "tgl_komisi"
-        '.txtDate.DataField = "tgl_jual"
         .txtDate.DataField = "tgl_komisi"
         .txtFak.DataField = "no_jual"
-        '.txtTglBayar.DataField = "tgl_bayar"
         .txtTglBayar.DataField = "tgl_jual"
         .txtCustID.DataField = "kd_pasien"
         .txtCustomerName.DataField = "nm_pasien"
@@ -823,19 +742,7 @@ Public Sub printPurchaseSummary()
         
         .DataControl1.CursorLocation = ddADOUseClient
         .DataControl1.ConnectionString = DBPath
-         Dim baw, bak As Long
-         Dim gb, gk As String
-         baw = Val(frmPurchase.lvList.ListItems(1).Text)
-         bak = Val(frmPurchase.lvList.ListItems(frmPurchase.lvList.ListItems.Count).Text)
-         If (baw <= bak) Then
-            gb = ">="
-            gk = "<="
-         Else
-            gb = "<="
-            gk = ">="
-        End If
-        'DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') as tgl_beli
-        'sql = "SELECT b.no_beli,b.tgl_beli,b.tgl_bayar,b.id_supplier,s.nm_supplier,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa FROM tbl_beli b INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier WHERE b.id_beli " & gb & " " & baw & " And b.id_beli " & gk & " " & bak & "  ORDER BY b.tgl_bayar " 'DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') ASC
+         
         sql = " SELECT b.no_beli,b.tgl_beli,b.tgl_bayar,b.id_supplier,s.nm_supplier,b.payment,b.bayar,b.hutang,(b.bayar-b.hutang) as sisa "
         sql = sql + " FROM tbl_beli b"
         sql = sql + " INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
@@ -856,9 +763,7 @@ Public Sub printPurchaseSummary()
         End If
         
         .DataControl1.Source = sql
-        '.GroupHeader1.DataField = "tgl_beli"
         .GroupHeader1.DataField = "tgl_bayar"
-        '.txtDate.DataField = "tgl_beli"
         .txtDate.DataField = "tgl_bayar"
         .txtFak.DataField = "no_beli"
         .txtTglBayar.DataField = "tgl_beli"
@@ -948,18 +853,6 @@ Public Sub printRetur()
         
         .ADO1.CursorLocation = ddADOUseClient
         .ADO1.ConnectionString = DBPath
-    
-         Dim baw, bak As Long
-         Dim gb, gk As String
-         baw = Val(frmReturPurchase.lvList.ListItems(1).Text)
-         bak = Val(frmReturPurchase.lvList.ListItems(frmReturPurchase.lvList.ListItems.Count).Text)
-         If (baw <= bak) Then
-            gb = ">="
-            gk = "<="
-         Else
-            gb = "<="
-            gk = ">="
-        End If
         sql = "SELECT *,(d.harga_beli*d.retur)as total "
         sql = sql & " FROM tbl_beli b JOIN tbl_beli_details d ON d.no_beli=b.no_beli "
         sql = sql & " INNER JOIN tbl_obat o ON o.id_obat=d.id_obat INNER JOIN tbl_kategori k ON k.id_kategori=o.id_kategori "
@@ -1040,6 +933,7 @@ Public Sub Invoice_lunas()
             sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
     End If
     If rsJual.State = 1 Then rsJual.Close
+    Set rsJual = New ADODB.Recordset
     rsJual.CursorLocation = adUseClient
     rsJual.Open sql, CN, adOpenStatic, adLockReadOnly
     
@@ -1097,8 +991,7 @@ Public Sub cetak_Invoice()
         .EndDoc
      End With
 opps:
-     'MB_Options = vbCritical
-     'MsgBox "Printer Error.", "Printer", "Error Message"
+     
 End Sub
 
 Public Sub printInvoicePembelian()
@@ -1110,7 +1003,6 @@ Public Sub printInvoicePembelian()
         .lblname.Caption = CurrBiz.BUSINNES_NAME
         .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblkota.Caption = CurrBiz.BUSINNES_CITY
-        '.lblkotaprov.Caption = CurrBiz.BUSINNES_CITY
         .lblTgl.Caption = Format(Date, "DD/MM/YYYY")
         
         .lblNamaSupplier.Caption = tbl.TABLE_NM_SUPPLIER
@@ -1119,6 +1011,7 @@ Public Sub printInvoicePembelian()
         .lblTlpSupplier.Caption = tbl.TABLE_TLP_SUPPLIER
         .DataControl1.CursorLocation = ddADOUseClient
         .DataControl1.ConnectionString = DBPath
+        
         sql = " SELECT b.no_beli,b.tgl_beli,o.kd_obat,o.nm_obat,d.harga_beli,d.jumlah,(d.harga_beli * d.jumlah) as total"
         sql = sql + " FROM tbl_beli b"
         sql = sql + " INNER JOIN tbl_beli_details d ON d.no_beli=b.no_beli"
@@ -1174,23 +1067,19 @@ Public Sub cetak_Invoice_Pembelian()
      tbl.TABLE_TANGGAL_AWAL = ""
      tbl.TABLE_TANGGAL_AKHIR = ""
 opps:
-     'MB_Options = vbCritical
-     'MsgBox "Printer Error.", "Printer", "Error Message"
+
 End Sub
 
 Public Sub printKomisi()
     Dim rpt As ACRCommision
     Set rpt = New ACRCommision
     DBPath = "DSN=" + CurrUser.User_DSN + ""
-    
-    'MsgBox "Print Invoice Komisi, Akan Melunasi Seluruh Faktur yang telah ada di Invoice !  ", vbCritical + vbInformation
+
     MDIMainMenu.HideTBButton "", True
     With rpt
         .lblname.Caption = CurrBiz.BUSINNES_NAME
         .lblALamat.Caption = CurrBiz.BUSINESS_ADDRESS
         .lblkota.Caption = CurrBiz.BUSINNES_CITY
-        '.lblkotaprov.Caption = CurrBiz.BUSINNES_CITY
-        
         .lblKdDebitor.Caption = tbl.TABLE_KD_DEPT
         .lblNamaDebitor.Caption = tbl.TABLE_NM_DEPT
         .lblTgl.Caption = Format(Date, "DD/MM/YYYY")
@@ -1203,14 +1092,12 @@ Public Sub printKomisi()
         sql = sql + " INNER JOIN tbl_pasien p ON p.kd_pasien=j.kd_pasien"
         sql = sql + " LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor"
         sql = sql + " INNER JOIN tbl_departement d ON d.id_departement=j.id_departement"
-        'AND j.flag_debitor= 0
         sql = sql + " WHERE j.id_departement= " & tbl.TABLE_ID_DEPT & " AND j.flag_kreditor=0 AND j.flag_debitor=1  AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= CURDATE() "
         
         If ((tbl.TABLE_TANGGAL_AWAL <> "") And (tbl.TABLE_TANGGAL_AKHIR <> "")) Then
             sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')>= '" & tbl.TABLE_TANGGAL_AWAL & "' "
             sql = sql + " AND DATE_FORMAT(j.tgl_jual,'%Y-%m-%d')<= '" & tbl.TABLE_TANGGAL_AKHIR & "' "
         End If
-        
         
         .DataControl1.Source = sql
         .txtKdFaktur.DataField = "no_jual"
@@ -1226,8 +1113,6 @@ Public Sub printKomisi()
      tbl.TABLE_TANGGAL_AWAL = ""
      tbl.TABLE_TANGGAL_AKHIR = ""
      MsgBox "Print Invoice Komisi, Akan Melunasi Seluruh Faktur yang telah ada di Invoice !  ", vbCritical + vbInformation
-
-     'MDIMainMenu.ShowTBButton "fffffft"
 End Sub
 
 Public Sub LunasKomisi()
@@ -1251,33 +1136,28 @@ Public Sub LunasKomisi()
     Set rsKom = New Recordset
     If rsKom.State = 1 Then rsKom.Close
     rsKom.Open sql, CN, adOpenStatic, adLockReadOnly
-     'With frmKomisiFaktur
-     'total = (.lvList.ListItems.Count)
-     total = 0
-        'If (total > 0) Then
-            bayar = 0
-            total = 0
-            Do While Not rsKom.EOF
-            'For i = 1 To total
-                sql = "UPDATE tbl_jual "
-                sql = sql + "SET "
-                sql = sql + " flag_debitor= 0,  "
-                sql = sql + " tgl_komisi= '" & Format(Date, "YYYY-MM-DD") & "'"
-                sql = sql + " WHERE no_jual='" & rsKom.Fields("no_jual") & "'"
-                CN.Execute sql
-                bayar = bayar + Val(Format(rsKom.Fields("komisi"), ""))
-                total = total + Val(Format(rsKom.Fields("kd_pasien"), ""))
-            rsKom.MoveNext
-            total = total + 1
-            Loop
-            rsKom.MoveFirst
-            tbl.TABLE_TANGGAL_AWAL = rsKom.Fields("tgl_jual")
-            rsKom.MoveLast
-            tbl.TABLE_TANGGAL_AKHIR = rsKom.Fields("tgl_jual")
-            tbl.TABLE_TOTAL = bayar
-            tbl.TABLE_TOTAL_PASIEN = total
-        'End If
-     'End With
+    total = 0
+    bayar = 0
+    total = 0
+    Do While Not rsKom.EOF
+        sql = "UPDATE tbl_jual "
+        sql = sql + "SET "
+        sql = sql + " flag_debitor= 0,  "
+        sql = sql + " tgl_komisi= '" & Format(Date, "YYYY-MM-DD") & "'"
+        sql = sql + " WHERE no_jual='" & rsKom.Fields("no_jual") & "'"
+        CN.Execute sql
+        bayar = bayar + Val(Format(rsKom.Fields("komisi"), ""))
+        total = total + Val(Format(rsKom.Fields("kd_pasien"), ""))
+        rsKom.MoveNext
+        total = total + 1
+    Loop
+    
+    rsKom.MoveFirst
+    tbl.TABLE_TANGGAL_AWAL = rsKom.Fields("tgl_jual")
+    rsKom.MoveLast
+    tbl.TABLE_TANGGAL_AKHIR = rsKom.Fields("tgl_jual")
+    tbl.TABLE_TOTAL = bayar
+    tbl.TABLE_TOTAL_PASIEN = total
 End Sub
     
 Public Sub cetak_Invoice_Komisi()
@@ -1304,7 +1184,6 @@ Public Sub cetak_Invoice_Komisi()
         Printer.Print " Total Komisi"; Spc(7); ":"; Spc(5); "" & tbl.TABLE_TOTAL & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
         Printer.Print ""
         .CurrentX = .CurrentX + 500
-        'Printer.Print " ------------------------------------------------------ "
         .EndDoc
      End With
      With tbl
@@ -1316,10 +1195,7 @@ Public Sub cetak_Invoice_Komisi()
         .TABLE_TOTAL = Empty
      End With
 opps:
-     'MB_Options = vbCritical
-     'MsgBox "Printer Error.", "Printer", "Error Message"
 End Sub
-
 
 Public Sub printStockOpname()
     Dim rpt As ACRStockOpname

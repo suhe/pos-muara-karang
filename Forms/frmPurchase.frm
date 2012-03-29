@@ -496,6 +496,7 @@ Private Sub Form_Load()
     End With
     
     If rsPurchase.State = 1 Then rsPurchase.Close
+    Set rsPurchase = New ADODB.Recordset
     rsPurchase.CursorLocation = adUseClient
     rsPurchase.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
     

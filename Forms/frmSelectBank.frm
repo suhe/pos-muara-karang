@@ -220,6 +220,7 @@ Private Sub Form_Load()
     End With
     
     If rsGroup.State = 1 Then rsGroup.Close
+    Set rsGroup = New ADODB.Recordset
     rsGroup.CursorLocation = adUseClient
     rsGroup.Open "SELECT * FROM tbl_cabang ORDER BY id_cabang ASC", CN, adOpenStatic, adLockOptimistic
     Call reload_rec
