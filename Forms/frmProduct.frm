@@ -165,7 +165,7 @@ Begin VB.Form frmProduct
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      NumItems        =   17
+      NumItems        =   16
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID Obat"
          Object.Width           =   0
@@ -210,54 +210,48 @@ Begin VB.Form frmProduct
       BeginProperty ColumnHeader(9) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   8
-         Text            =   "Profit"
-         Object.Width           =   0
+         Text            =   "Gudang"
+         Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(10) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   9
-         Text            =   "Gudang"
+         Text            =   "Beli"
          Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(11) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   10
-         Text            =   "Beli"
+         Text            =   "Jual"
          Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(12) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   11
-         Text            =   "Jual"
+         Text            =   "Retur"
          Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(13) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   12
-         Text            =   "Retur"
+         Text            =   "Sisa Stok"
          Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(14) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   13
-         Text            =   "Sisa Stok"
+         Text            =   "Stok Min"
          Object.Width           =   1764
       EndProperty
       BeginProperty ColumnHeader(15) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   14
-         Text            =   "Stok Min"
-         Object.Width           =   1764
+         Text            =   "Tgl Input"
+         Object.Width           =   2540
       EndProperty
       BeginProperty ColumnHeader(16) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Alignment       =   1
          SubItemIndex    =   15
-         Text            =   "Tgl Input"
-         Object.Width           =   2540
-      EndProperty
-      BeginProperty ColumnHeader(17) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   16
          Text            =   "Nm Pengguna"
          Object.Width           =   2469
       EndProperty
@@ -509,7 +503,7 @@ Private Sub Form_Load()
         Case "Stok Sisa": sort = "ABS(@stok) " & cbSortType.Text
     End Select
     'Set the graphics for the controls
-    sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.nm_ilmiah,k.nm_kategori,o.kemasan,o.harga_jual,o.harga_beli,(o.harga_jual-o.harga_beli)as profit,o.stok,"
+    sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.nm_ilmiah,k.nm_kategori,o.kemasan,o.harga_jual,o.harga_beli,o.stok,"
     sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0)) AS beli,"
     sql = sql & "@jual:=(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0)) AS jual,"
     sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0)) AS rugi,"
