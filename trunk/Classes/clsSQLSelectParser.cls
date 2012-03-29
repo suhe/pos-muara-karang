@@ -115,7 +115,7 @@ End Property
 'Return the SQL statement
 Public Property Get SQLStatement() As String
     'Required statement
-    SQLStatement = "SELECT " & m_Fields & " FROM " & m_Tables
+    SQLStatement = "EXPLAIN SELECT " & m_Fields & " FROM " & m_Tables
     'Optional statement
     If m_Join <> "" Then SQLStatement = SQLStatement & " LEFT JOIN " & m_Join
     If m_likeCondition <> "" Then SQLStatement = SQLStatement & m_likeCondition
