@@ -504,8 +504,6 @@ Private Sub txtSrchStr_Change()
             .Start rsSearchDepartement, 20
             FillList 1
         End With
-        
-        rsSearchDepartement.Close
     End If
 End Sub
 

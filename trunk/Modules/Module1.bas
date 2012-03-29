@@ -250,7 +250,7 @@ Public Sub cetak_Faktur3()
         
         If tbl.TABLE_TYPE = "Credit" Then
             If rscetak.State = 1 Then rscetak.Close
-            sql = "SELECT j.no_jual,DATE_FORMAT(tgl_jual,'%Y-%m-%d') as tgl_jual,j.jw,DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY) as jatuh_tempo,j.piutang,(IF(j.flag_kreditor=0,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL+j.jw DAY)>CURDATE(),'Piutang','Tagih')),'Lunas')) ,'Lunas'))AS statusjual FROM tbl_jual j JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor LEFT JOIN tbl_cabang c ON c.id_cabang=j.id_cabang WHERE j.id_kreditor=" & tbl.TABLE_ID_KREDITUR & " AND j.flag_kreditor=0  AND j.piutang>0 "
+            sql = "SELECT j.no_jual,DATE_FORMAT(tgl_jual,'%Y-%m-%d') as tgl_jual,j.jw,DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL + j.jw DAY) as jatuh_tempo,j.piutang,(IF(j.flag_kreditor=0,(IF (j.id_kreditor>0,(IF(DATE_ADD(DATE_FORMAT(j.tgl_jual,'%Y-%m-%d'),INTERVAL+j.jw DAY)>CURDATE(),'Piutang','Tagih')),'Lunas')) ,'Lunas'))AS statusjual FROM tbl_jual j LEFT JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor INNER JOIN tbl_cabang c ON c.id_cabang=j.id_cabang WHERE j.id_kreditor=" & tbl.TABLE_ID_KREDITUR & " AND j.flag_kreditor=0  AND j.piutang>0 "
             rscetak.Open sql, CN, adOpenStatic, adLockReadOnly
             If rscetak.RecordCount > 0 Then
                 Printer.Print ""
@@ -320,7 +320,6 @@ Public Sub cetak_Faktur4()
         .CurrentX = .CurrentX + 500 ' Skip some space
         Printer.Print " Nama Dept  "; Spc(2); ":"; Spc(5); "" & tbl.TABLE_NM_DEPT & ""; Tab(70); "Rp "; Spc(9); ":"; Spc(2); "" & Format(tbl.TABLE_TOTAL, "##,###0.00") & ""
         .CurrentX = .CurrentX + 500 ' Skip some space
-        'Printer.Print "   "; Spc(2); ""; Spc(5); "" & tbl.TABLE_NM_DEPT & ""
         Printer.Print ""
         .CurrentX = .CurrentX + 500
         Printer.Print " --------------------------------------------------------------------------------------------------------------- "
@@ -330,16 +329,12 @@ Public Sub cetak_Faktur4()
         .CurrentX = .CurrentX + 500
         Printer.Print " --------------------------------------------------------------------------------------------------------------- "
         .CurrentY = .CurrentY + 0
-        'Dim xx As Byte
+    
         Set rsobat = New Recordset
         If rsobat.State = 1 Then rsobat.Close
-        sql = "SELECT o.nm_obat,o.kemasan,d.jumlah FROM tbl_jual_details d JOIN tbl_obat o ON o.id_obat=d.id_obat WHERE d.no_jual='" & tbl.TABLE_NO_FAK & "' ORDER BY o.kd_obat "
-        'MsgBox sql
-        'rscetak.Open sql, CN, adOpenStatic, adLockReadOnly
+        sql = "SELECT o.nm_obat,o.kemasan,d.jumlah FROM tbl_jual_details d INNER JOIN tbl_obat o ON o.id_obat=d.id_obat WHERE d.no_jual='" & tbl.TABLE_NO_FAK & "' ORDER BY o.kd_obat LIMIT 100 "
         rsobat.Open sql, CN, adOpenStatic, adLockReadOnly
-        'MsgBox rsobat.RecordCount
         If rsobat.RecordCount > 0 Then
-        'rsObat.MoveFirst
             Do While (Not rsobat.EOF)
                  .CurrentX = .CurrentX + 500
                 Printer.Print " " & rsobat.Fields("nm_obat") & "  "; Tab(50); " " & rsobat.Fields("kemasan") & "  "; Tab(75); " " & rsobat.Fields("jumlah") & "  ";
@@ -354,8 +349,6 @@ Public Sub cetak_Faktur4()
         .EndDoc
      End With
 opps:
-     'MB_Options = vbCritical
-     'MsgBox "Printer Error.", "Printer", "Error Message"
 End Sub
 
 Public Sub cetak_FakturBeli()
@@ -388,28 +381,20 @@ Public Sub cetak_FakturBeli()
         .CurrentY = .CurrentY + 0
         sql = "SELECT *,(j.harga_jual * j.jumlah) as total FROM tbl_jual_details j INNER JOIN tbl_obat O ON O.id_obat=j.id_obat"
         Set rscetak = New Recordset
-        'Call OpenDB
         rscetak.CursorLocation = adUseClient
-        rscetak.Open sql, CN, adOpenStatic, adLockReadOnly
-        'MsgBox rscetak.Fields("kd_obat")
-        If (rscetak.RecordCount > 0) Then
-        'total = 0
-        Dim xx As Byte
-        'Do While Not rscetak.EOF
-        'For xx = 1 To 7 Step xx + 1
-        Dim ax As Integer
         
+        If rscetak.State = 1 Then rscetak.Close
+        rscetak.Open sql, CN, adOpenStatic, adLockReadOnly
+        If (rscetak.RecordCount > 0) Then
+        
+        Dim xx As Byte
+        Dim ax As Integer
         ax = frmPurchasing.lstOrders.ListItems.Count
-        'MsgBox ax
         
         For xx = 1 To ax
-            'Printer.Print ""
-             '.CurrentY = .CurrentY + 200 ' Skip some space
-             .CurrentX = .CurrentX + 500
+            .CurrentX = .CurrentX + 500
             Printer.Print " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(2) & " "; Tab(40); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(3) & " "; Tab(55); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(4) & " "; Tab(75); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(5) & " "; Tab(85); " " & frmPurchasing.lstOrders.ListItems(xx).SubItems(6) & " ";
             Printer.Print ""
-        '.CurrentX = .CurrentX + 500
-        'Printer.Print " ----------------------------------- ----------------------- -------------- ------------------- ---------------- "
             .CurrentY = .CurrentY + 50
         Next xx
         Printer.Print ""
@@ -420,7 +405,6 @@ Public Sub cetak_FakturBeli()
         Printer.Print Tab(75); " Bayar "; Tab(85); "" & Format(tbl.TABLE_TOTAL, "##,###0.00") & "";
         Printer.Print ""
         .CurrentX = .CurrentX + 500
-        'Printer.Print Tab(40); "" & CurrBiz.BUSINNES_NOTE & ""
         .EndDoc
         Else
             MsgBox "No Data"
@@ -627,7 +611,6 @@ Public Sub printCashFlowdetails()
         .lblTanggal.Caption = "Dari Tanggal " & tbl.TABLE_TANGGAL_AWAL & " Sampai " & tbl.TABLE_TANGGAL_AKHIR
         .DataControl1.CursorLocation = ddADOUseClient
         .DataControl1.ConnectionString = DBPath
-        'AND id " & gb & " " & baw & " AND  id  " & gk & " " & bak & "
          sql = "SELECT *,vf.tgl_cash,(vf.jual+vf.jual_sebelumnya) as total_jual,(vf.beli+vf.beli_sebelumnya) as total_beli,vk.komisi as komisidep,vk.pasien as vkpasien FROM vw_cash_flow vf "
          sql = sql & " LEFT JOIN vw_komisi vk ON vk.tgl_jual=vf.tgl_cash "
          If tbl.TABLE_TANGGAL_AWAL <> "" Then
@@ -924,24 +907,7 @@ Public Sub printPurchaseDetails()
         
         .DataControl1.CursorLocation = ddADOUseClient
         .DataControl1.ConnectionString = DBPath
-         Dim baw, bak As Long
-         Dim gb, gk As String
-         baw = Val(frmPurchase.lvList.ListItems(1).Text)
-         bak = Val(frmPurchase.lvList.ListItems(frmPurchase.lvList.ListItems.Count).Text)
-         If (baw <= bak) Then
-            gb = ">="
-            gk = "<="
-         Else
-            gb = "<="
-            gk = ">="
-        End If
-        'sql = "SELECT *,"
-        'sql = sql + " (d.harga_beli * d.jumlah) as total FROM tbl_beli b "
-        'sql = sql + " INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "
-        'sql = sql + " INNER JOIN tbl_beli_details d ON d.no_beli=b.no_beli "
-        'sql = sql + " INNER JOIN tbl_obat o ON o.id_obat=d.id_obat "
-        'sql = sql + " WHERE b.id_beli " & gb & " " & baw & " And b.id_beli " & gk & " " & bak & "  ORDER BY o.kd_obat ASC,DATE_FORMAT(b.tgl_beli,'%Y-%m-%d') ASC "
-        
+         
         sql = " SELECT *,(d.harga_beli * d.jumlah) as total "
         sql = sql + " FROM tbl_beli b"
         sql = sql + " INNER JOIN tbl_supplier s ON s.id_supplier=b.id_supplier "

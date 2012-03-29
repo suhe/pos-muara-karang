@@ -1,0 +1,2 @@
+DELETE FROM `tbl_cash`;
+ALTER TABLE tbl_cash AUTO_INCREMENT = 1;

@@ -1,0 +1,2 @@
+DELETE FROM `tbl_jual`;
+ALTER TABLE tbl_jual AUTO_INCREMENT = 1;

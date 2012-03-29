@@ -1,0 +1,2 @@
+DELETE FROM `tbl_beli`;
+ALTER TABLE tbl_beli AUTO_INCREMENT = 1;

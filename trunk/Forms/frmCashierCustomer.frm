@@ -521,8 +521,6 @@ Private Sub txtSrchStr_Change()
             .Start rsCashierCustomer, 20
             FillList 1
         End With
-        
-        'rsCashierCustomer.Close
     End If
 End Sub
 

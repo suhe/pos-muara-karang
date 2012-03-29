@@ -503,8 +503,7 @@ Private Sub txtSrchStr_Change()
             .SortOrder = "id_kreditor ASC,nm_kreditor ASC LIMIT 20 "
             .SaveStatement
         End With
-        
-        'SQLParser =
+    
         If rsCashierKreditor.State = 1 Then rsCashierKreditor.Close
         rsCashierKreditor.CursorLocation = adUseClient
         rsCashierKreditor.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
@@ -514,7 +513,6 @@ Private Sub txtSrchStr_Change()
             FillList 1
         End With
         
-        rsCashierKreditor.Close
     End If
 End Sub
 

@@ -493,7 +493,6 @@ Private Sub txtSrchStr_Change()
             .Start rsSearchSupplier, 20
             FillList 1
         End With
-        rsSearchSupplier.Close
     End If
 End Sub
 
