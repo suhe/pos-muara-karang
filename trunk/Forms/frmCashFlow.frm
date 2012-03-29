@@ -54,7 +54,7 @@ Begin VB.Form frmCashFlow
          Left            =   6120
          List            =   "frmCashFlow.frx":0394
          TabIndex        =   8
-         Text            =   "ASC"
+         Text            =   "DESC"
          Top             =   30
          Width           =   855
       End
@@ -275,7 +275,7 @@ Public Sub CommandPass(ByVal srcPerformWhat As String)
                         .TABLE_TGL_CASH = lvList.SelectedItem.SubItems(1)
                         .TABLE_LABA_BERSIH = Format(lvList.SelectedItem.SubItems(10), "")
                     End With
-                    'MsgBox Format(lvList.SelectedItem.SubItems(1), "DD/MM/YYYY") & " AND " & Format(Date, "DD/MM/YYYY")
+        
                     If (Format(lvList.SelectedItem.SubItems(1), "DD/MM/YYYY") = Format(Date, "DD/MM/YYYY")) Then
                         With frmCashFlowAE
                             .State = adStateEditMode
@@ -303,9 +303,7 @@ Public Sub CommandPass(ByVal srcPerformWhat As String)
         Case "Print"
            On Error Resume Next
             If (lvList.ListItems.Count > 0) Then
-                'MDIMainMenu.HideTBButton "", True
                 Call printCashFlowdetails
-                'Unload Me
             Else
                 MsgBox "No Data View In the List"
             End If
