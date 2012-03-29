@@ -3,16 +3,16 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmSearchFakturKreditor 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Search Kreditor"
-   ClientHeight    =   7410
+   ClientHeight    =   5715
    ClientLeft      =   45
    ClientTop       =   330
-   ClientWidth     =   7275
+   ClientWidth     =   7260
    Icon            =   "frmSearchFakturKreditor.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   7410
-   ScaleWidth      =   7275
+   ScaleHeight     =   5715
+   ScaleWidth      =   7260
    StartUpPosition =   2  'CenterScreen
    Begin VB.Frame freSearch 
       BeginProperty Font 
@@ -27,7 +27,7 @@ Begin VB.Form frmSearchFakturKreditor
       Height          =   735
       Left            =   0
       TabIndex        =   10
-      Top             =   6240
+      Top             =   4560
       Width           =   7215
       Begin VB.ComboBox cboFilter 
          Height          =   315
@@ -70,10 +70,10 @@ Begin VB.Form frmSearchFakturKreditor
       Height          =   380
       Left            =   0
       ScaleHeight     =   375
-      ScaleWidth      =   7275
+      ScaleWidth      =   7260
       TabIndex        =   2
-      Top             =   7035
-      Width           =   7275
+      Top             =   5340
+      Width           =   7260
       Begin VB.PictureBox Picture2 
          BorderStyle     =   0  'None
          Height          =   345
@@ -153,10 +153,10 @@ Begin VB.Form frmSearchFakturKreditor
       Index           =   0
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   7275
+      ScaleWidth      =   7260
       TabIndex        =   1
-      Top             =   7020
-      Width           =   7275
+      Top             =   5325
+      Width           =   7260
    End
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -166,19 +166,19 @@ Begin VB.Form frmSearchFakturKreditor
       Index           =   1
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   7275
+      ScaleWidth      =   7260
       TabIndex        =   0
-      Top             =   7005
-      Width           =   7275
+      Top             =   5310
+      Width           =   7260
    End
    Begin MSComctlLib.ListView lvList 
-      Height          =   6075
+      Height          =   4275
       Left            =   0
       TabIndex        =   13
       Top             =   240
       Width           =   7260
       _ExtentX        =   12806
-      _ExtentY        =   10716
+      _ExtentY        =   7541
       View            =   3
       LabelEdit       =   1
       LabelWrap       =   0   'False
@@ -231,18 +231,9 @@ Begin VB.Form frmSearchFakturKreditor
          Object.Width           =   3528
       EndProperty
    End
-   Begin VB.Shape shpBar 
-      BackColor       =   &H80000010&
-      BackStyle       =   1  'Opaque
-      BorderColor     =   &H80000010&
-      Height          =   240
-      Left            =   0
-      Top             =   0
-      Width           =   7275
-   End
    Begin VB.Label lblTitle 
       BackStyle       =   0  'Transparent
-      Caption         =   "Kreditor Records"
+      Caption         =   "Input Name Of Kreditor over textbox"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -256,8 +247,17 @@ Begin VB.Form frmSearchFakturKreditor
       Height          =   210
       Left            =   75
       TabIndex        =   14
-      Top             =   0
+      Top             =   10
       Width           =   4815
+   End
+   Begin VB.Shape shpBar 
+      BackColor       =   &H80000010&
+      BackStyle       =   1  'Opaque
+      BorderColor     =   &H80000010&
+      Height          =   240
+      Left            =   0
+      Top             =   0
+      Width           =   7275
    End
 End
 Attribute VB_Name = "frmSearchFakturKreditor"
@@ -484,16 +484,17 @@ Private Sub txtSrchStr_Change()
             Else
             .wCondition = str & " LIKE '%" & txtSrchStr.Text & "%'"
             End If
-            .SortOrder = "id_kreditor ASC,nm_kreditor ASC LIMIT 20 "
+            .SortOrder = "id_kreditor ASC,nm_kreditor ASC LIMIT 10 "
             .SaveStatement
         End With
         
         If rsSearchKreditor.State = 1 Then rsSearchKreditor.Close
+        Set rsSearchKreditor = New ADODB.Recordset
         rsSearchKreditor.CursorLocation = adUseClient
         rsSearchKreditor.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
         
         With RecordPage
-            .Start rsSearchKreditor, 20
+            .Start rsSearchKreditor, 10
             FillList 1
         End With
     End If
