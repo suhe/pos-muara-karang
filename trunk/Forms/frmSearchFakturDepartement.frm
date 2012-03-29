@@ -2,14 +2,14 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmSearchFakturDepartement 
    Caption         =   "Departement"
-   ClientHeight    =   7455
+   ClientHeight    =   5400
    ClientLeft      =   60
    ClientTop       =   450
    ClientWidth     =   7290
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    LinkTopic       =   "Form1"
-   ScaleHeight     =   7455
+   ScaleHeight     =   5400
    ScaleWidth      =   7290
    StartUpPosition =   2  'CenterScreen
    Begin VB.PictureBox picLine 
@@ -22,7 +22,7 @@ Begin VB.Form frmSearchFakturDepartement
       ScaleHeight     =   15
       ScaleWidth      =   7290
       TabIndex        =   12
-      Top             =   7050
+      Top             =   4995
       Width           =   7290
    End
    Begin VB.PictureBox picLine 
@@ -35,7 +35,7 @@ Begin VB.Form frmSearchFakturDepartement
       ScaleHeight     =   15
       ScaleWidth      =   7290
       TabIndex        =   11
-      Top             =   7065
+      Top             =   5010
       Width           =   7290
    End
    Begin VB.PictureBox Picture1 
@@ -46,7 +46,7 @@ Begin VB.Form frmSearchFakturDepartement
       ScaleHeight     =   375
       ScaleWidth      =   7290
       TabIndex        =   3
-      Top             =   7080
+      Top             =   5025
       Width           =   7290
       Begin VB.PictureBox Picture2 
          BorderStyle     =   0  'None
@@ -132,7 +132,7 @@ Begin VB.Form frmSearchFakturDepartement
       Height          =   735
       Left            =   0
       TabIndex        =   0
-      Top             =   6240
+      Top             =   4200
       Width           =   7215
       Begin VB.TextBox txtSrchStr 
          BeginProperty DataFormat 
@@ -170,13 +170,13 @@ Begin VB.Form frmSearchFakturDepartement
       End
    End
    Begin MSComctlLib.ListView lvList 
-      Height          =   6075
+      Height          =   3915
       Left            =   0
       TabIndex        =   13
       Top             =   240
       Width           =   7260
       _ExtentX        =   12806
-      _ExtentY        =   10716
+      _ExtentY        =   6906
       View            =   3
       LabelEdit       =   1
       LabelWrap       =   0   'False
@@ -246,7 +246,7 @@ Begin VB.Form frmSearchFakturDepartement
    End
    Begin VB.Label lblTitle 
       BackStyle       =   0  'Transparent
-      Caption         =   "Departement Records"
+      Caption         =   "Input Name Of Departement over textbox"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -495,8 +495,8 @@ Private Sub txtSrchStr_Change()
             .SaveStatement
         End With
         
-        'SQLParser =
         If rsSearchDepartement.State = 1 Then rsSearchDepartement.Close
+        Set rsSearchDepartement = New ADODB.Recordset
         rsSearchDepartement.CursorLocation = adUseClient
         rsSearchDepartement.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
         
