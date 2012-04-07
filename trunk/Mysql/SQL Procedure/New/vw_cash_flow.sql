@@ -23,7 +23,7 @@ c.id,c.tgl_cash,c.money_cash,
 (IF((SELECT COUNT(*) FROM tbl_beli b WHERE b.flag_supplier=0 AND DATE_FORMAT(b.tgl_input,'%Y-%m-%d')=b.tgl_bayar AND b.tgl_bayar=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d'))>0,(SELECT SUM(b.bayar+b.hutang)  FROM tbl_beli b WHERE b.flag_supplier=0 AND DATE_FORMAT(b.tgl_input,'%Y-%m-%d')=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d')),0)) AS beli,
 /* Beli Hari ini Lunas Hari Ini */
 
-(IF((SELECT COUNT(*) FROM tbl_beli b JOIN tbl_beli_details d ON d.no_beli=b.no_beli WHERE b.flag_supplier=0 AND d.tgl_retur=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d'))>0,(SELECT SUM(d.retur*d.harga_beli) FROM tbl_beli b JOIN tbl_beli_details d ON d.no_beli=b.no_beli WHERE b.flag_supplier=0 AND d.tgl_retur=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d')),0)) AS retur,  
+(IF((SELECT COUNT(*) FROM tbl_beli b INNER JOIN tbl_beli_details d ON d.no_beli=b.no_beli WHERE b.flag_supplier=0 AND d.tgl_retur=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d'))>0,(SELECT SUM(d.retur*d.harga_beli) FROM tbl_beli b INNER JOIN tbl_beli_details d ON d.no_beli=b.no_beli WHERE b.flag_supplier=0 AND d.tgl_retur=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d')),0)) AS retur,  
 (IF((SELECT COUNT(*) FROM tbl_jual j WHERE j.flag_kreditor=0 AND j.flag_debitor=0 AND j.tgl_komisi=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d'))>0,(SELECT SUM(j.komisi) FROM tbl_jual j  WHERE j.flag_kreditor=0 AND j.flag_debitor=0 AND j.tgl_komisi=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d')),0)) AS komisi,
 
 (
