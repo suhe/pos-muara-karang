@@ -911,8 +911,8 @@ Public Sub printInvoice()
         .txtSumTotal.DataField = "piutang"
         .txtTotalPasien.DataField = "kd_pasien"
      End With
-     tbl.TABLE_TANGGAL_AWAL = ""
-     tbl.TABLE_TANGGAL_AKHIR = ""
+     'tbl.TABLE_TANGGAL_AWAL = ""
+     'tbl.TABLE_TANGGAL_AKHIR = ""
      MsgBox "Print Invoice Pendapatan, Akan Melunasi Seluruh Faktur yang telah ada di Invoice !  ", vbCritical + vbInformation
 End Sub
 
@@ -1110,8 +1110,8 @@ Public Sub printKomisi()
         .txtSumTotal.DataField = "komisi"
      End With
      
-     tbl.TABLE_TANGGAL_AWAL = ""
-     tbl.TABLE_TANGGAL_AKHIR = ""
+     'tbl.TABLE_TANGGAL_AWAL = ""
+     'tbl.TABLE_TANGGAL_AKHIR = ""
      MsgBox "Print Invoice Komisi, Akan Melunasi Seluruh Faktur yang telah ada di Invoice !  ", vbCritical + vbInformation
 End Sub
 
@@ -1179,9 +1179,10 @@ Public Sub cetak_Invoice_Komisi()
         .CurrentX = .CurrentX + 500 ' Skip some space
         Printer.Print " Nama Departement  "; Spc(0); ":"; Spc(5); "" & tbl.TABLE_NM_DEPT & ""; Tab(70); " "; Spc(5); ""; Spc(2); ""
         .CurrentX = .CurrentX + 500 ' Skip some space
-        Printer.Print " Total Pasien"; Spc(8); ":"; Spc(5); "" & tbl.TABLE_TOTAL_PASIEN & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
+        'Format(tbl.TABLE_KAS_SISA, "##,###0")
+        Printer.Print " Total Pasien"; Spc(8); ":"; Spc(5); "" & Format(tbl.TABLE_TOTAL_PASIEN, "##,###0") & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
         .CurrentX = .CurrentX + 500 ' Skip some space
-        Printer.Print " Total Komisi"; Spc(7); ":"; Spc(5); "" & tbl.TABLE_TOTAL & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
+        Printer.Print " Total Komisi"; Spc(7); ":"; Spc(5); "" & Format(tbl.TABLE_TOTAL, "##,###0") & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
         Printer.Print ""
         .CurrentX = .CurrentX + 500
         .EndDoc

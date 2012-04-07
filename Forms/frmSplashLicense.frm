@@ -76,7 +76,6 @@ Begin VB.Form frmSplashLicense
          _ExtentX        =   8070
          _ExtentY        =   503
          _Version        =   393217
-         Enabled         =   -1  'True
          MultiLine       =   0   'False
          Appearance      =   0
          TextRTF         =   $"frmSplashLicense.frx":038A
@@ -133,6 +132,7 @@ Begin VB.Form frmSplashLicense
       _ExtentX        =   1508
       _ExtentY        =   450
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"frmSplashLicense.frx":084E
    End
    Begin VB.Label Label1 
@@ -283,8 +283,8 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub RegTrial()
-    Dim s As String, l As Byte
-    Dim dayone As Byte
+    Dim s As String, l As Integer
+    Dim dayone As Integer
     dayone = 5
     s = GetInfoReg
     If s <> "Registered" Then 'jika belum terdaftar"

@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {9EB8768B-CDFA-44DF-8F3E-857A8405E1DB} ACRCommision 
    Caption         =   "Invoice Pelunasan Komisi"
-   ClientHeight    =   11010
+   ClientHeight    =   10950
    ClientLeft      =   60
    ClientTop       =   345
    ClientWidth     =   15240
@@ -54,6 +54,7 @@ Public Sub CommandPass(ByVal srcPerformWhat As String)
         Case "Close"
             Unload Me
             Call cetak_Invoice_Komisi
+            Call frmKomisi.RefreshRecords
     End Select
     Exit Sub
     'Trap the error
