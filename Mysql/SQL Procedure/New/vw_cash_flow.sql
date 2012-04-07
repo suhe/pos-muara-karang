@@ -90,7 +90,7 @@ c.cash,
 )
 + 
 (IF((SELECT COUNT(*) FROM tbl_beli b JOIN tbl_beli_details d ON d.no_beli=b.no_beli WHERE b.flag_supplier=0 AND d.tgl_retur=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d'))>0,(SELECT SUM(d.retur*d.harga_beli) FROM tbl_beli b JOIN tbl_beli_details d ON d.no_beli=b.no_beli WHERE b.flag_supplier=0 AND d.tgl_retur=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d')),0))+
-(IF((SELECT COUNT(*) FROM tbl_jual j WHERE j.flag_kreditor=0 AND j.flag_debitor=0 AND j.tgl_komisi=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d'))>0,(SELECT SUM(j.komisi) FROM tbl_jual j WHERE j.flag_kreditor=0 AND j.flag_debitor AND j.tgl_komisi=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d')),0))
+(IF((SELECT COUNT(*) FROM tbl_jual j WHERE j.flag_kreditor=0 AND j.flag_debitor=0 AND j.tgl_komisi=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d'))>0,(SELECT SUM(j.komisi) FROM tbl_jual j WHERE j.flag_kreditor=0 AND j.flag_debitor=0 AND j.tgl_komisi=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d')),0))
 )
 ) - c.cash )) AS kas,
 
@@ -122,7 +122,7 @@ c.cash,
 
 + 
 (IF((SELECT COUNT(*) FROM tbl_beli b JOIN tbl_beli_details d ON d.no_beli=b.no_beli WHERE b.flag_supplier=0 AND d.tgl_retur=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d'))>0,(SELECT SUM(d.retur*d.harga_beli) FROM tbl_beli b JOIN tbl_beli_details d ON d.no_beli=b.no_beli WHERE b.flag_supplier=0 AND d.tgl_retur=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d')),0))+
-(IF((SELECT COUNT(*) FROM tbl_jual j WHERE j.flag_kreditor=0 AND j.flag_debitor=0 AND j.tgl_komisi=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d'))>0,(SELECT SUM(j.komisi) FROM tbl_jual j WHERE j.flag_kreditor=0 AND j.flag_debitor AND j.tgl_komisi=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d')),0))
+(IF((SELECT COUNT(*) FROM tbl_jual j WHERE j.flag_kreditor=0 AND j.flag_debitor=0 AND j.tgl_komisi=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d'))>0,(SELECT SUM(j.komisi) FROM tbl_jual j WHERE j.flag_kreditor=0 AND j.flag_debitor=0 AND j.tgl_komisi=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d')),0))
 )
 ) - c.cash )+ c.money_cash) AS kas_total,
 (IF((SELECT COUNT(*) FROM tbl_jual j WHERE DATE_FORMAT(j.tgl_input,'%Y-%m-%d')=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d'))>0,(SELECT COUNT(j.kd_pasien) FROM tbl_jual j WHERE  DATE_FORMAT(j.tgl_input,'%Y-%m-%d')=DATE_FORMAT(c.tgl_cash,'%Y-%m-%d')),0)) AS pasien
