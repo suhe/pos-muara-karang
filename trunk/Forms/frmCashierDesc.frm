@@ -282,24 +282,37 @@ Option Explicit
 Private Sub Form_Load()
     On Error Resume Next
     If (tbl.TABLE_PAY_TYPE <> "Credit") Then
-        'lblPay.Caption = "Cash"
         lblPay.Visible = False
         lblkembali.Visible = True
-        Call cetak_Faktur2
-        Call cetak_Faktur4
+        frmDelay.show vbModal
+        frmDelay.lblTitle.Caption = " Waiting For The Print 1 Of 2 Struck "
+            Call cetak_Faktur2
+        
+        frmDelay.show vbModal
+        frmDelay.lblTitle.Caption = " Waiting For The Print 2 Of 2 Struck "
+            Call cetak_Faktur4
+        
         lblbayar.Caption = Format(tbl.TABLE_MONEY, "##,###0.00")
         lblkembali.Caption = Format(tbl.TABLE_CBACK, "##,###0.00")
         Label5.Visible = True
     Else
-        'lblPay.Caption = "Credit"
+        lblPay.Caption = "Credit"
         lblPay.Visible = False
-        Call cetak_Faktur2
-        Call cetak_Faktur3
-        Call cetak_Faktur4
+        frmDelay.show vbModal
+        frmDelay.lblTitle.Caption = " Waiting For The Print 1 Of 3 Struck "
+            Call cetak_Faktur2
+        
+        frmDelay.show vbModal
+        frmDelay.lblTitle.Caption = " Waiting For The Print 2 Of 3 Struck "
+            Call cetak_Faktur3
+        
+        frmDelay.show vbModal
+        frmDelay.lblTitle.Caption = " Waiting For The Print 3 Of 3 Struck "
+            Call cetak_Faktur4
+        
         Label5.Visible = False
         lblbayar.Caption = "Credit"
         lblkembali.Visible = False
     End If
     lbltotal.Caption = Format(tbl.TABLE_TOTAL, "##,###0.00")
 End Sub
-

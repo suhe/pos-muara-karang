@@ -297,7 +297,7 @@ Private Sub sel4_Click()
                     .Delete
                     reload_rec
                     MsgBox "Record has been successfully deleted.", vbInformation, "Confirm"
-                    MDIMainMenu.UpdateInfoMsg
+                    'MDIMainMenu.UpdateInfoMsg
                  End If
             Else
                 MsgBox "Record not been deleted , this is record in the transaction OR FK Other table !.", vbInformation, "Confirm"

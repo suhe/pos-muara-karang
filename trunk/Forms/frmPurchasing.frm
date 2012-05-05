@@ -1027,7 +1027,7 @@ Private Sub cmdProcess_Click()
         Call txtSrchStr_Change
     End If
     cmdRemove.Visible = False
-    MDIMainMenu.UpdateInfoMsg
+    'MDIMainMenu.UpdateInfoMsg
 End Sub
 
 Private Sub Active()
