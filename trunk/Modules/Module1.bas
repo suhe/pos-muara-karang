@@ -356,17 +356,18 @@ Public Sub cetak_FakturBeli()
         .CurrentX = .CurrentX + 500
         Printer.Print " --------------------------------------------------------------------------------------------------------------- "
         .CurrentY = .CurrentY + 0
-        sql = "SELECT *,FORMAT((j.harga_jual * j.jumlah),0) as total FROM tbl_jual_details j INNER JOIN tbl_obat O ON O.id_obat=j.id_obat"
+        'sql = "SELECT *,FORMAT((j.harga_jual * j.jumlah),0) as total FROM tbl_beli_details j INNER JOIN tbl_obat O ON O.id_obat=j.id_obat"
         
-        If rscetak.State = 1 Then rscetak.Close
-        Set rscetak = New Recordset
-        rscetak.CursorLocation = adUseClient
-        rscetak.Open sql, CN, adOpenStatic, adLockReadOnly
+        'If rscetak.State = 1 Then rscetak.Close
+        'Set rscetak = New Recordset
+        'rscetak.CursorLocation = adUseClient
+        'rscetak.Open sql, CN, adOpenStatic, adLockReadOnly
+        Dim xx As Byte
+        Dim ax As Integer
+        ax = frmPurchasing.lstOrders.ListItems.Count
+            
         
-        If (rscetak.RecordCount > 0) Then
-            Dim xx As Byte
-            Dim ax As Integer
-            ax = frmPurchasing.lstOrders.ListItems.Count
+        If (ax > 0) Then
             
             For xx = 1 To ax
                 .CurrentX = .CurrentX + 500
