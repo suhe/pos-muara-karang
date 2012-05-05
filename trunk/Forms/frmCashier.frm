@@ -1095,6 +1095,62 @@ Begin VB.Form frmCashier
       Top             =   4920
       Width           =   1215
    End
+   Begin MSComctlLib.ListView lvList 
+      Height          =   4275
+      Left            =   7080
+      TabIndex        =   53
+      Top             =   960
+      Width           =   4785
+      _ExtentX        =   8440
+      _ExtentY        =   7541
+      View            =   3
+      LabelEdit       =   1
+      LabelWrap       =   0   'False
+      HideSelection   =   0   'False
+      FullRowSelect   =   -1  'True
+      GridLines       =   -1  'True
+      _Version        =   393217
+      Icons           =   "ImageList1"
+      SmallIcons      =   "ImageList1"
+      ForeColor       =   -2147483640
+      BackColor       =   -2147483643
+      Appearance      =   1
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      NumItems        =   5
+      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Text            =   "Kd Pasien"
+         Object.Width           =   1764
+      EndProperty
+      BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   1
+         Text            =   "Nm Pasien"
+         Object.Width           =   5292
+      EndProperty
+      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   2
+         Text            =   "No.Tlp"
+         Object.Width           =   2117
+      EndProperty
+      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   3
+         Text            =   "Alamat"
+         Object.Width           =   3528
+      EndProperty
+      BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
+         SubItemIndex    =   4
+         Text            =   "Umur"
+         Object.Width           =   1764
+      EndProperty
+   End
    Begin MSComctlLib.ListView lvListObat 
       Height          =   4275
       Left            =   7080
@@ -1161,62 +1217,6 @@ Begin VB.Form frmCashier
          Alignment       =   1
          SubItemIndex    =   6
          Text            =   "Stok Min"
-         Object.Width           =   1764
-      EndProperty
-   End
-   Begin MSComctlLib.ListView lvList 
-      Height          =   4275
-      Left            =   7080
-      TabIndex        =   53
-      Top             =   960
-      Width           =   4785
-      _ExtentX        =   8440
-      _ExtentY        =   7541
-      View            =   3
-      LabelEdit       =   1
-      LabelWrap       =   0   'False
-      HideSelection   =   0   'False
-      FullRowSelect   =   -1  'True
-      GridLines       =   -1  'True
-      _Version        =   393217
-      Icons           =   "ImageList1"
-      SmallIcons      =   "ImageList1"
-      ForeColor       =   -2147483640
-      BackColor       =   -2147483643
-      Appearance      =   1
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      NumItems        =   5
-      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Text            =   "Kd Pasien"
-         Object.Width           =   1764
-      EndProperty
-      BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   1
-         Text            =   "Nm Pasien"
-         Object.Width           =   5292
-      EndProperty
-      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   2
-         Text            =   "No.Tlp"
-         Object.Width           =   2117
-      EndProperty
-      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   3
-         Text            =   "Alamat"
-         Object.Width           =   3528
-      EndProperty
-      BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   4
-         Text            =   "Umur"
          Object.Width           =   1764
       EndProperty
    End
@@ -1609,6 +1609,9 @@ Private Sub recipeMedicine()
                     .Fields("jumlah") = lstOrders.ListItems(i).SubItems(5)
                     .Fields("dosis") = lstOrders.ListItems(i).SubItems(6)
                     .Update
+                    'update stok temp
+                    sql = "UPDATE tbl_obat SET stok_temp=stok_temp - " & lstOrders.ListItems(i).SubItems(5) & " WHERE id_obat=" & lstOrders.ListItems(i).Text
+                    CN.Execute sql
                 End If
             Next i
         End With
@@ -2048,17 +2051,17 @@ Private Sub txtSrchStr_Change()
         str = "o.nm_obat"
     End If
     If txtSrchStr.Text <> "" Then
-        sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.kemasan,FORMAT(o.harga_jual,0),"
-        sql = sql & "((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
-        sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
-        sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
-        sql = sql & " ) AS sisa,o.stok_min"
+        sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.kemasan,FORMAT(o.harga_jual,0),o.stok_temp,o.stok_min"
+        'sql = sql & "((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
+        'sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
+        'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
+        'sql = sql & " ) AS sisa,o.stok_min"
 
         With SQLParser
             .Fields = sql
             .Tables = " tbl_obat o INNER JOIN tbl_kategori k ON k.id_kategori =o.id_kategori INNER JOIN tbl_pengguna p ON p.id=o.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStr.Text & "%'  "
-            .SortOrder = " o.id_obat ASC LIMIT 5"
+            .SortOrder = " o.id_obat ASC LIMIT 100"
             .SaveStatement
         End With
         
@@ -2068,7 +2071,7 @@ Private Sub txtSrchStr_Change()
         rscashierObat.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
         
         With RecordPage
-            .Start rscashierObat, 5
+            .Start rscashierObat, 100
             FillList2 1
         End With
     End If

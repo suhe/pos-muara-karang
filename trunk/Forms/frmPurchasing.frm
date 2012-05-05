@@ -973,6 +973,11 @@ Private Sub cash()
                 .Fields("jumlah") = Format(lstOrders.ListItems(i).SubItems(5), "")
                 .Fields("retur") = 0
                 .Update
+                
+                'update stok temp
+                sql = "UPDATE tbl_obat SET stok_temp=stok_temp + " & lstOrders.ListItems(i).SubItems(5) & " WHERE id_obat=" & lstOrders.ListItems(i).Text
+                CN.Execute sql
+                    
             Next i
         End With
         rsdetails.Close
@@ -1204,17 +1209,17 @@ Private Sub txtSrchStr_Change()
         str = "nm_obat"
     End If
      If txtSrchStr.Text <> "" Then
-        sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.kemasan,FORMAT(o.harga_beli,0),"
-        sql = sql & "((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
-        sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
-        sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
-        sql = sql & " ) AS sisa,o.stok_min"
+        sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.kemasan,FORMAT(o.harga_beli,0),o.stok_temp,o.stok_min"
+        'sql = sql & "((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
+        'sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
+        'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
+        'sql = sql & " ) AS sisa,o.stok_min"
 
         With SQLParser
             .Fields = sql
             .Tables = " tbl_obat o INNER JOIN tbl_kategori k ON k.id_kategori =o.id_kategori INNER JOIN tbl_pengguna p ON p.id=o.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStr.Text & "%'"
-            .SortOrder = " o.id_obat ASC LIMIT 20"
+            .SortOrder = " o.id_obat ASC LIMIT 100"
             .SaveStatement
         End With
     
@@ -1224,7 +1229,7 @@ Private Sub txtSrchStr_Change()
         rspurchasing.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
         
         With RecordPage
-            .Start rspurchasing, 20
+            .Start rspurchasing, 100
             FillList 1
         End With
         
