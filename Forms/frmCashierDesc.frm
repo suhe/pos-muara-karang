@@ -284,12 +284,12 @@ Private Sub Form_Load()
     If (tbl.TABLE_PAY_TYPE <> "Credit") Then
         lblPay.Visible = False
         lblkembali.Visible = True
-        'frmDelay.show vbModal
-        'frmDelay.lblTitle.Caption = " Waiting For The Print 1 Of 2 Struck "
+        frmDelay.show vbModal
+        frmDelay.lblTitle.Caption = " Waiting For The Print 1 Of 2 Struck "
             Call cetak_Faktur2
         
-        'frmDelay.show vbModal
-        'frmDelay.lblTitle.Caption = " Waiting For The Print 2 Of 2 Struck "
+        frmDelay.show vbModal
+        frmDelay.lblTitle.Caption = " Waiting For The Print 2 Of 2 Struck "
             Call cetak_Faktur4
         
         lblbayar.Caption = Format(tbl.TABLE_MONEY, "##,###0.00")
