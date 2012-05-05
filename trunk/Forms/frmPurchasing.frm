@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "comctl32.ocx"
+Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "COMCTL32.OCX"
 Begin VB.Form frmPurchasing 
    Caption         =   "Purchasing"
    ClientHeight    =   8805
@@ -861,7 +861,7 @@ End Sub
 Private Sub CONTROL(Active As Boolean)
     fraFaktur.Enabled = Active
     fraSupplier.Enabled = Active
-    fraAmount.Enabled = Active
+    fraAMount.Enabled = Active
     fraProduct.Enabled = Active
     freSearch.Enabled = Active
     lstOrders.Enabled = Active
@@ -872,7 +872,7 @@ End Sub
 
 Private Sub clearText()
     On Error Resume Next
-    lblTotal.Caption = 0
+    lbltotal.Caption = 0
     txtFak.Text = ""
     txtSrchStr.Text = ""
     txtMoneyBack.Text = ""
@@ -880,7 +880,7 @@ Private Sub clearText()
     lblCodeCust.Caption = "......"
     lblNamaCust.Caption = "......"
     lblBrand.Caption = "---"
-    lblstock.Caption = "---"
+    lblStock.Caption = "---"
     lblPrice.Caption = "---"
     lvList.ListItems.Clear
     lstOrders.ListItems.Clear
@@ -980,7 +980,7 @@ Private Sub cash()
         With tbl
             .TABLE_NO_FAK = txtFak.Text
             .TABLE_TANGGAL = Format(Date, "DD-MM-YYYY")
-            .TABLE_TOTAL = Format(lblTotal.Caption, "")
+            .TABLE_TOTAL = Format(lbltotal.Caption, "")
         End With
         
         With rs
@@ -996,11 +996,11 @@ Private Sub cash()
                     .Fields("payment") = "Lunas"
                     .Fields("flag_supplier") = 0
                     .Fields("tgl_bayar") = Format(Date, "YYYY-MM-DD")
-                    .Fields("bayar") = Format(lblTotal.Caption, "")
+                    .Fields("bayar") = Format(lbltotal.Caption, "")
                 ElseIf (cbtypePayment.Text = "Hutang") Then
                     .Fields("payment") = "Hutang"
                     .Fields("flag_supplier") = 1
-                    .Fields("hutang") = Format(lblTotal.Caption, "")
+                    .Fields("hutang") = Format(lbltotal.Caption, "")
                     .Fields("tgl_bayar") = "-"
                 Else
                     MsgBox "Invalid Payment Type", vbCritical + vbInformation
@@ -1014,7 +1014,7 @@ End Sub
 Private Sub cmdProcess_Click()
     If cbtypePayment.Text = "" Then MsgBox "Empty Type Of Payment", vbOKOnly + vbCritical: Exit Sub
     If lstOrders.ListItems.Count < 1 Then MsgBox "Empty Product", vbOKOnly + vbCritical: Exit Sub
-    If lblTotal.Caption = 0 Then MsgBox "Please Insert Medicine ! ", vbOKOnly + vbCritical: Exit Sub
+    If lbltotal.Caption = 0 Then MsgBox "Please Insert Medicine ! ", vbOKOnly + vbCritical: Exit Sub
     If lblCodeCust.Caption = "......" Then
         MsgBox "Please Fill The Supplier Product! ", vbOKOnly + vbCritical, "Supplier Not Found"
         frmPurchasingSupplier.show vbModal
@@ -1056,7 +1056,7 @@ Public Sub counttotal()
     For i = 0 To lstOrders.ListItems.Count
         subtotal = subtotal + lstOrders.ListItems(i).SubItems(6)
     Next i
-    lblTotal.Caption = Format(subtotal, "##,###0.00")
+    lbltotal.Caption = Format(subtotal, "##,###0.00")
 End Sub
 
 Private Sub Form_Deactivate()
@@ -1129,7 +1129,7 @@ Private Sub lvList_Click()
         With lvList.SelectedItem
             lblBrand.Caption = .SubItems(1) & "(" & .SubItems(2) & ")"
             lblPrice.Caption = .SubItems(4)
-            lblstock.Caption = .SubItems(5)
+            lblStock.Caption = .SubItems(5)
         End With
     End If
 End Sub
@@ -1147,7 +1147,7 @@ Private Sub callBrand()
         .lblname.Caption = lvList.SelectedItem.SubItems(2)
         .lblKemasan.Caption = lvList.SelectedItem.SubItems(3)
         .lblPrice.Caption = lvList.SelectedItem.SubItems(4)
-        .lblstock.Caption = lvList.SelectedItem.SubItems(5)
+        .lblStock.Caption = lvList.SelectedItem.SubItems(5)
     End With
 End Sub
 
@@ -1227,6 +1227,10 @@ Private Sub txtSrchStr_Change()
             .Start rspurchasing, 20
             FillList 1
         End With
+        
+        rspurchasing.Close
+        Set rspurchasing = Nothing
+        
     End If
 End Sub
 
