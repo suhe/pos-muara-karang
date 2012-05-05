@@ -194,7 +194,6 @@ Private Sub cmdCancel_Click()
 End Sub
 
 Private Sub cmdLog_Click()
-    'Verify
     Dim rsGroupBusinnes As New Recordset
     Dim rsCash As New Recordset
     Dim kas As Double
@@ -217,10 +216,8 @@ Private Sub cmdLog_Click()
         user = getRecordCount("id", "tbl_pengguna", "WHERE nm_pengguna ='" & dcUser.Text & "' AND password='" & txtPass.Text & "' AND level='User'" & " And user_cabang = " & dcGroup.BoundText & " ")
         If rsGroupBusinnes.State = 1 Then rsGroupBusinnes.Close
         sql = "SELECT kd_cabang,plafon_default FROM tbl_cabang WHERE id_cabang=" & dcGroup.BoundText
-        'MsgBox sql
         rsGroupBusinnes.Open sql, CN, adOpenStatic, adLockReadOnly
         If (rsGroupBusinnes.RecordCount > 0) Then
-            'MsgBox rsGroupBusinnes.Fields("kd_cabang")
             tbl.TABLE_GROUP = Trim(UCase(rsGroupBusinnes.Fields("kd_cabang")))
             CurrBiz.BUSINNES_PLAFON = rsGroupBusinnes.Fields("plafon_default")
             rsGroupBusinnes.Close
@@ -292,7 +289,6 @@ Private Sub cmdLog_Click()
         cash = getRecordCount("id", "tbl_cash", "WHERE tgl_cash ='" & Format(Now, "YYYY-MM-DD") & "' ")
         If (cash < 1) Then
             If rsCash.State = 1 Then rsCash.Close
-            'sql = "SELECT kas_total FROM vw_cash_flow WHERE tgl_cash=DATE_ADD(CURDATE(), INTERVAL - 1 DAY) "
             sql = "SELECT (kas_total + (retur) ) as kas_total FROM vw_cash_flow ORDER BY tgl_cash DESC "
             rsCash.Open sql, CN, adOpenStatic, adLockReadOnly
             On Error Resume Next
@@ -310,7 +306,6 @@ Private Sub cmdLog_Click()
             sql = sql + " '" & Format(Now, "YYYY-mm-dd") & "', "
             sql = sql + " " & CurrUser.USER_PK & " "
             sql = sql + " ) "
-            'MsgBox sql
             CN.Execute sql
         End If
         
@@ -321,22 +316,8 @@ Private Sub cmdLog_Click()
             sql = sql + "" & CurrUser.USER_PK & ", "
             sql = sql + "" & CurrBiz.BUSINNES_GROUP & ""
             sql = sql + ")"
-            'MsgBox sql
             CN.Execute sql
         End If
-        'Dim root As Byte
-        'root = getRecordCount("id_departement", "tbl_departement", "WHERE id_departement =0")
-        'If (root < 1) Then
-        '    sql = "INSERT INTO tbl_departement(id_departement,nm_departement,tgl_input,id_pengguna) "
-        '    sql = sql + "VALUES( "
-        '    sql = sql + " 0, "
-        '    sql = sql + " 'Root Level', "
-        '    sql = sql + " '" & Format(Now, "YYYY-mm-dd") & "', "
-        '    sql = sql + " " & CurrUser.USER_PK & " "
-        '    sql = sql + " ) "
-        '    MsgBox sql
-        '    CN.Execute sql
-        'End If
     Else
         MsgBox "Invalid password.Please try again!", vbExclamation
         txtPass.SetFocus
@@ -358,6 +339,10 @@ End Sub
 Private Sub Form_Load()
     bind_dc "SELECT * FROM tbl_pengguna WHERE id<>0", "nm_pengguna", dcUser, "id"
     bind_dc "SELECT * FROM tbl_cabang", "nm_cabang", dcGroup, "id_cabang"
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+    Set frmLogin = Nothing
 End Sub
 
 Private Sub txtPass_Change()
