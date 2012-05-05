@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "comctl32.ocx"
+Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "COMCTL32.OCX"
 Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
 Begin VB.Form frmCashier 
    Caption         =   "Cashier"
@@ -1419,7 +1419,7 @@ Private Sub cmdNew_Click()
 End Sub
 
 Private Sub clearText()
-    lblTotal.Caption = 0
+    lbltotal.Caption = 0
     txtFak.Text = ""
     txtSrchStrPasien.Text = ""
     txtPayment.Text = ""
@@ -1427,7 +1427,7 @@ Private Sub clearText()
     lstOrders.ListItems.Clear
     lvList.ListItems.Clear
     lblBrand.Caption = "---"
-    lblstock.Caption = "---"
+    lblStock.Caption = "---"
     lblPrice.Caption = "---"
     lblKdPasien.Caption = "..."
     lblNmPasien.Caption = "..."
@@ -1521,7 +1521,7 @@ Private Sub recipeMedicine()
     Dim intResponse As Integer
     payment = Format(txtPayment.Text, "")
     payment = Replace(payment, ".", ",")
-    total = Format(lblTotal.Caption, "")
+    total = Format(lbltotal.Caption, "")
     If (txtPayment.Text <> "Credit") Then
         If (Val(total) > Val(payment)) Then MsgBox "Sorry Not Enought Money ,Please Insert Money! ", vbOKOnly + vbCritical: Exit Sub
     Else
@@ -1538,7 +1538,7 @@ Private Sub recipeMedicine()
             tbl.TABLE_TYPE = "Cash"
         Else
             bayar = 0
-            piutang = Format(lblTotal.Caption, "")
+            piutang = Format(lbltotal.Caption, "")
             strpay = "Piutang"
             tbl.TABLE_TYPE = "Credit"
         End If
@@ -1658,7 +1658,7 @@ Private Sub recipeMedicine()
         tbl.TABLE_NM_DEPT = dcDepartement.Text
         tbl.TABLE_ID_KREDITUR = Trim(txtKreditor.Text)
         tbl.TABLE_TANGGAL = Format(Now, "DD-MM-YYYY")
-        tbl.TABLE_TOTAL = lblTotal.Caption
+        tbl.TABLE_TOTAL = lbltotal.Caption
         tbl.TABLE_KOMISI = komisi
         If txtPayment <> "Credit" Then
             tbl.TABLE_MONEY = txtPayment.Text
@@ -1687,7 +1687,7 @@ Private Sub cmdRemove_Click()
 End Sub
 
 Private Sub clearPayment()
-    lblTotal.Caption = 0
+    lbltotal.Caption = 0
     txtPayment.Text = ""
     txtMoneyBack.Text = ""
     txtKreditor.Text = 0
@@ -1782,7 +1782,7 @@ Public Sub counttotal()
             subtotal = subtotal + (lstOrders.ListItems(i).SubItems(4) * lstOrders.ListItems(i).SubItems(5))
         Next i
     End If
-    lblTotal.Caption = Format(subtotal, "##,###0.00")
+    lbltotal.Caption = Format(subtotal, "##,###0.00")
 End Sub
 
 Private Sub Form_Deactivate()
@@ -1918,9 +1918,9 @@ Private Sub callBrand()
         End If
         
         If (lvListObat.SelectedItem.SubItems(5) = 0) Then
-            .lblstock.Caption = 0
+            .lblStock.Caption = 0
         Else
-            .lblstock.Caption = lvListObat.SelectedItem.SubItems(5)
+            .lblStock.Caption = lvListObat.SelectedItem.SubItems(5)
         End If
     End With
 End Sub
@@ -1942,7 +1942,7 @@ Private Sub lvListObat_Click()
         With lvListObat.SelectedItem
             lblBrand.Caption = .SubItems(2)
             lblPrice.Caption = .SubItems(4)
-            lblstock.Caption = .SubItems(5)
+            lblStock.Caption = .SubItems(5)
         End With
     End If
 End Sub
@@ -2021,7 +2021,7 @@ Private Sub txtPayment_Change()
     txtPayment.Text = Format(txtPayment.Text, "#,##0")
     Dim payment, total, cback As Double
     payment = Format(txtPayment.Text, "")
-    total = Format(lblTotal.Caption, "")
+    total = Format(lbltotal.Caption, "")
     cback = payment - total
     txtMoneyBack.Text = Format(cback, "#,###0")
     txtPayment.SelStart = Len(txtPayment.Text)
@@ -2064,10 +2064,15 @@ Private Sub txtSrchStr_Change()
         If rscashier.State = 1 Then rscashier.Close
         rscashier.CursorLocation = adUseClient
         rscashier.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
+        
         With RecordPage
             .Start rscashier, 15
             FillList2 1
         End With
+        
+        rscashier.Close
+        Set rscashier = Nothing
+        
     End If
 End Sub
 
@@ -2103,7 +2108,7 @@ Private Sub txtSrchStrPasien_Change()
             .Fields = sql
             .Tables = " tbl_pasien p INNER JOIN tbl_pengguna pp ON pp.id=p.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStrPasien.Text & "%'"
-            .SortOrder = " p.kd_pasien ASC LIMIT 15"
+            .SortOrder = " p.kd_pasien ASC LIMIT 100"
             .SaveStatement
         End With
         
@@ -2112,8 +2117,12 @@ Private Sub txtSrchStrPasien_Change()
         rscashier.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
         
         With RecordPage
-            .Start rscashier, 15
+            .Start rscashier, 100
             FillList 1
         End With
+        
+        rscashier.Close
+        Set rscashier = Nothing
+        
     End If
 End Sub
