@@ -271,7 +271,7 @@ Public Sub CommandPass(ByVal srcPerformWhat As String)
                         If isRecordExist("tbl_obat", "id_kategori", CLng(LeftSplitUF(lvList.SelectedItem.Tag))) = False Then
                             DelRecwSQL "tbl_kategori", "id_kategori", "", True, CLng(LeftSplitUF(lvList.SelectedItem.Tag))
                             RefreshRecords
-                            MDIMainMenu.UpdateInfoMsg
+                            'MDIMainMenu.UpdateInfoMsg
                             MsgBox "Record Has Been Successfully Deleted.", vbInformation, "Confirm"
                         Else
                             MsgBox "Record not been deleted , this is record in the FK other table !.", vbInformation, "Confirm"

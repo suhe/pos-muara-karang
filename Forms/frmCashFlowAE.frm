@@ -97,8 +97,8 @@ Dim rs                      As New Recordset
 Private Sub DisplayForEditing()
     On Error GoTo err
     With rs
-         text1.Text = .Fields("tgl_cash")
-         Text2.Text = .Fields("cash")
+         Text1.Text = .Fields("tgl_cash")
+         text2.Text = .Fields("cash")
     End With
     Exit Sub
 err:
@@ -111,13 +111,13 @@ End Sub
 
 Private Sub ResetFields()
     clearText Me
-    Text2.SetFocus
+    text2.SetFocus
 End Sub
 
 Private Sub cmdSave_Click()
-    If toNumber(Text2.Text) < 1000 Then MsgBox "Field value must be 1000 to larger Number only.", vbExclamation: Exit Sub
-    If Text2.Text = "" Then MsgBox "Field to Cash Return value No Empty And Number only..", vbExclamation:  Exit Sub
-    If is_high(Text2.Text, tbl.TABLE_TOTAL, True) = True Then Exit Sub
+    If toNumber(text2.Text) < 1000 Then MsgBox "Field value must be 1000 to larger Number only.", vbExclamation: Exit Sub
+    If text2.Text = "" Then MsgBox "Field to Cash Return value No Empty And Number only..", vbExclamation:  Exit Sub
+    If is_high(text2.Text, tbl.TABLE_TOTAL, True) = True Then Exit Sub
     If State = adStateAddMode Or State = adStatePopupMode Then
     Else
         'Dim transfer As Double
@@ -125,15 +125,15 @@ Private Sub cmdSave_Click()
         
         With tbl
             laba = Val(.TABLE_LABA_BERSIH)
-            transfer = Val(Text2.Text)
+            transfer = Val(text2.Text)
             total = laba - transfer
-                .TABLE_TRANSFER = Format(Text2.Text, "")
+                .TABLE_TRANSFER = Format(text2.Text, "")
                 .TABLE_KAS_SISA = Format(total, "")
         End With
                     
         sql = "UPDATE tbl_cash "
         sql = sql + "SET "
-        sql = sql + " cash=" & Text2.Text & " "
+        sql = sql + " cash=" & text2.Text & " "
         sql = sql + " WHERE id=" & PK & ""
         CN.Execute sql
         Call cetak_Transfer
@@ -150,7 +150,7 @@ Private Sub Form_Load()
     Else
         Caption = "Edit Entry"
         DisplayForEditing
-        text1.Enabled = False
+        Text1.Enabled = False
     End If
 
 End Sub
@@ -161,7 +161,7 @@ Private Sub Form_Unload(Cancel As Integer)
             frmCashFlow.RefreshRecords
         ElseIf State = adStatePopupMode Then
         End If
-        MDIMainMenu.UpdateInfoMsg
+        'MDIMainMenu.UpdateInfoMsg
     End If
     Set frmCashFlowAE = Nothing
 End Sub

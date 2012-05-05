@@ -281,7 +281,7 @@ Public Sub CommandPass(ByVal srcPerformWhat As String)
                         If isRecordExist("tbl_jual_details", "id_obat", CLng(LeftSplitUF(lvList.SelectedItem.Tag))) = False Then
                             DelRecwSQL "tbl_obat", "id_obat", "", True, CLng(LeftSplitUF(lvList.SelectedItem.Tag))
                             RefreshRecords
-                            MDIMainMenu.UpdateInfoMsg
+                            'MDIMainMenu.UpdateInfoMsg
                             MsgBox "Record has been successfully deleted.", vbInformation, "Confirm"
                         Else
                             MsgBox "Record not been deleted , this is record in the transaction table !.", vbInformation, "Confirm"

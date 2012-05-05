@@ -502,7 +502,7 @@ Private Sub cmdProcess_Click()
     If is_empty(txtFak, True) = True Then Exit Sub
     If is_empty(dcDepartement, True) = True Then Exit Sub
     Call cash
-    MDIMainMenu.UpdateInfoMsg
+    'MDIMainMenu.UpdateInfoMsg
     cmdPrint.SetFocus
 End Sub
 

@@ -108,6 +108,7 @@ Designer=Reports\ACRStockOpname.Dsr
 Form=Forms\FrmLicense.frm
 Object={3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0; RICHTX32.OCX
 Form=Forms\frmSplashLicense.frm
+Form=Forms\frmDelay.frm
 ResFile32="res\Themes.res"
 IconForm="MDIMainMenu"
 Startup="MDIMainMenu"

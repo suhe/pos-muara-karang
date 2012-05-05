@@ -6,8 +6,8 @@ Begin VB.MDIForm MDIMainMenu
    BackColor       =   &H8000000C&
    Caption         =   "POS APPLICATION"
    ClientHeight    =   8430
-   ClientLeft      =   165
-   ClientTop       =   870
+   ClientLeft      =   225
+   ClientTop       =   855
    ClientWidth     =   15240
    Icon            =   "MDIMainMenu.frx":0000
    LinkTopic       =   "MDIForm1"
@@ -412,13 +412,13 @@ Begin VB.MDIForm MDIMainMenu
             Style           =   6
             Object.Width           =   1764
             MinWidth        =   1764
-            TextSave        =   "3/4/2012"
+            TextSave        =   "5/5/2012"
          EndProperty
          BeginProperty Panel8 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
             Object.Width           =   1764
             MinWidth        =   1764
-            TextSave        =   "2:36 PM"
+            TextSave        =   "12:01 PM"
          EndProperty
          BeginProperty Panel9 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   3
@@ -538,7 +538,6 @@ Begin VB.MDIForm MDIMainMenu
          _ExtentX        =   1508
          _ExtentY        =   450
          _Version        =   393217
-         Enabled         =   -1  'True
          TextRTF         =   $"MDIMainMenu.frx":7D9E1
       End
       Begin VB.PictureBox picFreeMem 
@@ -947,7 +946,7 @@ Private Sub m_logout_Click()
     Unload frmShortcuts
     frmLogin.show vbModal: If CloseMe = True Then Unload Me: Exit Sub: Exit Sub
     DisplayUserInfo
-    UpdateInfoMsg
+    'UpdateInfoMsg
 End Sub
 
 Private Sub m_medicine_Click()
