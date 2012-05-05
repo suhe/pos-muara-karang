@@ -309,8 +309,6 @@ Public Sub cetak_Faktur4()
         .CurrentX = .CurrentX + 500
         Printer.Print " --------------------------------------------------------------------------------------------------------------- "
         .CurrentY = .CurrentY + 0
-    
-        MsgBox tbl.TABLE_NO_FAK
         Set rsobat = New Recordset
         If rsobat.State = 1 Then rsobat.Close
         sql = "SELECT o.nm_obat,o.kemasan,FORMAT(d.jumlah,0) as jumlah FROM tbl_jual_details d INNER JOIN tbl_obat o ON o.id_obat=d.id_obat WHERE d.no_jual='" & tbl.TABLE_NO_FAK & "' ORDER BY o.kd_obat LIMIT 100 "
