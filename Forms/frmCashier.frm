@@ -1257,7 +1257,6 @@ Option Explicit
 
 Dim CURR_COL   As Integer
 Dim rscashier  As New Recordset
-Dim rscashierO As New Recordset
 Dim RecordPage As New clsPaging
 Dim SQLParser  As New clsSQLSelectParser
 Dim rs         As New Recordset
@@ -1485,17 +1484,16 @@ Private Sub newPatient()
             .Update
         End With
             
-            tbl.TABLE_NO_FAK = Trim(txtFak.Text)
-            tbl.TABLE_KD_PASIEN = Trim(lblKdPasien.Caption)
-            tbl.TABLE_NM_PASIEN = lblNmPasien.Caption
-            tbl.TABLE_NM_DEPT = dcDepartement.Text
-            tbl.TABLE_UMUR_PASIEN = lblRelasi.Caption
-            tbl.TABLE_TLP_PASIEN = lblTlpPasien.Caption
-            tbl.TABLE_TANGGAL = Format(Now, "DD-MM-YYYY")
-            'panggil form frmDelay
-            frmDelay.show vbModal
-            Call cetak_Faktur 'cetak jika frmDelay close
-            controlPasien True
+         tbl.TABLE_NO_FAK = Trim(txtFak.Text)
+         tbl.TABLE_KD_PASIEN = Trim(lblKdPasien.Caption)
+         tbl.TABLE_NM_PASIEN = lblNmPasien.Caption
+         tbl.TABLE_NM_DEPT = dcDepartement.Text
+         tbl.TABLE_UMUR_PASIEN = lblRelasi.Caption
+         tbl.TABLE_TLP_PASIEN = lblTlpPasien.Caption
+         tbl.TABLE_TANGGAL = Format(Now, "DD-MM-YYYY")
+         frmDelay.show vbModal
+         Call cetak_Faktur
+         controlPasien True
          Call Form_Load
          Combo1.Visible = False
          Label1.Visible = False
@@ -1505,9 +1503,9 @@ End Sub
 
 Private Sub recipeMedicine()
     If (txtPayment.Text <> "Credit") Then
-        If txtPayment.Text = "" Then MsgBox "Empty Payment Money ,Please Insert Payment !", vbOKOnly + vbCritical: Exit Sub
-        If txtMoneyBack.Text = "" Then MsgBox "Empty Cashback Money !", vbOKOnly + vbCritical: Exit Sub
-        If txtPayment.Text = 0 Then MsgBox "Please Insert Payment Money ! ", vbOKOnly + vbCritical: Exit Sub
+        If txtPayment.Text = "" Then MsgBox "Empty Payment ", vbOKOnly + vbCritical: Exit Sub
+        If txtMoneyBack.Text = "" Then MsgBox "Empty Cashback", vbOKOnly + vbCritical: Exit Sub
+        If txtPayment.Text = 0 Then MsgBox "Please Insert Payment ! ", vbOKOnly + vbCritical: Exit Sub
     End If
     
     If (Combo1.Visible = True) Then
@@ -1516,40 +1514,41 @@ Private Sub recipeMedicine()
     
     If lstOrders.ListItems.Count < 1 Then MsgBox "Please Insert Medicine To Cashier ! ", vbOKOnly + vbCritical: Exit Sub
     If dcDepartement.Text = "" Then MsgBox "Empty Departement ", vbOKOnly + vbCritical: Exit Sub
-    
+    cmdRemove.Visible = False
     Dim i As Integer
     Dim kode As String
     Dim payment, total, BN, AN, PN, RN, VN, Om, Kn As Double
-    Dim intResponse As Byte
+    Dim intResponse As Integer
     payment = Format(txtPayment.Text, "")
     payment = Replace(payment, ".", ",")
     total = Format(lbltotal.Caption, "")
     If (txtPayment.Text <> "Credit") Then
         If (Val(total) > Val(payment)) Then MsgBox "Sorry Not Enought Money ,Please Insert Money! ", vbOKOnly + vbCritical: Exit Sub
-    End If
-    
-    'Perhitungan Komisi
-    Dim komisi, bayar, piutang As Double
-    Dim strpay As String
-    
-    If txtKreditor.Text = 0 Then
-        bayar = total
-        piutang = 0
-        strpay = "Lunas"
-        tbl.TABLE_TYPE = "Cash"
     Else
-        bayar = 0
-        piutang = Format(lbltotal.Caption, "")
-        strpay = "Piutang"
-        tbl.TABLE_TYPE = "Credit"
+    
     End If
     
-    'cari departement
-    Dim rsKomisi As New Recordset
-    Set rsKomisi = New Recordset
+        'Perhitungan Komisi
+        Dim komisi, bayar, piutang As Double
+        Dim strpay As String
+        If txtKreditor.Text = 0 Then
+            bayar = total
+            piutang = 0
+            strpay = "Lunas"
+            tbl.TABLE_TYPE = "Cash"
+        Else
+            bayar = 0
+            piutang = Format(lbltotal.Caption, "")
+            strpay = "Piutang"
+            tbl.TABLE_TYPE = "Credit"
+        End If
+               
+        'cari departement
+        Dim rsKomisi As New Recordset
+        Set rsKomisi = New Recordset
         
-    If rsKomisi.State = 1 Then rsKomisi.Close
-        rsKomisi.Open "SELECT * FROM tbl_departement WHERE id_departement=" & dcDepartement.BoundText & " LIMIT 1 ", CN, adOpenStatic, adLockReadOnly
+        If rsKomisi.State = 1 Then rsKomisi.Close
+        rsKomisi.Open "SELECT * FROM tbl_departement WHERE id_departement=" & dcDepartement.BoundText, CN, adOpenStatic, adLockReadOnly
         If (rsKomisi.RecordCount > 0) Then
             kode = rsKomisi.Fields("kd_departement")
             BN = rsKomisi.Fields("bn")
@@ -1564,118 +1563,114 @@ Private Sub recipeMedicine()
             RN = 0
             VN = 0
         End If
-    
-    rsKomisi.Close
-    Set rsKomisi = Nothing
-    
-    
-    'perhitungan komisi
-    Om = bayar + piutang
-    If (Left(kode, 1) = 1) Then
+        rsKomisi.Close
+        Set rsKomisi = Nothing
+        'perhitungan komisi
+        Om = bayar + piutang
+        If (Left(kode, 1) = 1) Then
         'Rumus Kn = ((Om - Vn) * Rn) + Pn
-        Kn = ((Om - VN) * RN) + PN
-    ElseIf (Left(kode, 1) = 2) Then
-        'Rumus Kn = ((Om - Vn) * Rn) + Pn
-        If (Om > BN) And (Om < AN) Then
-            Kn = ((Om - VN) * RN) + PN
-        Else
-                
-            If rsKomisi.State = 1 Then rsKomisi.Close
-                rsKomisi.Open "SELECT * FROM tbl_departement WHERE parent_id=" & dcDepartement.BoundText & " AND bn <= " & Om & " AND an >= " & Om & " ORDER BY bn ASC LIMIT 1 ", CN, adOpenStatic, adLockReadOnly
-                
+             Kn = ((Om - VN) * RN) + PN
+        ElseIf (Left(kode, 1) = 2) Then
+        '  Rumus Kn = ((Om - Vn) * Rn) + Pn
+            If (Om > BN) And (Om < AN) Then
+                Kn = ((Om - VN) * RN) + PN
+            Else
+                If rsKomisi.State = 1 Then rsKomisi.Close
+                rsKomisi.Open "SELECT * FROM tbl_departement WHERE parent_id=" & dcDepartement.BoundText & " AND bn <= " & Om & " AND an >= " & Om & " ORDER BY bn ASC ", CN, adOpenStatic, adLockReadOnly
                 If rsKomisi.RecordCount > 0 Then
-                    BN = rsKomisi.Fields("bn")
-                    AN = rsKomisi.Fields("an")
-                    PN = rsKomisi.Fields("pn")
-                    RN = (rsKomisi.Fields("rn")) / 100
-                    VN = rsKomisi.Fields("vn")
-                    Kn = ((Om - VN) * RN) + PN
+                        BN = rsKomisi.Fields("bn")
+                        AN = rsKomisi.Fields("an")
+                        PN = rsKomisi.Fields("pn")
+                        RN = (rsKomisi.Fields("rn")) / 100
+                        VN = rsKomisi.Fields("vn")
+                        Kn = ((Om - VN) * RN) + PN
                 Else
-                    BN = 0
-                    AN = 0
-                    PN = 0
-                    RN = 0
-                    VN = 0
-                    Kn = ((Om - VN) * RN) + PN
+                        BN = 0
+                        AN = 0
+                        PN = 0
+                        RN = 0
+                        VN = 0
+                        Kn = ((Om - VN) * RN) + PN
                 End If
-
-        End If
-    End If
-    
-    With rsdetails
-        For i = 1 To lstOrders.ListItems.Count
-            Dim details As Byte
-            details = getRecordCount("no_jual", "tbl_jual_details", "WHERE no_jual ='" & Trim(txtFak.Text) & "' AND id_obat='" & Trim(lstOrders.ListItems(i).Text) & "' LIMIT 1 ")
-            If (details < 0) Then
-                .AddNew
-                .Fields("no_jual") = txtFak.Text
-                .Fields("id_obat") = lstOrders.ListItems(i).Text
-                .Fields("harga_jual") = lstOrders.ListItems(i).SubItems(4)
-                .Fields("jumlah") = lstOrders.ListItems(i).SubItems(5)
-                .Fields("dosis") = lstOrders.ListItems(i).SubItems(6)
-                .Update
             End If
-        Next i
-    End With
-    rsdetails.Close
-    Set rsdetails = Nothing
-    
-    sql = "UPDATE tbl_jual "
-    sql = sql + " SET "
-    sql = sql + " payment='" & strpay & "', "
-    sql = sql + " type='Cash', "
-    sql = sql + " id_departement=" & Trim(dcDepartement.BoundText) & ", "
-    sql = sql + " id_kreditor=" & Trim(txtKreditor.Text) & ", "
-    sql = sql + " bayar=" & Format(bayar, "") & ", "
-    sql = sql + " piutang=" & Format(piutang, "") & ", "
+        End If
         
-    'kreditor
-    If ((txtKreditor.Text = 0) And (txtPayment.Text <> "Credit")) Then
-        sql = sql + " flag_kreditor= 0,"
-        sql = sql + " flag_debitor = 1,"
-        sql = sql + " jw=0,"
-        sql = sql + " dibayar=" & Format(txtPayment.Text, "") & ", "
-        sql = sql + " tgl_bayar='" & Format(Date, "YYYY-MM-DD") & "',"
-    Else
-        sql = sql + " flag_kreditor=1,"
-        sql = sql + " flag_debitor =1,"
-        sql = sql + " jw=" & Combo1.Text & ","
-        sql = sql + " dibayar=" & Format(Replace(bayar, ",", "."), "") & ", "
-        sql = sql + " tgl_bayar='-' ,"
-    End If
+        With rsdetails
+            For i = 1 To lstOrders.ListItems.Count
+                Dim details As Byte
+                details = getRecordCount("no_jual", "tbl_jual_details", "WHERE no_jual ='" & Trim(txtFak.Text) & "' AND id_obat='" & Trim(lstOrders.ListItems(i).Text) & "' ")
+                If (details > 0) Then
+                Else
+                    .AddNew
+                    .Fields("no_jual") = txtFak.Text
+                    .Fields("id_obat") = lstOrders.ListItems(i).Text
+                    .Fields("harga_jual") = lstOrders.ListItems(i).SubItems(4)
+                    .Fields("jumlah") = lstOrders.ListItems(i).SubItems(5)
+                    .Fields("dosis") = lstOrders.ListItems(i).SubItems(6)
+                    .Update
+                End If
+            Next i
+        End With
+        rsdetails.Close
         
-    sql = sql + " komisi=" & Replace(Kn, ",", ".") & " "
-    sql = sql + " WHERE no_jual='" & Trim(txtFak.Text) & "' "
-    sql = sql + " AND kd_pasien='" & Trim(lblKdPasien.Caption) & "'"
-    CN.Execute sql
-    'Call txtSrchStr_Change
-    CONTROL False
-    Call Form_Activate
-    lstOrders.Enabled = False
-    lblStatus.Caption = "Saved Transaction !"
-    'MDIMainMenu.UpdateInfoMsg 'Display the business status
-    tbl.TABLE_NO_FAK = Trim(txtFak.Text)
-    tbl.TABLE_KD_PASIEN = Trim(lblKdPasien.Caption)
-    tbl.TABLE_NM_PASIEN = lblNmPasien.Caption
-    tbl.TABLE_NM_DEPT = dcDepartement.Text
-    tbl.TABLE_RELASI = lblRelasi.Caption
-    tbl.TABLE_TLP_PASIEN = lblTlpPasien.Caption
-    tbl.TABLE_PAY_TYPE = txtPayment.Text
-    tbl.TABLE_NM_DEPT = dcDepartement.Text
-    tbl.TABLE_ID_KREDITUR = Trim(txtKreditor.Text)
-    tbl.TABLE_TANGGAL = Format(Now, "DD-MM-YYYY")
-    tbl.TABLE_TOTAL = lbltotal.Caption
-    tbl.TABLE_KOMISI = komisi
-    If txtPayment <> "Credit" Then
-        tbl.TABLE_MONEY = txtPayment.Text
-        tbl.TABLE_CBACK = txtMoneyBack.Text
-    End If
-    frmCashierDesc.show vbModal
-    Call Form_Load
-    cmdResep.Enabled = True
-    Combo1.Visible = False
-    Label1.Visible = False
-    Label5.Visible = False
+        sql = "UPDATE tbl_jual "
+        sql = sql + " SET "
+        sql = sql + " payment='" & strpay & "', "
+        sql = sql + " type='Cash', "
+        sql = sql + " id_departement=" & Trim(dcDepartement.BoundText) & ", "
+        sql = sql + " id_kreditor=" & Trim(txtKreditor.Text) & ", "
+        sql = sql + " bayar=" & Format(bayar, "") & ", "
+        sql = sql + " piutang=" & Format(piutang, "") & ", "
+        
+        'kreditor
+        If ((txtKreditor.Text = 0) And (txtPayment.Text <> "Credit")) Then
+            sql = sql + " flag_kreditor= 0,"
+            sql = sql + " flag_debitor = 1,"
+            sql = sql + " jw=0,"
+            sql = sql + " dibayar=" & Format(txtPayment.Text, "") & ", "
+            sql = sql + " tgl_bayar='" & Format(Date, "YYYY-MM-DD") & "',"
+        Else
+            sql = sql + " flag_kreditor=1,"
+            sql = sql + " flag_debitor =1,"
+            sql = sql + " jw=" & Combo1.Text & ","
+            sql = sql + " dibayar=" & Format(Replace(bayar, ",", "."), "") & ", "
+            sql = sql + " tgl_bayar='-' ,"
+        End If
+        
+        sql = sql + " komisi=" & Replace(Kn, ",", ".") & " "
+        sql = sql + " WHERE no_jual='" & Trim(txtFak.Text) & "' "
+        sql = sql + " AND kd_pasien='" & Trim(lblKdPasien.Caption) & "'"
+        
+        CN.Execute sql
+        Call txtSrchStr_Change
+        CONTROL False
+        Call Form_Activate
+        lstOrders.Enabled = False
+        lblStatus.Caption = "Saved Transaction !"
+       'MDIMainMenu.UpdateInfoMsg 'Display the business status
+        tbl.TABLE_NO_FAK = Trim(txtFak.Text)
+        tbl.TABLE_KD_PASIEN = Trim(lblKdPasien.Caption)
+        tbl.TABLE_NM_PASIEN = lblNmPasien.Caption
+        tbl.TABLE_NM_DEPT = dcDepartement.Text
+        tbl.TABLE_RELASI = lblRelasi.Caption
+        tbl.TABLE_TLP_PASIEN = lblTlpPasien.Caption
+        tbl.TABLE_PAY_TYPE = txtPayment.Text
+        tbl.TABLE_NM_DEPT = dcDepartement.Text
+        tbl.TABLE_ID_KREDITUR = Trim(txtKreditor.Text)
+        tbl.TABLE_TANGGAL = Format(Now, "DD-MM-YYYY")
+        tbl.TABLE_TOTAL = lbltotal.Caption
+        tbl.TABLE_KOMISI = komisi
+        If txtPayment <> "Credit" Then
+            tbl.TABLE_MONEY = txtPayment.Text
+            tbl.TABLE_CBACK = txtMoneyBack.Text
+        End If
+        Set rsKomisi = Nothing
+        frmCashierDesc.show vbModal
+        Call Form_Load
+        cmdResep.Enabled = True
+        Combo1.Visible = False
+        Label1.Visible = False
+        Label5.Visible = False
 End Sub
 
 Private Sub Active()
@@ -2062,22 +2057,17 @@ Private Sub txtSrchStr_Change()
             .Fields = sql
             .Tables = " tbl_obat o INNER JOIN tbl_kategori k ON k.id_kategori =o.id_kategori INNER JOIN tbl_pengguna p ON p.id=o.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStr.Text & "%'  "
-            .SortOrder = " o.id_obat ASC LIMIT 10"
+            .SortOrder = " o.id_obat ASC LIMIT 15"
             .SaveStatement
         End With
         
         If rscashier.State = 1 Then rscashier.Close
         rscashier.CursorLocation = adUseClient
         rscashier.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
-        
         With RecordPage
-            .Start rscashier, 10
+            .Start rscashier, 15
             FillList2 1
         End With
-        
-        rscashier.Close
-        Set rscashier = Nothing
-        
     End If
 End Sub
 
@@ -2113,7 +2103,7 @@ Private Sub txtSrchStrPasien_Change()
             .Fields = sql
             .Tables = " tbl_pasien p INNER JOIN tbl_pengguna pp ON pp.id=p.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStrPasien.Text & "%'"
-            .SortOrder = " p.kd_pasien ASC LIMIT 100"
+            .SortOrder = " p.kd_pasien ASC LIMIT 15"
             .SaveStatement
         End With
         
@@ -2122,7 +2112,7 @@ Private Sub txtSrchStrPasien_Change()
         rscashier.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
         
         With RecordPage
-            .Start rscashier, 100
+            .Start rscashier, 15
             FillList 1
         End With
         
@@ -2131,3 +2121,5 @@ Private Sub txtSrchStrPasien_Change()
         
     End If
 End Sub
+
+
