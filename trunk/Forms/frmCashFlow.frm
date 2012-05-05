@@ -5,13 +5,13 @@ Begin VB.Form frmCashFlow
    ClientHeight    =   5085
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   9240
+   ClientWidth     =   9090
    Icon            =   "frmCashFlow.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    ScaleHeight     =   5085
-   ScaleWidth      =   9240
+   ScaleWidth      =   9090
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
       BackColor       =   &H80000010&
@@ -20,10 +20,10 @@ Begin VB.Form frmCashFlow
       Index           =   1
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   9240
+      ScaleWidth      =   9090
       TabIndex        =   3
       Top             =   4680
-      Width           =   9240
+      Width           =   9090
    End
    Begin VB.PictureBox picLine 
       Align           =   2  'Align Bottom
@@ -33,10 +33,10 @@ Begin VB.Form frmCashFlow
       Index           =   0
       Left            =   0
       ScaleHeight     =   15
-      ScaleWidth      =   9240
+      ScaleWidth      =   9090
       TabIndex        =   2
       Top             =   4695
-      Width           =   9240
+      Width           =   9090
    End
    Begin VB.PictureBox Picture1 
       Align           =   2  'Align Bottom
@@ -44,10 +44,10 @@ Begin VB.Form frmCashFlow
       Height          =   380
       Left            =   0
       ScaleHeight     =   375
-      ScaleWidth      =   9240
+      ScaleWidth      =   9090
       TabIndex        =   0
       Top             =   4710
-      Width           =   9240
+      Width           =   9090
       Begin VB.ComboBox cbSortType 
          Height          =   315
          ItemData        =   "frmCashFlow.frx":038A
