@@ -861,7 +861,7 @@ End Sub
 Private Sub CONTROL(Active As Boolean)
     fraFaktur.Enabled = Active
     fraSupplier.Enabled = Active
-    fraAMount.Enabled = Active
+    fraAmount.Enabled = Active
     fraProduct.Enabled = Active
     freSearch.Enabled = Active
     lstOrders.Enabled = Active
@@ -872,7 +872,7 @@ End Sub
 
 Private Sub clearText()
     On Error Resume Next
-    lbltotal.Caption = 0
+    lblTotal.Caption = 0
     txtFak.Text = ""
     txtSrchStr.Text = ""
     txtMoneyBack.Text = ""
@@ -880,7 +880,7 @@ Private Sub clearText()
     lblCodeCust.Caption = "......"
     lblNamaCust.Caption = "......"
     lblBrand.Caption = "---"
-    lblStock.Caption = "---"
+    lblstock.Caption = "---"
     lblPrice.Caption = "---"
     lvList.ListItems.Clear
     lstOrders.ListItems.Clear
@@ -980,7 +980,7 @@ Private Sub cash()
         With tbl
             .TABLE_NO_FAK = txtFak.Text
             .TABLE_TANGGAL = Format(Date, "DD-MM-YYYY")
-            .TABLE_TOTAL = Format(lbltotal.Caption, "")
+            .TABLE_TOTAL = Format(lblTotal.Caption, "")
         End With
         
         With rs
@@ -996,11 +996,11 @@ Private Sub cash()
                     .Fields("payment") = "Lunas"
                     .Fields("flag_supplier") = 0
                     .Fields("tgl_bayar") = Format(Date, "YYYY-MM-DD")
-                    .Fields("bayar") = Format(lbltotal.Caption, "")
+                    .Fields("bayar") = Format(lblTotal.Caption, "")
                 ElseIf (cbtypePayment.Text = "Hutang") Then
                     .Fields("payment") = "Hutang"
                     .Fields("flag_supplier") = 1
-                    .Fields("hutang") = Format(lbltotal.Caption, "")
+                    .Fields("hutang") = Format(lblTotal.Caption, "")
                     .Fields("tgl_bayar") = "-"
                 Else
                     MsgBox "Invalid Payment Type", vbCritical + vbInformation
@@ -1014,7 +1014,7 @@ End Sub
 Private Sub cmdProcess_Click()
     If cbtypePayment.Text = "" Then MsgBox "Empty Type Of Payment", vbOKOnly + vbCritical: Exit Sub
     If lstOrders.ListItems.Count < 1 Then MsgBox "Empty Product", vbOKOnly + vbCritical: Exit Sub
-    If lbltotal.Caption = 0 Then MsgBox "Please Insert Medicine ! ", vbOKOnly + vbCritical: Exit Sub
+    If lblTotal.Caption = 0 Then MsgBox "Please Insert Medicine ! ", vbOKOnly + vbCritical: Exit Sub
     If lblCodeCust.Caption = "......" Then
         MsgBox "Please Fill The Supplier Product! ", vbOKOnly + vbCritical, "Supplier Not Found"
         frmPurchasingSupplier.show vbModal
@@ -1056,7 +1056,7 @@ Public Sub counttotal()
     For i = 0 To lstOrders.ListItems.Count
         subtotal = subtotal + lstOrders.ListItems(i).SubItems(6)
     Next i
-    lbltotal.Caption = Format(subtotal, "##,###0.00")
+    lblTotal.Caption = Format(subtotal, "##,###0.00")
 End Sub
 
 Private Sub Form_Deactivate()
@@ -1129,7 +1129,7 @@ Private Sub lvList_Click()
         With lvList.SelectedItem
             lblBrand.Caption = .SubItems(1) & "(" & .SubItems(2) & ")"
             lblPrice.Caption = .SubItems(4)
-            lblStock.Caption = .SubItems(5)
+            lblstock.Caption = .SubItems(5)
         End With
     End If
 End Sub
@@ -1147,7 +1147,7 @@ Private Sub callBrand()
         .lblname.Caption = lvList.SelectedItem.SubItems(2)
         .lblKemasan.Caption = lvList.SelectedItem.SubItems(3)
         .lblPrice.Caption = lvList.SelectedItem.SubItems(4)
-        .lblStock.Caption = lvList.SelectedItem.SubItems(5)
+        .lblstock.Caption = lvList.SelectedItem.SubItems(5)
     End With
 End Sub
 
@@ -1228,8 +1228,9 @@ Private Sub txtSrchStr_Change()
             FillList 1
         End With
         
-        rspurchasing.Close
-        Set rspurchasing = Nothing
+        'rspurchasing.Close
+        'Set rspurchasing = Nothing
+        If rspurchasing.State = 1 Then rspurchasing.Close
         
     End If
 End Sub

@@ -1095,62 +1095,6 @@ Begin VB.Form frmCashier
       Top             =   4920
       Width           =   1215
    End
-   Begin MSComctlLib.ListView lvList 
-      Height          =   4275
-      Left            =   7080
-      TabIndex        =   53
-      Top             =   960
-      Width           =   4785
-      _ExtentX        =   8440
-      _ExtentY        =   7541
-      View            =   3
-      LabelEdit       =   1
-      LabelWrap       =   0   'False
-      HideSelection   =   0   'False
-      FullRowSelect   =   -1  'True
-      GridLines       =   -1  'True
-      _Version        =   393217
-      Icons           =   "ImageList1"
-      SmallIcons      =   "ImageList1"
-      ForeColor       =   -2147483640
-      BackColor       =   -2147483643
-      Appearance      =   1
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      NumItems        =   5
-      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Text            =   "Kd Pasien"
-         Object.Width           =   1764
-      EndProperty
-      BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   1
-         Text            =   "Nm Pasien"
-         Object.Width           =   5292
-      EndProperty
-      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   2
-         Text            =   "No.Tlp"
-         Object.Width           =   2117
-      EndProperty
-      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         SubItemIndex    =   3
-         Text            =   "Alamat"
-         Object.Width           =   3528
-      EndProperty
-      BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Alignment       =   1
-         SubItemIndex    =   4
-         Text            =   "Umur"
-         Object.Width           =   1764
-      EndProperty
-   End
    Begin MSComctlLib.ListView lvListObat 
       Height          =   4275
       Left            =   7080
@@ -1220,6 +1164,62 @@ Begin VB.Form frmCashier
          Object.Width           =   1764
       EndProperty
    End
+   Begin MSComctlLib.ListView lvList 
+      Height          =   4275
+      Left            =   7080
+      TabIndex        =   53
+      Top             =   960
+      Width           =   4785
+      _ExtentX        =   8440
+      _ExtentY        =   7541
+      View            =   3
+      LabelEdit       =   1
+      LabelWrap       =   0   'False
+      HideSelection   =   0   'False
+      FullRowSelect   =   -1  'True
+      GridLines       =   -1  'True
+      _Version        =   393217
+      Icons           =   "ImageList1"
+      SmallIcons      =   "ImageList1"
+      ForeColor       =   -2147483640
+      BackColor       =   -2147483643
+      Appearance      =   1
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      NumItems        =   5
+      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Text            =   "Kd Pasien"
+         Object.Width           =   1764
+      EndProperty
+      BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   1
+         Text            =   "Nm Pasien"
+         Object.Width           =   5292
+      EndProperty
+      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   2
+         Text            =   "No.Tlp"
+         Object.Width           =   2117
+      EndProperty
+      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   3
+         Text            =   "Alamat"
+         Object.Width           =   3528
+      EndProperty
+      BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
+         SubItemIndex    =   4
+         Text            =   "Umur"
+         Object.Width           =   1764
+      EndProperty
+   End
    Begin VB.Label lblStatus 
       BackStyle       =   0  'Transparent
       Caption         =   "Closed Transaction"
@@ -1257,6 +1257,7 @@ Option Explicit
 
 Dim CURR_COL   As Integer
 Dim rscashier  As New Recordset
+Dim rscashierObat  As New Recordset
 Dim RecordPage As New clsPaging
 Dim SQLParser  As New clsSQLSelectParser
 Dim rs         As New Recordset
@@ -2057,25 +2058,29 @@ Private Sub txtSrchStr_Change()
             .Fields = sql
             .Tables = " tbl_obat o INNER JOIN tbl_kategori k ON k.id_kategori =o.id_kategori INNER JOIN tbl_pengguna p ON p.id=o.id_pengguna "
             .wCondition = str & " Like '%" & txtSrchStr.Text & "%'  "
-            .SortOrder = " o.id_obat ASC LIMIT 15"
+            .SortOrder = " o.id_obat ASC LIMIT 5"
             .SaveStatement
         End With
         
-        If rscashier.State = 1 Then rscashier.Close
-        rscashier.CursorLocation = adUseClient
-        rscashier.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
+        If rscashierObat.State = 1 Then rscashierObat.Close
+        Set rscashierObat = New ADODB.Recordset
+        rscashierObat.CursorLocation = adUseClient
+        rscashierObat.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
+        
         With RecordPage
-            .Start rscashier, 15
+            .Start rscashierObat, 5
             FillList2 1
         End With
     End If
+    
+    If rscashierObat.State = 1 Then rscashierObat.Close
 End Sub
 
 Private Sub FillList2(ByVal whichPage As Long)
     RecordPage.CurrentPosition = whichPage
     Screen.MousePointer = vbHourglass
     Me.Enabled = False
-    Call pageFillListView(lvListObat, rscashier, RecordPage.PageStart, RecordPage.PageEnd, 16, 2, False, True, , , , "id_obat")
+    Call pageFillListView(lvListObat, rscashierObat, RecordPage.PageStart, RecordPage.PageEnd, 16, 2, False, True, , , , "id_obat")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
     lblPageInfo.Caption = "Record " & RecordPage.PageInfo

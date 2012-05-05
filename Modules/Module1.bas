@@ -551,9 +551,9 @@ Public Sub printCashFlowdetails()
         .DataControl1.CursorLocation = ddADOUseClient
         .DataControl1.ConnectionString = DBPath
          sql = "SELECT *,vf.tgl_cash,(vf.jual+vf.jual_sebelumnya) as total_jual,(vf.beli+vf.beli_sebelumnya) as total_beli,vk.komisi as komisidep,vk.pasien as vkpasien FROM vw_cash_flow vf "
-         sql = sql & " LEFT JOIN vw_komisi vk ON vk.tgl_jual=vf.tgl_cash "
+         sql = sql & " LEFT JOIN vw_komisi vk ON vk.tgl_jual=vf.tgl_cash WHERE MONTH(vf.tgl_cash)=MONTH(CURDATE()) "
          If tbl.TABLE_TANGGAL_AWAL <> "" Then
-            sql = sql & " WHERE vf.tgl_cash >='" & tbl.TABLE_TANGGAL_AWAL & "' AND vf.tgl_cash <='" & tbl.TABLE_TANGGAL_AKHIR & "'  "
+            sql = sql & " AND vf.tgl_cash >='" & tbl.TABLE_TANGGAL_AWAL & "' AND vf.tgl_cash <='" & tbl.TABLE_TANGGAL_AKHIR & "'  "
             tbl.TABLE_TANGGAL_AWAL = ""
             tbl.TABLE_TANGGAL_AKHIR = ""
          End If
