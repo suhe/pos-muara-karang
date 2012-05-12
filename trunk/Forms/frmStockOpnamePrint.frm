@@ -70,3 +70,7 @@ Private Sub cmdPrint_Click()
         Call printStockOpname
     End If
 End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+    Set frmStockOpnamePrint = Nothing
+End Sub

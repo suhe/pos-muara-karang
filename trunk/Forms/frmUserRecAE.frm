@@ -184,7 +184,6 @@ Option Explicit
 Public State                As FormState 'Variable used to determine on how the form used
 Public PK                   As Long 'Variable used to get what record is going to edit
 Public srcText              As TextBox 'Used in pop-up mode
-
 Dim HaveAction              As Boolean 'Variable used to detect if the user perform some action
 Dim rs                      As New Recordset
 

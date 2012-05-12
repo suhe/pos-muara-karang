@@ -136,9 +136,9 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Private Sub cmdSave_Click()
-    If Text1.Text = "" Then MsgBox "Empty Text For + Correction", vbOKOnly + vbCritical: Exit Sub
+    If text1.Text = "" Then MsgBox "Empty Text For + Correction", vbOKOnly + vbCritical: Exit Sub
     If Text2.Text = "" Then MsgBox "Empty Text For - Correction", vbOKOnly + vbCritical: Exit Sub
-    sql = "UPDATE PRODUCTS SET QTY_PLUS=" & Text1.Text & " , QTY_MIN=" & Text2.Text & " WHERE PK=" & Me.Caption
+    sql = "UPDATE PRODUCTS SET QTY_PLUS=" & text1.Text & " , QTY_MIN=" & Text2.Text & " WHERE PK=" & Me.Caption
     'MsgBox sql
     CN.Execute sql
     frmStock.RefreshRecords
@@ -158,20 +158,14 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Form_Load()
-    Text1.Text = frmStock.lvList.SelectedItem.SubItems(11)
+    text1.Text = frmStock.lvList.SelectedItem.SubItems(11)
     Text2.Text = frmStock.lvList.SelectedItem.SubItems(12)
 End Sub
 
 Private Sub Text1_KeyPress(KeyAscii As Integer)
     KeyAscii = isNumber(KeyAscii)
-    'If Index > 3 And Index < 13 Then
-     '   KeyAscii = isNumber(KeyAscii)
-    'End If
 End Sub
 
 Private Sub Text2_KeyPress(KeyAscii As Integer)
     KeyAscii = isNumber(KeyAscii)
-    'If Index > 3 And Index < 13 Then
-        'KeyAscii = isNumber(KeyAscii)
-    'End If
 End Sub

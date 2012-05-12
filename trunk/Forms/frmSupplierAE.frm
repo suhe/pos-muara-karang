@@ -278,8 +278,7 @@ Private Sub Form_Unload(Cancel As Integer)
         If State = adStateAddMode Or adStateEditMode Then
             frmSupplier.RefreshRecords
         ElseIf State = adStatePopupMode Then
-            'srcText.Text = rs![Name]
-            'srcText.Tag = rs![PK]
+            
         End If
     End If
     Set frmSupplierAE = Nothing

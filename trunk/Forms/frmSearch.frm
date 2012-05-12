@@ -137,7 +137,7 @@ Begin VB.Form frmSearch
          _ExtentY        =   503
          _Version        =   393216
          CustomFormat    =   "dd/MM/yyyy"
-         Format          =   59572227
+         Format          =   102105091
          CurrentDate     =   38207
       End
       Begin MSComCtl2.DTPicker dtpDate 
@@ -152,7 +152,7 @@ Begin VB.Form frmSearch
          _ExtentY        =   503
          _Version        =   393216
          CustomFormat    =   "dd/MM/yyyy"
-         Format          =   59572227
+         Format          =   102105091
          CurrentDate     =   38207
       End
       Begin MSComCtl2.DTPicker dtpDate 
@@ -167,7 +167,7 @@ Begin VB.Form frmSearch
          _ExtentY        =   503
          _Version        =   393216
          CustomFormat    =   "dd/mm/yyyy"
-         Format          =   59572225
+         Format          =   102105089
          CurrentDate     =   38207
       End
       Begin MSComCtl2.DTPicker dtpDate 
@@ -182,7 +182,7 @@ Begin VB.Form frmSearch
          _ExtentY        =   503
          _Version        =   393216
          CustomFormat    =   "dd/mm/yyyy"
-         Format          =   59572225
+         Format          =   102105089
          CurrentDate     =   38207
       End
       Begin VB.Label Label3 
@@ -382,7 +382,6 @@ Private Sub Form_Load()
     End With
     
     Dim i, K As Integer
-    
     If srcNoOfCol = 0 Then srcNoOfCol = srcColumnHeaders.Count
      
     If srcform.Name = "frmDebt" Then

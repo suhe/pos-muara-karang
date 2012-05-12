@@ -455,21 +455,31 @@ End Sub
 
 Private Sub dcObat_Click(Area As Integer)
     If dcObat.BoundText <> "" Then
-    txtEntry(2).Enabled = True
-    txtEntry(3).Enabled = True
-    txtEntry(2).SetFocus
-    Dim rsKode As New Recordset
-    If rsKode.State = 1 Then rsKode.Close
-    rsKode.Open "SELECT tbl_beli_details.id_obat,nm_obat,tbl_beli_details.harga_beli,jumlah as total FROM tbl_beli_details INNER JOIN tbl_obat ON tbl_obat.id_obat=tbl_beli_details.id_obat WHERE no_beli='" & txtEntry(0).Text & "' AND tbl_beli_details.id_obat=" & dcObat.BoundText, CN, adOpenStatic, adLockReadOnly
-    If (rsKode.RecordCount > 0) Then
-            tbl.TABLE_ID_OBAT = rsKode.Fields("id_obat")
-            Label5.Caption = rsKode.Fields("nm_obat")
-            Label8.Caption = rsKode.Fields("harga_beli")
-            lblQty.Caption = rsKode.Fields("total")
-            cmdRetur.Enabled = True
-    Else
-        MsgBox "Data Tidak Ketemu !", vbCritical + vbInformation
-    End If
+        txtEntry(2).Enabled = True
+        txtEntry(3).Enabled = True
+        txtEntry(2).SetFocus
+    
+        Dim rsKode As New Recordset
+        Dim rsKode2 As New Recordset
+        
+        rsKode.Open "SELECT tbl_beli_details.id_obat,nm_obat,tbl_beli_details.harga_beli,jumlah as total FROM tbl_beli_details INNER JOIN tbl_obat ON tbl_obat.id_obat=tbl_beli_details.id_obat WHERE no_beli='" & txtEntry(0).Text & "' AND tbl_beli_details.id_obat=" & dcObat.BoundText, CN, adOpenStatic, adLockReadOnly
+        If (rsKode.RecordCount > 0) Then
+                Set rsKode2 = New Recordset
+                rsKode.Open "SELECT tbl_beli_details.id_obat,nm_obat,tbl_beli_details.harga_beli,jumlah as total FROM tbl_beli_details INNER JOIN tbl_obat ON tbl_obat.id_obat=tbl_beli_details.id_obat WHERE retur < 1 AND no_beli='" & txtEntry(0).Text & "' AND tbl_beli_details.id_obat=" & dcObat.BoundText, CN, adOpenStatic, adLockReadOnly
+                If (rsKode2.RecordCount > 1) Then
+                    tbl.TABLE_ID_OBAT = rsKode.Fields("id_obat")
+                    Label5.Caption = rsKode.Fields("nm_obat")
+                    Label8.Caption = rsKode.Fields("harga_beli")
+                    lblQty.Caption = rsKode.Fields("total")
+                    cmdRetur.Enabled = True
+                Else
+                    MsgBox "Entry Obat Sudah Diretur,Hubungi Administrator untuk Access Hapus !", vbCritical + vbInformation
+                End If
+        Else
+            MsgBox "Data Tidak Ketemu !", vbCritical + vbInformation
+        End If
+        If rsKode.State = 1 Then rsKode.Close
+        If rsKode2.State = 1 Then rsKode2.Close
     End If
 End Sub
 
