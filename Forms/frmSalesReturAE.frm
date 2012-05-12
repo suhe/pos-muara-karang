@@ -384,10 +384,8 @@ Private Sub cmdRetur_Click()
     If is_empty(txtEntry(2), True) = True Then Exit Sub
     If is_empty(txtEntry(3), True) = True Then Exit Sub
     If is_empty(dcObat, True) = True Then Exit Sub
-    'If is_zero(lblQty, True) = True Then Exit Sub
     If is_zero(txtEntry(2), True) = True Then Exit Sub
     If Val(txtEntry(2).Text) > Val(lblQty.Caption) Then MsgBox "Data Melebihi Stok Beli", vbAbortRetryIgnore + vbInformation: Exit Sub
-    'On Error Resume Next
 
     sql = "UPDATE tbl_beli_details "
     sql = sql + "SET "
@@ -404,7 +402,7 @@ Private Sub cmdRetur_Click()
     CN.Execute sql
     
     Dim rsobat As New Recordset
-    If rsobat.State = 1 Then rsobat.Close
+    Set rsobat = New ADODB.Recordset
     rsobat.Open "SELECT b.kd_obat,b.nm_obat,d.jumlah,b.sisa FROM tbl_beli_details d JOIN vw_stok b ON b.id_obat=d.id_obat WHERE d.id_obat=" & dcObat.BoundText & " AND d.no_beli='" & Trim(txtEntry(0).Text) & "' LIMIT 1", CN, adOpenStatic, adLockReadOnly
     If rsobat.RecordCount > 0 Then
         tbl.TABLE_KD_OBAT = rsobat.Fields("kd_obat")
@@ -414,6 +412,7 @@ Private Sub cmdRetur_Click()
         'tbl.TABLE_SISA_OBAT = rsobat.Fields("sisa")
         tbl.TABLE_SISA_RETUR = Val(rsobat.Fields("sisa")) - txtEntry(2).Text
     End If
+    If rsobat.State = 1 Then rsobat.Close
     
     Call ReturObat
     Call GeneratePK
@@ -433,8 +432,8 @@ Private Sub cmdRetur_Click()
             sql = sql + " '" & Format(Now, "YYYY-mm-dd h:m:s") & "', "
             sql = sql + " " & CurrUser.USER_PK & " "
             sql = sql + ") "
-    'MsgBox sql
     CN.Execute sql
+    
     sql = "INSERT INTO tbl_beli_details(no_beli,id_obat,harga_beli,jumlah,tgl_retur) "
             sql = sql + "VALUES( "
             sql = sql + " '" & tbl.TABLE_NO_FAK & "',"
@@ -443,7 +442,6 @@ Private Sub cmdRetur_Click()
             sql = sql + " -" & Val(txtEntry(2).Text) & ", "
             sql = sql + " '" & Format(Now, "YYYY-mm-dd h:m:s") & "' "
             sql = sql + ") "
-    'MsgBox sql
     CN.Execute sql
     Unload Me
     frmReturPurchase.RefreshRecords
@@ -455,30 +453,20 @@ Private Sub GeneratePK()
     tbl.TABLE_NO_FAK = "K" & tbl.TABLE_GROUP & PK
 End Sub
 
-
 Private Sub dcObat_Click(Area As Integer)
     If dcObat.BoundText <> "" Then
-    'On Error Resume Next
-    'Dim app As String
     txtEntry(2).Enabled = True
     txtEntry(3).Enabled = True
     txtEntry(2).SetFocus
     Dim rsKode As New Recordset
     If rsKode.State = 1 Then rsKode.Close
-    rsKode.Open "SELECT tbl_beli_details.id_obat,nm_obat,tbl_beli_details.harga_beli,(jumlah-retur) as total FROM tbl_beli_details JOIN tbl_obat ON tbl_obat.id_obat=tbl_beli_details.id_obat WHERE no_beli='" & txtEntry(0).Text & "' AND tbl_beli_details.id_obat=" & dcObat.BoundText, CN, adOpenStatic, adLockReadOnly
+    rsKode.Open "SELECT tbl_beli_details.id_obat,nm_obat,tbl_beli_details.harga_beli,jumlah as total FROM tbl_beli_details INNER JOIN tbl_obat ON tbl_obat.id_obat=tbl_beli_details.id_obat WHERE no_beli='" & txtEntry(0).Text & "' AND tbl_beli_details.id_obat=" & dcObat.BoundText, CN, adOpenStatic, adLockReadOnly
     If (rsKode.RecordCount > 0) Then
-        'lblQty.Caption = rsKode.Fields("total")
-        'rsKode.Close
-        'Set rsKode = Nothing
-        'app = MsgBox("Anda Setuju , Akan Meretur Barang dengan Kode " & rsKode.Fields("total"), vbYesNo + vbQuestion)
-        'If app = vbYes Then
             tbl.TABLE_ID_OBAT = rsKode.Fields("id_obat")
             Label5.Caption = rsKode.Fields("nm_obat")
             Label8.Caption = rsKode.Fields("harga_beli")
             lblQty.Caption = rsKode.Fields("total")
             cmdRetur.Enabled = True
-        'End If
-        'dcObat.Enabled = False
     Else
         MsgBox "Data Tidak Ketemu !", vbCritical + vbInformation
     End If
@@ -547,7 +535,7 @@ Private Sub txtEntry_KeyPress(Index As Integer, KeyAscii As Integer)
             If (total > 0) Then
                 MsgBox "Data Ditemukan Silahkan Pilih Kode Obat !", vbOKCancel + vbInformation
                 txtEntry(0).Enabled = False
-                bind_dc "SELECT o.id_obat,o.nm_obat FROM tbl_beli_details d JOIN tbl_obat o ON o.id_obat=d.id_obat WHERE d.no_beli='" & Trim(txtEntry(0).Text) & "'", "nm_obat", dcObat, "id_obat"
+                bind_dc "SELECT o.id_obat,o.nm_obat FROM tbl_beli_details d INNER JOIN tbl_obat o ON o.id_obat=d.id_obat WHERE d.no_beli='" & Trim(txtEntry(0).Text) & "'", "nm_obat", dcObat, "id_obat"
                 dcObat.Enabled = True
             Else
                 dcObat.Enabled = False
