@@ -405,14 +405,14 @@ Private Sub cmdRetur_Click()
     
     Dim rsobat As New Recordset
     If rsobat.State = 1 Then rsobat.Close
-    rsobat.Open "SELECT b.kd_obat,b.nm_obat,d.jumlah,b.sisa FROM tbl_beli_details d JOIN vw_stok b ON b.id_obat=d.id_obat WHERE d.id_obat=" & dcObat.BoundText, CN, adOpenStatic, adLockReadOnly
+    rsobat.Open "SELECT b.kd_obat,b.nm_obat,d.jumlah,b.sisa FROM tbl_beli_details d JOIN vw_stok b ON b.id_obat=d.id_obat WHERE d.id_obat=" & dcObat.BoundText & " AND d.no_beli='" & Trim(txtEntry(0).Text) & "' LIMIT 1", CN, adOpenStatic, adLockReadOnly
     If rsobat.RecordCount > 0 Then
         tbl.TABLE_KD_OBAT = rsobat.Fields("kd_obat")
         tbl.TABLE_NM_OBAT = rsobat.Fields("nm_obat")
-        tbl.TABLE_TOTAL = rsobat.Fields("jumlah")
+        tbl.TABLE_TOTAL_OBAT = rsobat.Fields("jumlah")
         tbl.TABLE_RETUR_OBAT = txtEntry(2).Text
-        tbl.TABLE_SISA_OBAT = rsobat.Fields("sisa")
-        tbl.TABLE_SISA_RETUR = Val(rsobat.Fields("sisa"))
+        'tbl.TABLE_SISA_OBAT = rsobat.Fields("sisa")
+        tbl.TABLE_SISA_RETUR = Val(rsobat.Fields("sisa")) - txtEntry(2).Text
     End If
     
     Call ReturObat
