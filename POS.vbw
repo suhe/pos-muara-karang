@@ -1,4 +1,4 @@
-frmProduct = 359, 122, 859, 568, , 198, 198, 698, 644, C
+frmProduct = 359, 122, 859, 568, Z, 198, 198, 698, 644, C
 clsBlowfish = 0, 0, 0, 0, C
 clsPaging = 0, 0, 0, 0, C
 clsSQLSelectParser = 22, 22, 522, 468, 
@@ -60,7 +60,7 @@ ACRInvoice = 0, 0, 0, 0, C, 125, 125, 959, 731, C
 ACRCashFlow = 0, 0, 0, 0, C, 150, 150, 1182, 922, C
 frmCashFlowAE = 175, 175, 1054, 610, , 176, 176, 676, 622, C
 ACRCashFlowDetails = 0, 0, 0, 0, C, 175, 175, 1207, 727, C
-frmDebt = 88, 88, 588, 534, Z, 220, 220, 720, 666, C
+frmDebt = 88, 88, 588, 534, , 220, 220, 720, 666, C
 frmDebtDetails = 132, 132, 632, 578, , 0, 0, 500, 446, C
 frmKreditorAE = 0, 0, 0, 0, C, 22, 22, 522, 468, C
 ACRRetur = 0, 0, 0, 0, C, 200, 200, 1232, 972, C

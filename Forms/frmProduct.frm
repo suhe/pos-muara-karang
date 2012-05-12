@@ -291,6 +291,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
 Dim CURR_COL As Integer
 Dim rsproduct As New Recordset
 Dim RecordPage As New clsPaging
