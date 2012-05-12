@@ -475,7 +475,7 @@ Private Sub InsertList()
     With frmPurchasing.lstOrders.ListItems.Add
             .Text = lblBarCode.Caption
             .SubItems(1) = lblCode.Caption
-            .SubItems(2) = lblName.Caption
+            .SubItems(2) = lblname.Caption
             .SubItems(3) = lblKemasan.Caption
             .SubItems(4) = txtPrice.Text
             .SubItems(5) = txtQty.Text
@@ -524,7 +524,18 @@ Private Sub txtPrice_KeyPress(KeyAscii As Integer)
     If KeyAscii = 13 Then
         If txtPrice.Text = "" Then MsgBox "Empty Price", vbOKOnly + vbCritical: Exit Sub
         If txtPrice.Text < 0 Then MsgBox "Empty Price", vbOKOnly + vbCritical: Exit Sub
+        
         Call InsertList
+        
+        With frmPurchasing.lstOrders
+            Dim i As Long
+            For i = .ListItems.Count To 2 Step -1
+                If lblCode.Caption = .ListItems(i - 1).SubItems(1) Then
+                    .ListItems.Remove (i - 1)
+                     MsgBox "Duplicate Data, System replace Data with last entry !", vbCritical + vbInformation
+                End If
+            Next i
+        End With
         Call frmPurchasing.counttotal
         txtPrice.Enabled = False
         Unload Me

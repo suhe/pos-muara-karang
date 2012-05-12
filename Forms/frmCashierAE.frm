@@ -372,7 +372,7 @@ Private Sub InsertList()
             .SubItems(6) = ""
     End With
     'frmCashier.lvList.SelectedItem.SubItems(5) = Format(frmCashier.lvList.SelectedItem.SubItems(5) - txtQty.Text, "##,###0.00")
-    Set frmCashier.lstOrders = Nothing
+    'Set frmCashier.lstOrders = Nothing
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -424,9 +424,6 @@ End Sub
 Private Sub txtQty_KeyPress(KeyAscii As Integer)
     If is_empty(txtQty, True) = True Then Exit Sub
     If is_empty(txtHarga, True) = True Then Exit Sub
-    'If is_zero(txtQty, True) = True Then Exit Sub
-    'If is_zero(txtHarga, True) = True Then Exit Sub
-    On Error Resume Next
     Dim a As Integer
     Dim b As Integer
     NumberOnly KeyAscii
@@ -434,13 +431,20 @@ Private Sub txtQty_KeyPress(KeyAscii As Integer)
         If txtQty.Text = "" Then MsgBox "Empty Qty", vbOKOnly + vbCritical: Exit Sub
         a = FormatNumber(txtQty.Text, 0)
         b = FormatNumber(lblStock.Caption, 0)
-     'If (a <= b) Then
-        Call InsertList
+
+        With frmCashier.lstOrders
+            Call InsertList
+            Dim i As Long
+            For i = .ListItems.Count To 2 Step -1
+                If lblCode.Caption = .ListItems(i - 1).SubItems(1) Then
+                     .ListItems.Remove (i - 1)
+                     MsgBox "Duplicate Data, System replace Data with last entry !", vbCritical + vbInformation
+                End If
+            Next i
+        End With
         Call frmCashier.counttotal
-        On Error Resume Next
         frmCashier.lvListObat.SelectedItem.SubItems(5) = Val(frmCashier.lvListObat.SelectedItem.SubItems(5)) - Val(txtQty.Text)
         Unload Me
-        'frmCashier.cboFilter.SetFocus
         On Error Resume Next
         With frmCashier
             If .lvListObat.Visible = True Then
@@ -449,8 +453,5 @@ Private Sub txtQty_KeyPress(KeyAscii As Integer)
                 .txtSrchStr.SetFocus
             End If
         End With
-      'Else
-       '  MsgBox "Sorry Not Enough Stock In Your Product Stock", vbOKOnly + vbCritical, "Out Of Stock"
-      'End If
     End If
 End Sub
