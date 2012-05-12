@@ -50,12 +50,12 @@ Public Sub ReturObat()
         Printer.Print " Nama Obat  "; Spc(1); ":"; Spc(5); "" & tbl.TABLE_NM_OBAT & ""; Tab(70); " "; Spc(5); ""; Spc(2); ""
         .CurrentX = .CurrentX + 500 ' Skip some space
         Printer.Print " Beli "; Spc(10); ":"; Spc(5); "" & tbl.TABLE_TOTAL & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
-        .CurrentX = .CurrentX + 500 ' Skip some space
-        Printer.Print " Stok "; Spc(9); ":"; Spc(5); "" & tbl.TABLE_SISA_OBAT & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
+       ' .CurrentX = .CurrentX + 500 ' Skip some space
+       ' Printer.Print " Stok "; Spc(9); ":"; Spc(5); "" & tbl.TABLE_SISA_OBAT & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
         .CurrentX = .CurrentX + 500 ' Skip some space
         Printer.Print " Retur "; Spc(8); ":"; Spc(5); "" & tbl.TABLE_RETUR_OBAT & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
         .CurrentX = .CurrentX + 500 ' Skip some space
-        Printer.Print " Sisa "; Spc(9); ":"; Spc(5); "" & tbl.TABLE_SISA_RETUR & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
+        Printer.Print " Stok "; Spc(9); ":"; Spc(5); "" & tbl.TABLE_SISA_RETUR & ""; Tab(70); ""; Spc(8); ""; Spc(9); " "
         Printer.Print ""
         .EndDoc
      End With

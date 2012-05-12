@@ -388,18 +388,7 @@ Private Sub cmdRetur_Click()
     If is_zero(txtEntry(2), True) = True Then Exit Sub
     If Val(txtEntry(2).Text) > Val(lblQty.Caption) Then MsgBox "Data Melebihi Stok Beli", vbAbortRetryIgnore + vbInformation: Exit Sub
     'On Error Resume Next
-    Dim rsobat As New Recordset
-    If rsobat.State = 1 Then rsobat.Close
-    rsobat.Open "SELECT * FROM tbl_beli_details d JOIN vw_stok b ON b.id_obat=d.id_obat WHERE d.id_obat=" & dcObat.BoundText, CN, adOpenStatic, adLockReadOnly
-    If rsobat.RecordCount > 0 Then
-        tbl.TABLE_KD_OBAT = rsobat.Fields("kd_obat")
-        tbl.TABLE_NM_OBAT = rsobat.Fields("nm_obat")
-        tbl.TABLE_TOTAL = rsobat.Fields("jumlah")
-        tbl.TABLE_RETUR_OBAT = txtEntry(2).Text
-        tbl.TABLE_SISA_OBAT = rsobat.Fields("sisa")
-        tbl.TABLE_SISA_RETUR = Val(rsobat.Fields("sisa")) - Val(txtEntry(2).Text)
-    End If
-    
+
     sql = "UPDATE tbl_beli_details "
     sql = sql + "SET "
     sql = sql + " tgl_retur='" & Format(Date, "YYYY-MM-DD") & "', "
@@ -413,6 +402,18 @@ Private Sub cmdRetur_Click()
     sql = sql + " stok_temp=stok_temp - " & txtEntry(2).Text
     sql = sql + " WHERE id_obat=" & dcObat.BoundText & ""
     CN.Execute sql
+    
+    Dim rsobat As New Recordset
+    If rsobat.State = 1 Then rsobat.Close
+    rsobat.Open "SELECT b.kd_obat,b.nm_obat,d.jumlah,b.sisa FROM tbl_beli_details d JOIN vw_stok b ON b.id_obat=d.id_obat WHERE d.id_obat=" & dcObat.BoundText, CN, adOpenStatic, adLockReadOnly
+    If rsobat.RecordCount > 0 Then
+        tbl.TABLE_KD_OBAT = rsobat.Fields("kd_obat")
+        tbl.TABLE_NM_OBAT = rsobat.Fields("nm_obat")
+        tbl.TABLE_TOTAL = rsobat.Fields("jumlah")
+        tbl.TABLE_RETUR_OBAT = txtEntry(2).Text
+        tbl.TABLE_SISA_OBAT = rsobat.Fields("sisa")
+        tbl.TABLE_SISA_RETUR = Val(rsobat.Fields("sisa"))
+    End If
     
     Call ReturObat
     Call GeneratePK
