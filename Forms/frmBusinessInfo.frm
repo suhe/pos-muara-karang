@@ -232,29 +232,29 @@ Option Explicit
 Dim rs_set As New Recordset
 
 Private Sub Command1_Click()
-    If is_empty(text1) = True Then Exit Sub
-    If is_empty(Text2) = True Then Exit Sub
+    If is_empty(Text1) = True Then Exit Sub
+    If is_empty(text2) = True Then Exit Sub
     If is_empty(text3) = True Then Exit Sub
     If is_empty(Text4) = True Then Exit Sub
     If is_empty(Text5) = True Then Exit Sub
     
         sql = "UPDATE tbl_business_info "
         sql = sql + "SET "
-        sql = sql + " bussines_name='" & text1.Text & "', "
-        sql = sql + " bussines_address='" & Text2.Text & "', "
+        sql = sql + " bussines_name='" & Text1.Text & "', "
+        sql = sql + " bussines_address='" & text2.Text & "', "
         sql = sql + " bussines_cp='" & text3.Text & "', "
         sql = sql + " bussines_city='" & Text4.Text & "', "
         sql = sql + " bussines_note='" & Text5.Text & "' "
-        'sql = sql + " WHERE id=" & PK
         CN.Execute sql
-    
+        
     With CurrBiz
-        .BUSINNES_NAME = text1.Text
-        .BUSINESS_ADDRESS = Text2.Text
+        .BUSINNES_NAME = Text1.Text
+        .BUSINESS_ADDRESS = text2.Text
         .BUSINESS_CONTACT_INFO = text3.Text
         .BUSINNES_CITY = Text4.Text
         .BUSINNES_NOTE = Text5.Text
     End With
+    
     MsgBox "Changes has been successfully saved.", vbInformation
     Unload Me
 End Sub
@@ -266,8 +266,8 @@ End Sub
 Private Sub Form_Load()
     On Error Resume Next
     rs_set.Open "SELECT * FROM tbl_business_info", CN, adOpenStatic, adLockOptimistic
-    text1.Text = rs_set.Fields("bussines_name")
-    Text2.Text = rs_set.Fields("bussines_address")
+    Text1.Text = rs_set.Fields("bussines_name")
+    text2.Text = rs_set.Fields("bussines_address")
     text3.Text = rs_set.Fields("bussines_cp")
     Text4.Text = rs_set.Fields("bussines_city")
     Text5.Text = rs_set.Fields("bussines_note")

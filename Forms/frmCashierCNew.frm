@@ -460,19 +460,9 @@ End Sub
 
 Private Sub cmdPrint_Click()
     Dim Lines As Integer, Y As Long, OutStr As String
-    'On Error Resume Nex
     On Error GoTo opps
-  '---- set jenis kertas jika paper=0 tidak ada yang akan dicetak.
-        'If Paper <> "0" Then
-        '    Printer.Font.Size = 10
-        '    Printer.Font.Name = "control"
-        '    Printer.Print Paper
-        'End If
-   '--- set font dan size, font
-     
      With Printer
      If (lblCodeCust.Caption <> "...") Then
-        '.Cls
         .Font.Name = "Times New Roman"
         .Font.Size = 8
         .CurrentY = .CurrentY + 200 ' Skip some space
@@ -502,7 +492,6 @@ Private Sub cmdProcess_Click()
     If is_empty(txtFak, True) = True Then Exit Sub
     If is_empty(dcDepartement, True) = True Then Exit Sub
     Call cash
-    'MDIMainMenu.UpdateInfoMsg
     cmdPrint.SetFocus
 End Sub
 

@@ -316,3 +316,7 @@ Private Sub Form_Load()
     End If
     lbltotal.Caption = Format(tbl.TABLE_TOTAL, "##,###0.00")
 End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+    Set frmCashierDesc = Nothing
+End Sub

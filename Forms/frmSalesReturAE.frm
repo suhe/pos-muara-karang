@@ -410,39 +410,39 @@ Private Sub cmdRetur_Click()
         tbl.TABLE_TOTAL_OBAT = rsobat.Fields("jumlah")
         tbl.TABLE_RETUR_OBAT = txtEntry(2).Text
         'tbl.TABLE_SISA_OBAT = rsobat.Fields("sisa")
-        tbl.TABLE_SISA_RETUR = Val(rsobat.Fields("sisa")) - txtEntry(2).Text
+        tbl.TABLE_SISA_RETUR = rsobat.Fields("sisa")
     End If
     If rsobat.State = 1 Then rsobat.Close
     
     Call ReturObat
-    Call GeneratePK
+    'Call GeneratePK
     
-    sql = "INSERT INTO tbl_beli(no_beli,tgl_beli,tgl_bayar,id_supplier,type,payment,bayar,hutang,flag_supplier,tgl_akhir,tgl_input,id_pengguna) "
-            sql = sql + "VALUES( "
-            sql = sql + " '" & tbl.TABLE_NO_FAK & "',"
-            sql = sql + " '" & Format(Now, "YYYY-mm-dd h:m:s") & "', "
-            sql = sql + " '-',"
-            sql = sql + " " & tbl.TABLE_ID_SUPPLIER & ", "
-            sql = sql + " 'Cash',"
-            sql = sql + " 'Hutang',"
-            sql = sql + " 0, "
-            sql = sql + " -" & Val(txtEntry(2).Text) * Val(Label8.Caption) & ", "
-            sql = sql + " 0, "
-            sql = sql + " '" & Format(Now, "YYYY-mm-dd h:m:s") & "', "
-            sql = sql + " '" & Format(Now, "YYYY-mm-dd h:m:s") & "', "
-            sql = sql + " " & CurrUser.USER_PK & " "
-            sql = sql + ") "
-    CN.Execute sql
+    'sql = "INSERT INTO tbl_beli(no_beli,tgl_beli,tgl_bayar,id_supplier,type,payment,bayar,hutang,flag_supplier,tgl_akhir,tgl_input,id_pengguna) "
+    '        sql = sql + "VALUES( "
+    '        sql = sql + " '" & tbl.TABLE_NO_FAK & "',"
+    '        sql = sql + " '" & Format(Now, "YYYY-mm-dd h:m:s") & "', "
+    '        sql = sql + " '-',"
+    '        sql = sql + " " & tbl.TABLE_ID_SUPPLIER & ", "
+    '        sql = sql + " 'Cash',"
+    '        sql = sql + " 'Hutang',"
+    '        sql = sql + " 0, "
+    '        sql = sql + " -" & Val(txtEntry(2).Text) * Val(Label8.Caption) & ", "
+    '        sql = sql + " 0, "
+    '        sql = sql + " '" & Format(Now, "YYYY-mm-dd h:m:s") & "', "
+    '        sql = sql + " '" & Format(Now, "YYYY-mm-dd h:m:s") & "', "
+    '        sql = sql + " " & CurrUser.USER_PK & " "
+    '        sql = sql + ") "
+    'CN.Execute sql
     
-    sql = "INSERT INTO tbl_beli_details(no_beli,id_obat,harga_beli,jumlah,tgl_retur) "
-            sql = sql + "VALUES( "
-            sql = sql + " '" & tbl.TABLE_NO_FAK & "',"
-            sql = sql + " " & tbl.TABLE_ID_OBAT & ", "
-            sql = sql + " " & Label8.Caption & ", "
-            sql = sql + " -" & Val(txtEntry(2).Text) & ", "
-            sql = sql + " '" & Format(Now, "YYYY-mm-dd h:m:s") & "' "
-            sql = sql + ") "
-    CN.Execute sql
+    'sql = "INSERT INTO tbl_beli_details(no_beli,id_obat,harga_beli,jumlah,tgl_retur) "
+    '        sql = sql + "VALUES( "
+    '        sql = sql + " '" & tbl.TABLE_NO_FAK & "',"
+    '        sql = sql + " " & tbl.TABLE_ID_OBAT & ", "
+    '        sql = sql + " " & Label8.Caption & ", "
+    '        sql = sql + " -" & Val(txtEntry(2).Text) & ", "
+    '        sql = sql + " '" & Format(Now, "YYYY-mm-dd h:m:s") & "' "
+    '        sql = sql + ") "
+    'CN.Execute sql
     Unload Me
     frmReturPurchase.RefreshRecords
 End Sub
@@ -549,4 +549,3 @@ Private Sub txtEntry_KeyPress(Index As Integer, KeyAscii As Integer)
         End If
     End If
 End Sub
-

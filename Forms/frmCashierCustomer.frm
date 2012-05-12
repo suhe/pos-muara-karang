@@ -512,7 +512,6 @@ Private Sub txtSrchStr_Change()
             .SaveStatement
         End With
         
-        'SQLParser =
         If rsCashierCustomer.State = 1 Then rsCashierCustomer.Close
         rsCashierCustomer.CursorLocation = adUseClient
         rsCashierCustomer.Open SQLParser.SQLStatement, CN, adOpenStatic, adLockReadOnly
