@@ -524,7 +524,7 @@ Begin VB.Form frmPurchasing
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      NumItems        =   7
+      NumItems        =   8
       BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
          Text            =   "ID"
          Object.Width           =   882
@@ -562,6 +562,12 @@ Begin VB.Form frmPurchasing
          SubItemIndex    =   6
          Text            =   "Stok Min"
          Object.Width           =   1940
+      EndProperty
+      BeginProperty ColumnHeader(8) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
+         SubItemIndex    =   7
+         Text            =   "Kem.Sedang"
+         Object.Width           =   2293
       EndProperty
    End
    Begin MSComctlLib.ImageList i32x32 
@@ -1153,6 +1159,7 @@ Private Sub callBrand()
         .lblKemasan.Caption = lvList.SelectedItem.SubItems(3)
         .lblPrice.Caption = lvList.SelectedItem.SubItems(4)
         .lblStock.Caption = lvList.SelectedItem.SubItems(5)
+        .lblBoxSedang.Caption = lvList.SelectedItem.SubItems(7)
     End With
 End Sub
 
@@ -1209,11 +1216,7 @@ Private Sub txtSrchStr_Change()
         str = "nm_obat"
     End If
      If txtSrchStr.Text <> "" Then
-        sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.kemasan,FORMAT(o.harga_beli,0),o.stok_temp,o.stok_min"
-        'sql = sql & "((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
-        'sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
-        'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
-        'sql = sql & " ) AS sisa,o.stok_min"
+        sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.kemasan,FORMAT(o.harga_beli,0),o.stok_temp,o.stok_min,o.box_sedang"
 
         With SQLParser
             .Fields = sql
@@ -1233,8 +1236,6 @@ Private Sub txtSrchStr_Change()
             FillList 1
         End With
         
-        'rspurchasing.Close
-        'Set rspurchasing = Nothing
         If rspurchasing.State = 1 Then rspurchasing.Close
         
     End If
