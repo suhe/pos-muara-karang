@@ -407,7 +407,13 @@ Private Sub cmdRetur_Click()
     sql = sql + " WHERE no_beli='" & txtEntry(0).Text & "'"
     sql = sql + " AND id_obat=" & dcObat.BoundText & ""
     CN.Execute sql
-    'MsgBox sql
+    
+    sql = "UPDATE tbl_obat "
+    sql = sql + "SET "
+    sql = sql + " stok_temp=stok_temp - " & txtEntry(2).Text
+    sql = sql + " WHERE id_obat=" & dcObat.BoundText & ""
+    CN.Execute sql
+    
     Call ReturObat
     Call GeneratePK
     
@@ -443,9 +449,9 @@ Private Sub cmdRetur_Click()
 End Sub
 
 Private Sub GeneratePK()
-    Dim pk As Integer
-    pk = getIndex("id_beli", "tbl_beli")
-    tbl.TABLE_NO_FAK = "K" & tbl.TABLE_GROUP & pk
+    Dim PK As Integer
+    PK = getIndex("id_beli", "tbl_beli")
+    tbl.TABLE_NO_FAK = "K" & tbl.TABLE_GROUP & PK
 End Sub
 
 
