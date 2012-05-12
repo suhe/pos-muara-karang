@@ -166,13 +166,13 @@ Begin VB.Form frmSearchFaktur
          _ExtentY        =   503
          _Version        =   393216
          CustomFormat    =   "dd/mm/yyyy"
-         Format          =   59572225
+         Format          =   103874561
          CurrentDate     =   38207
       End
       Begin VB.Label Label3 
          Caption         =   "-"
          BeginProperty Font 
-            Name            =   "Arial Narrow"
+            Name            =   "Arial"
             Size            =   9
             Charset         =   0
             Weight          =   700
@@ -189,7 +189,7 @@ Begin VB.Form frmSearchFaktur
       Begin VB.Label Label1 
          Caption         =   "Tanggal"
          BeginProperty Font 
-            Name            =   "Arial Narrow"
+            Name            =   "Arial"
             Size            =   9
             Charset         =   0
             Weight          =   700
@@ -206,7 +206,7 @@ Begin VB.Form frmSearchFaktur
       Begin VB.Label lblNama 
          Caption         =   "Name"
          BeginProperty Font 
-            Name            =   "Arial Narrow"
+            Name            =   "Arial"
             Size            =   9
             Charset         =   0
             Weight          =   700
@@ -388,14 +388,7 @@ Private Sub Form_Load()
         End If
         cmbHari.AddItem d
     Next d
-    
-    'For mm = 1 To 12
-    '    If (mm <= 9) Then
-    '        mm = "0" & mm
-    '    End If
-    '    cmbBulan.AddItem mm
-    'Next mm
-    
+        
     For Y = 1900 To Year(Now)
         cmbTahun.AddItem Y
     Next Y
@@ -406,14 +399,6 @@ Private Sub Form_Load()
         End If
         cmbHari2.AddItem d2
     Next d2
-    
-    'For mm2 = 1 To 12 Step mm2 + 1
-    '    If (Val(mm2) <= 9) Then
-    '        cmbBulan2.AddItem "0" & mm2
-    '    Else
-    '        cmbBulan2.AddItem mm2
-    '    End If
-    'Next mm2
     
     For y2 = 1900 To Year(Now)
         cmbTahun2.AddItem y2
