@@ -1651,7 +1651,6 @@ Private Sub recipeMedicine()
         Call Form_Activate
         lstOrders.Enabled = False
         lblStatus.Caption = "Saved Transaction !"
-       'MDIMainMenu.UpdateInfoMsg 'Display the business status
         tbl.TABLE_NO_FAK = Trim(txtFak.Text)
         tbl.TABLE_KD_PASIEN = Trim(lblKdPasien.Caption)
         tbl.TABLE_NM_PASIEN = lblNmPasien.Caption
@@ -2052,11 +2051,6 @@ Private Sub txtSrchStr_Change()
     End If
     If txtSrchStr.Text <> "" Then
         sql = "o.id_obat,o.kd_obat ,o.nm_obat,o.kemasan,FORMAT(o.harga_jual,0),o.stok_temp,o.stok_min"
-        'sql = sql & "((IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))-"
-        'sql = sql & "(IF((SELECT COUNT(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat)>0,(SELECT SUM(j.jumlah) FROM tbl_jual_details j WHERE j.id_obat=o.id_obat),0))+ (o.stok) - "
-        'sql = sql & "(IF((SELECT COUNT(b.jumlah) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat)>0,(SELECT SUM(b.retur) FROM tbl_beli_details b WHERE b.id_obat=o.id_obat),0))"
-        'sql = sql & " ) AS sisa,o.stok_min"
-
         With SQLParser
             .Fields = sql
             .Tables = " tbl_obat o INNER JOIN tbl_kategori k ON k.id_kategori =o.id_kategori INNER JOIN tbl_pengguna p ON p.id=o.id_pengguna "
@@ -2129,5 +2123,3 @@ Private Sub txtSrchStrPasien_Change()
         
     End If
 End Sub
-
-

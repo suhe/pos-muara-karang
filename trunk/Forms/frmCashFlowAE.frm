@@ -161,7 +161,6 @@ Private Sub Form_Unload(Cancel As Integer)
             frmCashFlow.RefreshRecords
         ElseIf State = adStatePopupMode Then
         End If
-        'MDIMainMenu.UpdateInfoMsg
     End If
     Set frmCashFlowAE = Nothing
 End Sub

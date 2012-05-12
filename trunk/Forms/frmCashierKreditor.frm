@@ -384,7 +384,6 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsCashierKreditor, RecordPage.PageStart, RecordPage.PageEnd, 12, 2, False, True, , , , "id_kreditor")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    SetNavigation
     lblPageInfo.Caption = "Record " & RecordPage.PageInfo
     lvList_Click
 End Sub
@@ -406,32 +405,6 @@ Private Sub Form_Unload(Cancel As Integer)
     MDIMainMenu.RemToWin Me.Caption
     MDIMainMenu.HideTBButton "", True
     Set frmCashierKreditor = Nothing
-End Sub
-
-Private Sub SetNavigation()
-    With RecordPage
-        If .PAGE_TOTAL = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        ElseIf .PAGE_CURRENT = 1 Then
-            btnFirst.Enabled = False
-            btnPrev.Enabled = False
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        ElseIf .PAGE_CURRENT = .PAGE_TOTAL And .PAGE_CURRENT > 1 Then
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = False
-            btnLast.Enabled = False
-        Else
-            btnFirst.Enabled = True
-            btnPrev.Enabled = True
-            btnNext.Enabled = True
-            btnLast.Enabled = True
-        End If
-    End With
 End Sub
 
 Private Sub lvList_Click()

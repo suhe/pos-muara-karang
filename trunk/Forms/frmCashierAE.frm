@@ -366,13 +366,10 @@ Private Sub InsertList()
             .SubItems(1) = lblCode.Caption
             .SubItems(2) = lblname.Caption
             .SubItems(3) = lblKemasan.Caption
-            '.SubItems(4) = lblPrice.Caption
             .SubItems(4) = Format(txtHarga.Text, "")
             .SubItems(5) = txtQty.Text
             .SubItems(6) = ""
     End With
-    'frmCashier.lvList.SelectedItem.SubItems(5) = Format(frmCashier.lvList.SelectedItem.SubItems(5) - txtQty.Text, "##,###0.00")
-    'Set frmCashier.lstOrders = Nothing
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
