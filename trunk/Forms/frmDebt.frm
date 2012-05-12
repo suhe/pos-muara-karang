@@ -249,10 +249,8 @@ Public Sub CommandPass(ByVal srcPerformWhat As String)
                     RefreshRecords
                     Exit Sub
                 Else
-                    'With frmDebtDetails
                         frmDebtDetails.State = adStateEditMode
                         frmDebtDetails.PK = CLng(LeftSplitUF(lvList.SelectedItem.Tag))
-                        'tbl.TABLE_ID_KREDITUR = CLng(LeftSplitUF(lvList.SelectedItem.Tag))
                     On Error Resume Next
                     With lvList
                         tbl.TABLE_ID_KREDITUR = .SelectedItem.Text
@@ -428,7 +426,7 @@ Private Sub Form_Load()
     With SQLParser
         .Fields = " j.id_kreditor,k.nm_kreditor,k.almt_kreditor,k.kota_kreditor,k.tlp_kreditor,k.cp_kreditor,k.plafon,SUM(j.piutang) AS piutang,(k.plafon-SUM(j.piutang)) as sisa "
         .Tables = " tbl_jual j INNER JOIN tbl_kreditor k ON k.id_kreditor=j.id_kreditor "
-        .wCondition = " j.flag_kreditor=1 "
+        .wCondition = " j.flag_kreditor= 1 "
         .GroupOrder = " j.id_kreditor "
         .SortOrder = sort & " LIMIT " & cbShow.Text
         .SaveStatement
@@ -453,9 +451,7 @@ Private Sub FillList(ByVal whichPage As Long)
     Call pageFillListView(lvList, rsDebtKreditor, RecordPage.PageStart, RecordPage.PageEnd, 14, 2, False, True, , , , "id_kreditor")
     Me.Enabled = True
     Screen.MousePointer = vbDefault
-    'Display the page information
-    'Display the selected record
-    lvList_Click
+    lvList_Click 'Display the selected record AND Display the page information
 End Sub
 
 Private Sub Form_Resize()
@@ -465,7 +461,6 @@ Private Sub Form_Resize()
         If Me.Height < 4500 Then Me.Height = 4500
         
         shpBar.Width = ScaleWidth
-        
         lvList.Width = Me.ScaleWidth
         lvList.Height = (Me.ScaleHeight - Picture1.Height) - lvList.Top
     End If
@@ -505,4 +500,3 @@ End Sub
 Private Sub lvList_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = 38 Or KeyCode = 40 Or KeyCode = 33 Or KeyCode = 34 Then lvList_Click
 End Sub
-

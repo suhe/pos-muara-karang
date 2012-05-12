@@ -314,7 +314,6 @@ Private Sub Form_Resize()
         lvList.Width = Me.ScaleWidth
         freSearch.Width = Me.ScaleWidth
         txtSrchStr.Width = freSearch.Width - (txtSrchStr.Left + imgSearch.Width)
-        'lvList.Height = (Me.ScaleHeight - Picture1.Height) - lvList.Top
     End If
 End Sub
 

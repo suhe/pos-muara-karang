@@ -62,7 +62,6 @@ Form=Forms\frmSplash.frm
 Class=CTooltip; Classes\CToolTip.cls
 Module=modTextRot; Classes\TextRot.bas
 Module=modbkPath; Modules\modbkPath.bas
-Form=Forms\frmStockChecking.frm
 Form=Forms\frmSalesReturAE.frm
 Form=Forms\frmDateChecker.frm
 Form=Forms\frmKreditor.frm
