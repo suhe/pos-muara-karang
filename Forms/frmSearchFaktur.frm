@@ -166,7 +166,7 @@ Begin VB.Form frmSearchFaktur
          _ExtentY        =   503
          _Version        =   393216
          CustomFormat    =   "dd/mm/yyyy"
-         Format          =   103874561
+         Format          =   212926465
          CurrentDate     =   38207
       End
       Begin VB.Label Label3 

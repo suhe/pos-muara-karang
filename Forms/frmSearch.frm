@@ -137,7 +137,7 @@ Begin VB.Form frmSearch
          _ExtentY        =   503
          _Version        =   393216
          CustomFormat    =   "dd/MM/yyyy"
-         Format          =   102105091
+         Format          =   211288067
          CurrentDate     =   38207
       End
       Begin MSComCtl2.DTPicker dtpDate 
@@ -152,7 +152,7 @@ Begin VB.Form frmSearch
          _ExtentY        =   503
          _Version        =   393216
          CustomFormat    =   "dd/MM/yyyy"
-         Format          =   102105091
+         Format          =   211288067
          CurrentDate     =   38207
       End
       Begin MSComCtl2.DTPicker dtpDate 
@@ -167,7 +167,7 @@ Begin VB.Form frmSearch
          _ExtentY        =   503
          _Version        =   393216
          CustomFormat    =   "dd/mm/yyyy"
-         Format          =   102105089
+         Format          =   211288065
          CurrentDate     =   38207
       End
       Begin MSComCtl2.DTPicker dtpDate 
@@ -182,7 +182,7 @@ Begin VB.Form frmSearch
          _ExtentY        =   503
          _Version        =   393216
          CustomFormat    =   "dd/mm/yyyy"
-         Format          =   102105089
+         Format          =   211288065
          CurrentDate     =   38207
       End
       Begin VB.Label Label3 
